@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bnc-dz-6Q6">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Pdf Reader View Controller-->
+        <scene sceneID="i0N-vX-rAQ">
+            <objects>
+                <viewController id="bnc-dz-6Q6" customClass="PdfReaderViewController" customModule="MachReader" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="IwT-ro-0Xl">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6aD-5h-Utg" customClass="PDFView">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="6aD-5h-Utg" firstAttribute="leading" secondItem="hFG-E8-ClZ" secondAttribute="leading" id="KMd-Ss-ONJ"/>
+                            <constraint firstItem="6aD-5h-Utg" firstAttribute="top" secondItem="hFG-E8-ClZ" secondAttribute="top" id="bfF-jt-2pv"/>
+                            <constraint firstItem="hFG-E8-ClZ" firstAttribute="bottom" secondItem="6aD-5h-Utg" secondAttribute="bottom" id="lvn-N6-4Tu"/>
+                            <constraint firstItem="hFG-E8-ClZ" firstAttribute="trailing" secondItem="6aD-5h-Utg" secondAttribute="trailing" id="vD3-9K-5Jm"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="hFG-E8-ClZ"/>
+                    </view>
+                    <connections>
+                        <outlet property="pdfView" destination="6aD-5h-Utg" id="Adj-ug-8yr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NUi-jh-pK7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="239" y="269"/>
+        </scene>
+    </scenes>
+</document>

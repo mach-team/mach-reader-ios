@@ -12,6 +12,10 @@
 		2593F82A20B8073200319C1B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2593F82820B8073200319C1B /* Main.storyboard */; };
 		2593F82C20B8073200319C1B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2593F82B20B8073200319C1B /* Assets.xcassets */; };
 		2593F82F20B8073200319C1B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2593F82D20B8073200319C1B /* LaunchScreen.storyboard */; };
+		2593F83820B8074D00319C1B /* PdfReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2593F83720B8074D00319C1B /* PdfReaderViewController.swift */; };
+		2593F83A20B8075500319C1B /* PdfReader.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2593F83920B8075500319C1B /* PdfReader.storyboard */; };
+		2593F83C20B808D600319C1B /* sample.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2593F83B20B808D600319C1B /* sample.pdf */; };
+		2593F84020B83E1E00319C1B /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2593F83F20B83E1E00319C1B /* CloudKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,11 @@
 		2593F82B20B8073200319C1B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2593F82E20B8073200319C1B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2593F83020B8073200319C1B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2593F83720B8074D00319C1B /* PdfReaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfReaderViewController.swift; sourceTree = "<group>"; };
+		2593F83920B8075500319C1B /* PdfReader.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PdfReader.storyboard; sourceTree = "<group>"; };
+		2593F83B20B808D600319C1B /* sample.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = sample.pdf; sourceTree = "<group>"; };
+		2593F83D20B83E1700319C1B /* MachReader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MachReader.entitlements; sourceTree = "<group>"; };
+		2593F83F20B83E1E00319C1B /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2593F84020B83E1E00319C1B /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +50,7 @@
 			children = (
 				2593F82320B8073200319C1B /* MachReader */,
 				2593F82220B8073200319C1B /* Products */,
+				2593F83E20B83E1E00319C1B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,6 +65,9 @@
 		2593F82320B8073200319C1B /* MachReader */ = {
 			isa = PBXGroup;
 			children = (
+				2593F83D20B83E1700319C1B /* MachReader.entitlements */,
+				2593F83B20B808D600319C1B /* sample.pdf */,
+				2593F83620B8073D00319C1B /* Views */,
 				2593F82420B8073200319C1B /* AppDelegate.swift */,
 				2593F82620B8073200319C1B /* ViewController.swift */,
 				2593F82820B8073200319C1B /* Main.storyboard */,
@@ -62,6 +76,23 @@
 				2593F83020B8073200319C1B /* Info.plist */,
 			);
 			path = MachReader;
+			sourceTree = "<group>";
+		};
+		2593F83620B8073D00319C1B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2593F83720B8074D00319C1B /* PdfReaderViewController.swift */,
+				2593F83920B8075500319C1B /* PdfReader.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2593F83E20B83E1E00319C1B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2593F83F20B83E1E00319C1B /* CloudKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -97,6 +128,14 @@
 					2593F82020B8073200319C1B = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -123,9 +162,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2593F83A20B8075500319C1B /* PdfReader.storyboard in Resources */,
 				2593F82F20B8073200319C1B /* LaunchScreen.storyboard in Resources */,
 				2593F82C20B8073200319C1B /* Assets.xcassets in Resources */,
 				2593F82A20B8073200319C1B /* Main.storyboard in Resources */,
+				2593F83C20B808D600319C1B /* sample.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,6 +178,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2593F82720B8073200319C1B /* ViewController.swift in Sources */,
+				2593F83820B8074D00319C1B /* PdfReaderViewController.swift in Sources */,
 				2593F82520B8073200319C1B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -274,11 +316,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MachReader/MachReader.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NAJPYUJBUB;
 				INFOPLIST_FILE = MachReader/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = tech.mach.MachReader;
+				PRODUCT_BUNDLE_IDENTIFIER = "tech.mach.mach-reader";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -289,11 +332,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MachReader/MachReader.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NAJPYUJBUB;
 				INFOPLIST_FILE = MachReader/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = tech.mach.MachReader;
+				PRODUCT_BUNDLE_IDENTIFIER = "tech.mach.mach-reader";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
