@@ -17,13 +17,8 @@ class PdfReaderViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        pdfView.document = getDocument()
-        pdfView.backgroundColor = .lightGray
-        pdfView.autoScales = true
-        pdfView.displayMode = .singlePageContinuous
-        pdfView.usePageViewController(true)
         
+        setupPDFView()
         createMenu()
     }
     
@@ -46,6 +41,14 @@ class PdfReaderViewController: UIViewController {
         let pdfURL = URL(fileURLWithPath: path)
         let document = PDFDocument(url: pdfURL)
         return document
+    }
+    
+    private func setupPDFView() {
+        pdfView.document = getDocument()
+        pdfView.backgroundColor = .lightGray
+        pdfView.autoScales = true
+        pdfView.displayMode = .singlePageContinuous
+        pdfView.usePageViewController(true)
     }
 
     private func createMenu() {

@@ -10,5 +10,6 @@ target 'MachReader' do
   pod 'Firebase/Firestore’
   pod 'Firebase/Storage'
   pod 'Pring'
+  pod 'GrowingTextView', '~> 0.5'
 
 end
