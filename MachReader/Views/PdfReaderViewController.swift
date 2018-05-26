@@ -11,7 +11,7 @@ import PDFKit
 
 class PdfReaderViewController: UIViewController {
 
-    @IBOutlet weak var pdfView: PDFView!
+    @IBOutlet private weak var pdfView: PDFView!
     
     // MARK: - Life cycle methods
     
@@ -29,6 +29,8 @@ class PdfReaderViewController: UIViewController {
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         if action == #selector(highlight(_:)) {
+            return true
+        } else if action == #selector(comment(_:)) {
             return true
         }
         return false
@@ -48,21 +50,38 @@ class PdfReaderViewController: UIViewController {
 
     private func createMenu() {
         let highlightItem = UIMenuItem(title: "Highlight", action: #selector(highlight(_:)))
-        UIMenuController.shared.menuItems = [highlightItem]
+        let commentItem = UIMenuItem(title: "Comment", action: #selector(comment(_:)))
+        UIMenuController.shared.menuItems = [highlightItem, commentItem]
+    }
+    
+    private func highlight(selection: PDFSelection, page: PDFPage) {
+        selection.selectionsByLine().forEach { s in
+            let highlight = PDFAnnotation(bounds: s.bounds(for: page), forType: .highlight, withProperties: nil)
+            highlight.endLineStyle = .square
+            page.addAnnotation(highlight)
+        }
     }
     
     @objc private func highlight(_ sender: UIMenuController?) {
         guard let currentSelection = pdfView.currentSelection else { return }
-        let selections = currentSelection.selectionsByLine()
-        guard let page = selections.first?.pages.first else { return }
+        guard let page = currentSelection.pages.first else { return }
         
-        selections.forEach { selection in
-            let highlight = PDFAnnotation(bounds: selection.bounds(for: page), forType: .highlight, withProperties: nil)
-            highlight.endLineStyle = .square
-            page.addAnnotation(highlight)
-        }
+        highlight(selection: currentSelection, page: page)
         
         pdfView.clearSelection()
     }
     
+    @objc private func comment(_ sender: UIMenuController?) {
+        guard let currentSelection = pdfView.currentSelection else { return }
+        guard let page = currentSelection.pages.first else { return }
+        guard let text = currentSelection.string else { return }
+        guard let pageNumber = pdfView.document?.index(for: page) else { return }
+        
+        highlight(selection: currentSelection, page: page)
+        
+        pdfView.clearSelection()
+        
+        let vc = AddCommentViewController.instantiate(text: text, page: pageNumber)
+        present(vc, animated: true)
+    }
 }
