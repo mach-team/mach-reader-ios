@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import Foundation
 import PDFKit
 
 class PdfReaderViewController: UIViewController {
 
     @IBOutlet private weak var pdfView: PDFView!
+    
+    private let book = Book()
     
     // MARK: - Life cycle methods
     
@@ -40,6 +43,11 @@ class PdfReaderViewController: UIViewController {
         }
         let pdfURL = URL(fileURLWithPath: path)
         let document = PDFDocument(url: pdfURL)
+
+        book.hashID = SHA1.hexString(fromFile: path)
+        Book.get(hashID: SHA1.hexString(fromFile: path)!)
+        // book.save()
+
         return document
     }
     
@@ -84,7 +92,7 @@ class PdfReaderViewController: UIViewController {
         
         pdfView.clearSelection()
         
-        let vc = AddCommentViewController.instantiate(text: text, page: pageNumber)
+        let vc = AddCommentViewController.instantiate(text: text, page: pageNumber, book: book)
         present(vc, animated: true)
     }
 }
