@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y0s-dT-7FA" customClass="GrowingTextView" customModule="GrowingTextView">
-                                <rect key="frame" x="40" y="144" width="295" height="33"/>
+                                <rect key="frame" x="40" y="128" width="295" height="33"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -31,7 +31,7 @@
                                 </connections>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l67-2z-Zc3">
-                                <rect key="frame" x="40" y="60" width="295" height="60"/>
+                                <rect key="frame" x="40" y="44" width="295" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="s6T-Mo-RS2"/>
                                 </constraints>
@@ -39,41 +39,15 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jj9-H5-bf1">
-                                <rect key="frame" x="157" y="209" width="60" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="60" id="6KQ-MH-yti"/>
-                                    <constraint firstAttribute="height" constant="44" id="rsZ-rG-cMd"/>
-                                </constraints>
-                                <state key="normal" title="Save"/>
-                                <connections>
-                                    <action selector="handleSaveAction:" destination="fQ7-t1-QRC" eventType="touchUpInside" id="atF-bb-Btp"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7rU-f8-xuh">
-                                <rect key="frame" x="311" y="24" width="48" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="48" id="EhV-F5-Ndh"/>
-                                    <constraint firstAttribute="height" constant="44" id="Zaq-jZ-f3m"/>
-                                </constraints>
-                                <state key="normal" title="Cancel"/>
-                                <connections>
-                                    <action selector="handleCancelAction:" destination="fQ7-t1-QRC" eventType="touchUpInside" id="ANY-3t-owK"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="hGn-EZ-w3Q" firstAttribute="trailing" secondItem="Y0s-dT-7FA" secondAttribute="trailing" constant="40" id="418-iR-lym"/>
-                            <constraint firstItem="Jj9-H5-bf1" firstAttribute="top" secondItem="Y0s-dT-7FA" secondAttribute="bottom" constant="32" id="C4p-gg-08w"/>
                             <constraint firstItem="l67-2z-Zc3" firstAttribute="leading" secondItem="hGn-EZ-w3Q" secondAttribute="leading" constant="40" id="S5m-S4-hPY"/>
                             <constraint firstItem="hGn-EZ-w3Q" firstAttribute="trailing" secondItem="l67-2z-Zc3" secondAttribute="trailing" constant="40" id="TV1-Tg-z27"/>
-                            <constraint firstItem="7rU-f8-xuh" firstAttribute="top" secondItem="hGn-EZ-w3Q" secondAttribute="top" constant="4" id="ZYB-pc-0wb"/>
-                            <constraint firstItem="l67-2z-Zc3" firstAttribute="top" secondItem="hGn-EZ-w3Q" secondAttribute="top" constant="40" id="cnD-Zc-YzN"/>
                             <constraint firstItem="Y0s-dT-7FA" firstAttribute="leading" secondItem="hGn-EZ-w3Q" secondAttribute="leading" constant="40" id="dLu-ZE-z2B"/>
-                            <constraint firstItem="hGn-EZ-w3Q" firstAttribute="trailing" secondItem="7rU-f8-xuh" secondAttribute="trailing" constant="16" id="e6d-Hh-7GR"/>
+                            <constraint firstItem="l67-2z-Zc3" firstAttribute="top" secondItem="hGn-EZ-w3Q" secondAttribute="top" constant="24" id="lEC-U6-7tk"/>
                             <constraint firstItem="Y0s-dT-7FA" firstAttribute="top" secondItem="l67-2z-Zc3" secondAttribute="bottom" constant="24" id="n8D-BD-8hV"/>
-                            <constraint firstItem="Jj9-H5-bf1" firstAttribute="centerX" secondItem="D5A-gr-2hb" secondAttribute="centerX" id="xOQ-uI-gBo"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hGn-EZ-w3Q"/>
                     </view>

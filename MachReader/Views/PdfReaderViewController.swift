@@ -53,8 +53,8 @@ class PdfReaderViewController: UIViewController {
         createMenu()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         
         NotificationObserver.removeAll(from: self)
     }
@@ -162,6 +162,9 @@ class PdfReaderViewController: UIViewController {
         let vc = AddCommentViewController.instantiate(highlight: h, book: book) { [weak self] in
             self?.highlight(selection: currentSelection, page: page)
         }
-        present(vc, animated: true)
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .formSheet
+
+        present(nav, animated: true)
     }
 }

@@ -28,15 +28,27 @@ class AddCommentViewController: UIViewController {
         return vc
     }
     
+    // MARK: Life cycle method
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupNavigationBar()
         highlightTextLabel.text = highlight.text
     }
     
-    // MARK: - IBActions
+    // MARK: - Private methods
     
-    @IBAction func handleSaveAction(_ sender: Any) {
+    private func setupNavigationBar() {
+        title = "Add Comment"
+        // UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(handleCancelAction(_:)))
+        let backButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancelAction(_:)))
+        let saveButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSaveAction(_:)))
+        navigationItem.leftBarButtonItem = backButtonItem
+        navigationItem.rightBarButtonItem = saveButton
+    }
+    
+    @objc private func handleSaveAction(_ sender: Any) {
         if commentTextView.text.isEmpty {
             dismiss(animated: true)
         } else {
@@ -60,7 +72,7 @@ class AddCommentViewController: UIViewController {
         }
     }
     
-    @IBAction func handleCancelAction(_ sender: Any) {
+    @objc private func handleCancelAction(_ sender: Any) {
         dismiss(animated: true)
     }
 }
