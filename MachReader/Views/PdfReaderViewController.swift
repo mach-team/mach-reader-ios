@@ -14,13 +14,30 @@ class PdfReaderViewController: UIViewController {
 
     @IBOutlet private weak var pdfView: PDFView!
     
-    private let book = Book()
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        indicator.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
+        indicator.center = self.view.center
+        indicator.autoresizingMask = [.flexibleLeftMargin, .flexibleRightMargin, .flexibleBottomMargin]
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
+    
+    private var book: Book! = nil {
+        didSet {
+            activityIndicator.stopAnimating()
+        }
+    }
     
     // MARK: - Life cycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        
+        setupDocument()
         setupPDFView()
         createMenu()
     }
@@ -36,23 +53,23 @@ class PdfReaderViewController: UIViewController {
     
     // MARK: - private methods
     
-    private func getDocument() -> PDFDocument? {
+    private func setupDocument() {
         guard let path = Bundle.main.path(forResource: "sample", ofType: "pdf") else {
             print("failed to get path.")
-            return nil
+            return
         }
+        
         let pdfURL = URL(fileURLWithPath: path)
         let document = PDFDocument(url: pdfURL)
-
-        book.hashID = SHA1.hexString(fromFile: path)
-        Book.get(hashID: SHA1.hexString(fromFile: path)!)
-        // book.save()
-
-        return document
+        pdfView.document = document
+        
+        let hashID = SHA1.hexString(fromFile: path) ?? ""
+        Book.findOrCreate(by: hashID) { [weak self] book, error in
+             self?.book = book
+        }
     }
     
     private func setupPDFView() {
-        pdfView.document = getDocument()
         pdfView.backgroundColor = .lightGray
         pdfView.autoScales = true
         pdfView.displayMode = .singlePageContinuous
@@ -77,22 +94,31 @@ class PdfReaderViewController: UIViewController {
         guard let currentSelection = pdfView.currentSelection else { return }
         guard let page = currentSelection.pages.first else { return }
         
+        // このタイミングではなく、highlightするタイミングはFirestoreにsyncさせるほうが良いか
         highlight(selection: currentSelection, page: page)
         
         pdfView.clearSelection()
+        
+        book.saveHighlight(text: currentSelection.string, pageNumber: pdfView.document?.index(for: page))
     }
     
+    // ハイライトもないところからコメントをする場合のみ
     @objc private func comment(_ sender: UIMenuController?) {
         guard let currentSelection = pdfView.currentSelection else { return }
         guard let page = currentSelection.pages.first else { return }
         guard let text = currentSelection.string else { return }
         guard let pageNumber = pdfView.document?.index(for: page) else { return }
         
+        // このタイミングではなく、highlightするタイミングはFirestoreにsyncさせるほうが良いか
+        // もしくはコメント入力が完了したときにこれを呼ぶようにする
         highlight(selection: currentSelection, page: page)
         
         pdfView.clearSelection()
         
-        let vc = AddCommentViewController.instantiate(text: text, page: pageNumber, book: book)
+        let h = Highlight()
+        h.text = text
+        h.page = pageNumber
+        let vc = AddCommentViewController.instantiate(highlight: h, book: book)
         present(vc, animated: true)
     }
 }

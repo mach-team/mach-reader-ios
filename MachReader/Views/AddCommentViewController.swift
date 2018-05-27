@@ -18,12 +18,9 @@ class AddCommentViewController: UIViewController {
     private var highlight = Highlight()
     private var book = Book()
     
-    static func instantiate(text: String, page: Int, book: Book) -> AddCommentViewController {
+    static func instantiate(highlight: Highlight, book: Book) -> AddCommentViewController {
         let sb = UIStoryboard(name: "AddComment", bundle: nil)
         let vc = sb.instantiateInitialViewController() as! AddCommentViewController
-        let highlight = Highlight()
-        highlight.text = text
-        highlight.page = page
         vc.highlight = highlight
         vc.book = book
         return vc
@@ -49,11 +46,15 @@ class AddCommentViewController: UIViewController {
             // book
             book.highlights.insert(highlight)
             // book.viewers.insert(currentUser)
-            // book.update()
+            book.update()
             
             // highlight
+            // すでに存在しているところにコメントをするときはupdate
+            // 一旦ハイライトも新規作成に絞って考える
             highlight.comments.insert(comment)
-            // highlight.update()
+            highlight.save()
+            
+            dismiss(animated: true)
         }
     }
     
