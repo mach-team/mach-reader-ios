@@ -15,6 +15,7 @@ class PdfReaderViewController: UIViewController {
     @IBOutlet private weak var pdfView: PDFView!
     
     private lazy var activityIndicator: UIActivityIndicatorView = {
+        // This is supposed to block user interaction when loading...
         let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         indicator.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
         indicator.center = self.view.center
@@ -82,6 +83,9 @@ class PdfReaderViewController: UIViewController {
         UIMenuController.shared.menuItems = [highlightItem, commentItem]
     }
     
+    /**
+     * Just add highlight view
+     */
     private func highlight(selection: PDFSelection, page: PDFPage) {
         selection.selectionsByLine().forEach { s in
             let highlight = PDFAnnotation(bounds: s.bounds(for: page), forType: .highlight, withProperties: nil)
@@ -90,11 +94,13 @@ class PdfReaderViewController: UIViewController {
         }
     }
     
+    /**
+     * Add Highlight(call above method and save this Highlight to Firestore)
+     */
     @objc private func highlight(_ sender: UIMenuController?) {
         guard let currentSelection = pdfView.currentSelection else { return }
         guard let page = currentSelection.pages.first else { return }
         
-        // このタイミングではなく、highlightするタイミングはFirestoreにsyncさせるほうが良いか
         highlight(selection: currentSelection, page: page)
         
         pdfView.clearSelection()
@@ -102,23 +108,23 @@ class PdfReaderViewController: UIViewController {
         book.saveHighlight(text: currentSelection.string, pageNumber: pdfView.document?.index(for: page))
     }
     
-    // ハイライトもないところからコメントをする場合のみ
+    /**
+     * Add both Comment and Highlight(go to AddCommentViewController)
+     */
     @objc private func comment(_ sender: UIMenuController?) {
         guard let currentSelection = pdfView.currentSelection else { return }
         guard let page = currentSelection.pages.first else { return }
         guard let text = currentSelection.string else { return }
         guard let pageNumber = pdfView.document?.index(for: page) else { return }
         
-        // このタイミングではなく、highlightするタイミングはFirestoreにsyncさせるほうが良いか
-        // もしくはコメント入力が完了したときにこれを呼ぶようにする
-        highlight(selection: currentSelection, page: page)
-        
         pdfView.clearSelection()
         
         let h = Highlight()
         h.text = text
         h.page = pageNumber
-        let vc = AddCommentViewController.instantiate(highlight: h, book: book)
+        let vc = AddCommentViewController.instantiate(highlight: h, book: book) { [weak self] in
+            self?.highlight(selection: currentSelection, page: page)
+        }
         present(vc, animated: true)
     }
 }

@@ -17,12 +17,14 @@ class AddCommentViewController: UIViewController {
     
     private var highlight = Highlight()
     private var book = Book()
+    private var callback: (() -> Void)? = nil
     
-    static func instantiate(highlight: Highlight, book: Book) -> AddCommentViewController {
+    static func instantiate(highlight: Highlight, book: Book, block: (() -> Void)? = nil) -> AddCommentViewController {
         let sb = UIStoryboard(name: "AddComment", bundle: nil)
         let vc = sb.instantiateInitialViewController() as! AddCommentViewController
         vc.highlight = highlight
         vc.book = book
+        vc.callback = block
         return vc
     }
     
@@ -49,12 +51,12 @@ class AddCommentViewController: UIViewController {
             book.update()
             
             // highlight
-            // すでに存在しているところにコメントをするときはupdate
-            // 一旦ハイライトも新規作成に絞って考える
             highlight.comments.insert(comment)
-            highlight.save()
+            highlight.save() // Currently, only save is considered.
             
-            dismiss(animated: true)
+            dismiss(animated: true) { [weak self] in
+                self?.callback?()
+            }
         }
     }
     
