@@ -10,7 +10,7 @@ import UIKit
 import Pring
 
 @objcMembers
-class User: Object {
+final class User: Object {
     dynamic var name: String?
     dynamic var highlights: ReferenceCollection<Highlight> = []
 }

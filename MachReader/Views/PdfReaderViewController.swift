@@ -7,11 +7,12 @@
 //
 
 import UIKit
-import Foundation
 import PDFKit
 
 class PdfReaderViewController: UIViewController {
 
+    // MARK: - Properties
+    
     @IBOutlet private weak var pdfView: PDFView!
     
     private lazy var activityIndicator: UIActivityIndicatorView = {
@@ -26,8 +27,14 @@ class PdfReaderViewController: UIViewController {
     
     private var book: Book! = nil {
         didSet {
+            drawStoredHighlights()
             activityIndicator.stopAnimating()
         }
+    }
+    
+    private var currentPageNumber: Int {
+        let page = pdfView.currentPage
+        return pdfView.document?.index(for: page!) ?? 0
     }
     
     // MARK: - Life cycle methods
@@ -38,9 +45,18 @@ class PdfReaderViewController: UIViewController {
         view.addSubview(activityIndicator)
         activityIndicator.startAnimating()
         
+        NotificationObserver.add(name: .PDFViewAnnotationHit, method: handleHitAnnotation)
+        NotificationObserver.add(name: .PDFViewPageChanged, method: handlePageChanged)
+        
         setupDocument()
         setupPDFView()
         createMenu()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NotificationObserver.removeAll(from: self)
     }
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
@@ -54,6 +70,7 @@ class PdfReaderViewController: UIViewController {
     
     // MARK: - private methods
     
+    /// PDF data handling for init
     private func setupDocument() {
         guard let path = Bundle.main.path(forResource: "sample", ofType: "pdf") else {
             print("failed to get path.")
@@ -66,10 +83,11 @@ class PdfReaderViewController: UIViewController {
         
         let hashID = SHA1.hexString(fromFile: path) ?? ""
         Book.findOrCreate(by: hashID) { [weak self] book, error in
-             self?.book = book
+            self?.book = book
         }
     }
     
+    /// Base settings for PDFView.
     private func setupPDFView() {
         pdfView.backgroundColor = .lightGray
         pdfView.autoScales = true
@@ -77,15 +95,38 @@ class PdfReaderViewController: UIViewController {
         pdfView.usePageViewController(true)
     }
 
+    /// Customize UIMenuController.
     private func createMenu() {
         let highlightItem = UIMenuItem(title: "Highlight", action: #selector(highlight(_:)))
         let commentItem = UIMenuItem(title: "Comment", action: #selector(comment(_:)))
         UIMenuController.shared.menuItems = [highlightItem, commentItem]
     }
     
-    /**
-     * Just add highlight view
-     */
+    /// Notification handler for hitting of annotation, such as an existing highlight.
+    @objc private func handleHitAnnotation(notification: Notification) {
+        print("TODO: show popup")
+    }
+    
+    /// Notification handler for the current page change.
+    @objc private func handlePageChanged(notification: Notification) {
+        drawStoredHighlights()
+    }
+    
+    /// Fetch Highlights stored at Firestore and display those annotation views.
+    private func drawStoredHighlights() {
+        book?.getHighlights() { [weak self] highlight, error in
+            guard let `self` = self else { return }
+            guard let h = highlight else { return }
+            
+            if h.page == self.currentPageNumber {
+                guard let selection = self.pdfView.document?.findString(h.text ?? "", withOptions: .caseInsensitive).first else { return }
+                guard let page = selection.pages.first else { return }
+                self.highlight(selection: selection, page: page)
+            }
+        }
+    }
+    
+    /// Add highlight annotation view.
     private func highlight(selection: PDFSelection, page: PDFPage) {
         selection.selectionsByLine().forEach { s in
             let highlight = PDFAnnotation(bounds: s.bounds(for: page), forType: .highlight, withProperties: nil)
@@ -94,9 +135,7 @@ class PdfReaderViewController: UIViewController {
         }
     }
     
-    /**
-     * Add Highlight(call above method and save this Highlight to Firestore)
-     */
+    /// Call above method and save this Highlight at Firestore.
     @objc private func highlight(_ sender: UIMenuController?) {
         guard let currentSelection = pdfView.currentSelection else { return }
         guard let page = currentSelection.pages.first else { return }
@@ -108,9 +147,7 @@ class PdfReaderViewController: UIViewController {
         book.saveHighlight(text: currentSelection.string, pageNumber: pdfView.document?.index(for: page))
     }
     
-    /**
-     * Add both Comment and Highlight(go to AddCommentViewController)
-     */
+    /// Go to AddCommentViewController to save both Highlight and Comment.
     @objc private func comment(_ sender: UIMenuController?) {
         guard let currentSelection = pdfView.currentSelection else { return }
         guard let page = currentSelection.pages.first else { return }

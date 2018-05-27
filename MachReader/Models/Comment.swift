@@ -10,7 +10,7 @@ import UIKit
 import Pring
 
 @objcMembers
-class Comment: Object {
+final class Comment: Object {
     dynamic var text: String?
     // dynamic var threadID: String?
 }

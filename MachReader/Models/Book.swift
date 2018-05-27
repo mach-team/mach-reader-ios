@@ -10,7 +10,7 @@ import UIKit
 import Pring
 
 @objcMembers
-class Book: Object {
+final class Book: Object {
     @objc enum BookType: Int {
         case pdf
         case epub
@@ -37,7 +37,6 @@ class Book: Object {
                 book.save()
                 block(book, nil)
             }
-            
         }
     }
     
@@ -53,5 +52,17 @@ class Book: Object {
         // viewers.insert(currentUser)
         
         update()
+    }
+    
+    func getHighlights(block: @escaping ((Highlight?, Error?) -> Void)) {
+        highlights.order(by: \Highlight.updatedAt).get { snapshot, error in
+            guard let ss = snapshot else { return }
+            ss.documents.forEach { document in
+                let highlightID = document.reference.documentID
+                Highlight.get(highlightID) { highlight, error in
+                    block(highlight, error)
+                }
+            }
+        }
     }
 }

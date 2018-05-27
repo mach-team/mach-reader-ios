@@ -45,14 +45,14 @@ class AddCommentViewController: UIViewController {
             comment.text = commentTextView.text
             comment.save()
             
+            // highlight
+            highlight.comments.insert(comment)
+            highlight.save() // Currently, only save is considered.
+            
             // book
             book.highlights.insert(highlight)
             // book.viewers.insert(currentUser)
             book.update()
-            
-            // highlight
-            highlight.comments.insert(comment)
-            highlight.save() // Currently, only save is considered.
             
             dismiss(animated: true) { [weak self] in
                 self?.callback?()

@@ -10,7 +10,7 @@ import UIKit
 import Pring
 
 @objcMembers
-class Highlight: Object {
+final class Highlight: Object {
     dynamic var pdfHash: String?
     dynamic var text: String?
     dynamic var page: Int = 0
