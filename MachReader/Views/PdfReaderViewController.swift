@@ -37,6 +37,19 @@ class PdfReaderViewController: UIViewController {
         return pdfView.document?.index(for: page!) ?? 0
     }
     
+    private var document: PDFDocument!
+    private var hashID: String!
+    
+    // MARK: - Initialize method
+    
+    static func instantiate(document: PDFDocument, hashID: String) -> PdfReaderViewController {
+        let sb = UIStoryboard(name: "PdfReader", bundle: nil)
+        let vc = sb.instantiateInitialViewController() as! PdfReaderViewController
+        vc.document = document
+        vc.hashID = hashID
+        return vc
+    }
+    
     // MARK: - Life cycle methods
     
     override func viewDidLoad() {
@@ -72,16 +85,7 @@ class PdfReaderViewController: UIViewController {
     
     /// PDF data handling for init
     private func setupDocument() {
-        guard let path = Bundle.main.path(forResource: "sample", ofType: "pdf") else {
-            print("failed to get path.")
-            return
-        }
-        
-        let pdfURL = URL(fileURLWithPath: path)
-        let document = PDFDocument(url: pdfURL)
         pdfView.document = document
-        
-        let hashID = SHA1.hexString(fromFile: path) ?? ""
         Book.findOrCreate(by: hashID) { [weak self] book, error in
             self?.book = book
         }
