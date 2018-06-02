@@ -8,27 +8,18 @@
 
 import UIKit
 import PDFKit
+import NVActivityIndicatorView
 
 class PdfReaderViewController: UIViewController {
 
     // MARK: - Properties
     
     @IBOutlet private weak var pdfView: PDFView!
-    
-    private lazy var activityIndicator: UIActivityIndicatorView = {
-        // This is supposed to block user interaction when loading...
-        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-        indicator.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
-        indicator.center = self.view.center
-        indicator.autoresizingMask = [.flexibleLeftMargin, .flexibleRightMargin, .flexibleBottomMargin]
-        indicator.hidesWhenStopped = true
-        return indicator
-    }()
-    
+
     private var book: Book! = nil {
         didSet {
             drawStoredHighlights()
-            activityIndicator.stopAnimating()
+            stopAnimating()
         }
     }
     
@@ -39,14 +30,16 @@ class PdfReaderViewController: UIViewController {
     
     private var document: PDFDocument!
     private var hashID: String!
+    private var fileUrl: URL!
     
     // MARK: - Initialize method
     
-    static func instantiate(document: PDFDocument, hashID: String) -> PdfReaderViewController {
+    static func instantiate(document: PDFDocument, hashID: String, url: URL) -> PdfReaderViewController {
         let sb = UIStoryboard(name: "PdfReader", bundle: nil)
         let vc = sb.instantiateInitialViewController() as! PdfReaderViewController
         vc.document = document
         vc.hashID = hashID
+        vc.fileUrl = url
         return vc
     }
     
@@ -55,8 +48,7 @@ class PdfReaderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(activityIndicator)
-        activityIndicator.startAnimating()
+        startAnimating(type: .circleStrokeSpin)
         
         NotificationObserver.add(name: .PDFViewAnnotationHit, method: handleHitAnnotation)
         NotificationObserver.add(name: .PDFViewPageChanged, method: handlePageChanged)
@@ -86,7 +78,7 @@ class PdfReaderViewController: UIViewController {
     /// PDF data handling for init
     private func setupDocument() {
         pdfView.document = document
-        Book.findOrCreate(by: hashID) { [weak self] book, error in
+        Book.findOrCreate(by: hashID, url: fileUrl) { [weak self] book, error in
             self?.book = book
         }
     }
@@ -170,3 +162,6 @@ class PdfReaderViewController: UIViewController {
         present(nav, animated: true)
     }
 }
+
+// MARK: - NVActivityIndicatorViewable
+extension PdfReaderViewController: NVActivityIndicatorViewable {}

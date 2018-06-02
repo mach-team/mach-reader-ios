@@ -27,6 +27,9 @@
 		25B2B95D20BAB09500B8E93B /* NotificationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2B95C20BAB09500B8E93B /* NotificationObserver.swift */; };
 		25DFCFE720BC3705001C84F5 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFCFE620BC3705001C84F5 /* HomeViewController.swift */; };
 		25DFCFE920BC3710001C84F5 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25DFCFE820BC3710001C84F5 /* Home.storyboard */; };
+		25DFCFF920C2AA82001C84F5 /* BookCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFCFF820C2AA82001C84F5 /* BookCollectionViewCell.swift */; };
+		25DFCFFB20C2AA91001C84F5 /* BookCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25DFCFFA20C2AA91001C84F5 /* BookCollectionViewCell.xib */; };
+		25DFCFFE20C2AC90001C84F5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFCFFD20C2AC90001C84F5 /* HomeViewModel.swift */; };
 		BDF1A311C04A47F52E580EF1 /* Pods_MachReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07001BF1EA7BCF832DFA59ED /* Pods_MachReader.framework */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +58,9 @@
 		25B2B95C20BAB09500B8E93B /* NotificationObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationObserver.swift; sourceTree = "<group>"; };
 		25DFCFE620BC3705001C84F5 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		25DFCFE820BC3710001C84F5 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
+		25DFCFF820C2AA82001C84F5 /* BookCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCollectionViewCell.swift; sourceTree = "<group>"; };
+		25DFCFFA20C2AA91001C84F5 /* BookCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BookCollectionViewCell.xib; sourceTree = "<group>"; };
+		25DFCFFD20C2AC90001C84F5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		BCA1043EB48565CAFD50F509 /* Pods-MachReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MachReader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MachReader/Pods-MachReader.debug.xcconfig"; sourceTree = "<group>"; };
 		FA562CF4233AE72D14C10969 /* Pods-MachReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MachReader.release.xcconfig"; path = "Pods/Target Support Files/Pods-MachReader/Pods-MachReader.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -93,6 +99,7 @@
 		2593F82320B8073200319C1B /* MachReader */ = {
 			isa = PBXGroup;
 			children = (
+				25DFCFFC20C2AC6E001C84F5 /* ViewModels */,
 				25B2B95920B9A55A00B8E93B /* Utils */,
 				25B2B94820B9601F00B8E93B /* Models */,
 				2593F83D20B83E1700319C1B /* MachReader.entitlements */,
@@ -112,12 +119,11 @@
 		2593F83620B8073D00319C1B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				25DFCFF720C2AA33001C84F5 /* Home */,
 				2593F83720B8074D00319C1B /* PdfReaderViewController.swift */,
 				2593F83920B8075500319C1B /* PdfReader.storyboard */,
 				25B2B95520B974E400B8E93B /* AddCommentViewController.swift */,
 				25B2B95720B974F000B8E93B /* AddComment.storyboard */,
-				25DFCFE620BC3705001C84F5 /* HomeViewController.swift */,
-				25DFCFE820BC3710001C84F5 /* Home.storyboard */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -149,6 +155,25 @@
 				25B2B95C20BAB09500B8E93B /* NotificationObserver.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		25DFCFF720C2AA33001C84F5 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				25DFCFE620BC3705001C84F5 /* HomeViewController.swift */,
+				25DFCFE820BC3710001C84F5 /* Home.storyboard */,
+				25DFCFF820C2AA82001C84F5 /* BookCollectionViewCell.swift */,
+				25DFCFFA20C2AA91001C84F5 /* BookCollectionViewCell.xib */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		25DFCFFC20C2AC6E001C84F5 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				25DFCFFD20C2AC90001C84F5 /* HomeViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		FE96C9E0DFFBF843182152D7 /* Pods */ = {
@@ -234,6 +259,7 @@
 				2593F82F20B8073200319C1B /* LaunchScreen.storyboard in Resources */,
 				2593F82C20B8073200319C1B /* Assets.xcassets in Resources */,
 				2593F82A20B8073200319C1B /* Main.storyboard in Resources */,
+				25DFCFFB20C2AA91001C84F5 /* BookCollectionViewCell.xib in Resources */,
 				2593F83C20B808D600319C1B /* sample.pdf in Resources */,
 				25B2B95820B974F000B8E93B /* AddComment.storyboard in Resources */,
 				2593F84220B842AF00319C1B /* GoogleService-Info.plist in Resources */,
@@ -288,6 +314,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/GrowingTextView/GrowingTextView.framework",
+				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
@@ -302,6 +329,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GrowingTextView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
@@ -330,7 +358,9 @@
 				25B2B95620B974E400B8E93B /* AddCommentViewController.swift in Sources */,
 				25B2B95B20B9A56D00B8E93B /* SHA1.swift in Sources */,
 				25DFCFE720BC3705001C84F5 /* HomeViewController.swift in Sources */,
+				25DFCFFE20C2AC90001C84F5 /* HomeViewModel.swift in Sources */,
 				2593F82520B8073200319C1B /* AppDelegate.swift in Sources */,
+				25DFCFF920C2AA82001C84F5 /* BookCollectionViewCell.swift in Sources */,
 				25B2B94C20B9625B00B8E93B /* Comment.swift in Sources */,
 				25B2B94E20B9629800B8E93B /* Highlight.swift in Sources */,
 			);

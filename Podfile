@@ -6,6 +6,8 @@ target 'MachReader' do
   use_frameworks!
 
   # Pods for MachReader
+  pod 'NVActivityIndicatorView'
+
   pod 'Firebase/Core'
   pod 'Firebase/Firestore’
   pod 'Firebase/Storage'

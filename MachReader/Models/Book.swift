@@ -16,10 +16,11 @@ final class Book: Object {
         case epub
     }
     dynamic var type: BookType = .pdf
+    dynamic var contents: File?
     dynamic var viewers: ReferenceCollection<User> = []
     dynamic var highlights: ReferenceCollection<Highlight> = []
     
-    static func findOrCreate(by hashID: String, block: @escaping (Book?, Error?) -> Void) {
+    static func findOrCreate(by hashID: String, url: URL? = nil, block: @escaping (Book?, Error?) -> Void) {
         Book.get(hashID) { (book, error) in
             if let e = error {
                 print(e.localizedDescription)
@@ -27,7 +28,15 @@ final class Book: Object {
             }
             if book == nil {
                 let book = Book(id: hashID)
-                book.save()
+                if let u = url {
+                    // TODO: name
+                    book.contents = File(url: u, name: "test", mimeType: .pdf)
+                }
+                let tasks = book.save() { ref, error in
+                    print(error)
+                }
+                let task = tasks["contents"]
+                print(task)
                 block(book, nil)
             } else if book != nil {
                 block(book, nil)

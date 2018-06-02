@@ -69,6 +69,9 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - NVActivityIndicatorView (4.2.1):
+    - NVActivityIndicatorView/Presenter (= 4.2.1)
+  - NVActivityIndicatorView/Presenter (4.2.1)
   - Pring (0.9.2):
     - Firebase/Core
     - Firebase/Firestore
@@ -80,6 +83,7 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/Storage
   - GrowingTextView (~> 0.5)
+  - NVActivityIndicatorView
   - Pring
 
 SPEC CHECKSUMS:
@@ -99,9 +103,10 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  NVActivityIndicatorView: 8068ba3ad39cb44cbaab25d89ff2546b3f092681
   Pring: f19fea218069951baf45858effee0acfffe229f9
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
 
-PODFILE CHECKSUM: 77331d9ec4d45800b06e8e3fa906ddfde6e48cbb
+PODFILE CHECKSUM: 2c00dc8d9b0552c26f8507277c0d9aa232c73fd2
 
 COCOAPODS: 1.4.0
