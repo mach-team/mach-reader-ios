@@ -159,10 +159,8 @@ class PdfReaderViewController: UIViewController {
         guard let pageNumber = pdfView.document?.index(for: page) else { return }
         
         pdfView.clearSelection()
-        
-        let h = Highlight()
-        h.text = text
-        h.page = pageNumber
+
+        let h = Highlight.new(text: text, page: pageNumber)
         let vc = AddCommentViewController.instantiate(highlight: h, book: book) { [weak self] in
             self?.highlight(selection: currentSelection, page: page)
         }

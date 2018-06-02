@@ -39,6 +39,10 @@ class HomeViewController: UIViewController {
         documentPickerController.delegate = self
         present(documentPickerController, animated: true)
     }
+    
+    @IBAction func handleOpenSample(_ sender: Any) {
+        openSample()
+    }
 }
 
 // MARK: - UIDocumentPickerDelegate
