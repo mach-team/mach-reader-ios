@@ -63,6 +63,7 @@ PODS:
     - gRPC-Core (= 1.11.0)
     - gRPC-RxLibrary (= 1.11.0)
   - GTMSessionFetcher/Core (1.1.15)
+  - Kingfisher (4.8.0)
   - leveldb-library (1.20)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
@@ -83,6 +84,7 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/Storage
   - GrowingTextView (~> 0.5)
+  - Kingfisher (~> 4.0)
   - NVActivityIndicatorView
   - Pring
 
@@ -101,12 +103,13 @@ SPEC CHECKSUMS:
   gRPC-ProtoRPC: bb5fddf3424aa4fad74d76736578a79fe40e244e
   gRPC-RxLibrary: 26d53d1b1f306befd4ad4e15bd6de27839a82481
   GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
+  Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NVActivityIndicatorView: 8068ba3ad39cb44cbaab25d89ff2546b3f092681
   Pring: f19fea218069951baf45858effee0acfffe229f9
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
 
-PODFILE CHECKSUM: 2c00dc8d9b0552c26f8507277c0d9aa232c73fd2
+PODFILE CHECKSUM: 83c3f08e7c419d0376c787dfbf21606f9b40dd66
 
 COCOAPODS: 1.4.0

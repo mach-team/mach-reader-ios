@@ -7,6 +7,7 @@ target 'MachReader' do
 
   # Pods for MachReader
   pod 'NVActivityIndicatorView'
+  pod 'Kingfisher', '~> 4.0'
 
   pod 'Firebase/Core'
   pod 'Firebase/Firestore’

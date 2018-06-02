@@ -8,6 +8,7 @@
 
 import UIKit
 import Pring
+import Kingfisher
 
 class BookCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var bookImageView: UIImageView!
@@ -21,7 +22,8 @@ class BookCollectionViewCell: UICollectionViewCell {
         bookImageView.image = nil
     }
     
-    func render(title: String) {
+    func render(title: String, imageURL: URL?) {
         titleLabel.text = title
+        bookImageView.kf.setImage(with: imageURL)
     }
 }

@@ -21,7 +21,25 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         
         setupCollectionView()
-        
+        setupObserver()
+    }
+
+    // MARK: - Private methods
+    
+    /// configure collectionView
+    private func setupCollectionView() {
+        collectionView.register(UINib(nibName: "BookCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "BookCollectionViewCell")
+        let flowLayout = UICollectionViewFlowLayout()
+        let margin: CGFloat = 8
+        flowLayout.itemSize = CGSize(width: 144, height: 144 * 1.8)
+        flowLayout.minimumLineSpacing = margin
+        flowLayout.minimumInteritemSpacing = margin
+        flowLayout.sectionInset = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
+        collectionView.collectionViewLayout = flowLayout
+    }
+    
+    /// start observation of Book model
+    private func setupObserver() {
         dataSource = Book.order(by: \Book.updatedAt).limit(to: 30).dataSource()
             .on({ [weak self] (snapshot, changes) in
                 guard let collectionView = self?.collectionView else { return }
@@ -40,45 +58,27 @@ class HomeViewController: UIViewController {
             })
             .listen()
     }
-
-    // MARK: - Private methods
-    
-    private func setupCollectionView() {
-        collectionView.register(UINib(nibName: "BookCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "BookCollectionViewCell")
-        let flowLayout = UICollectionViewFlowLayout()
-        let margin: CGFloat = 8
-        flowLayout.itemSize = CGSize(width: 144, height: 144 * 1.8)
-        flowLayout.minimumLineSpacing = margin
-        flowLayout.minimumInteritemSpacing = margin
-        flowLayout.sectionInset = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
-        collectionView.collectionViewLayout = flowLayout
-    }
     
     // https://dev.classmethod.jp/smartphone/iphone/ios-11-pdfkit/
-    private func openReader(with url: URL, hashID: String = "", isLocal: Bool = false) {
-        
-        startAnimating(type: .circleStrokeSpin) // FIXME: This does not work...
-        
-        if isLocal {
-            guard let document = PDFDocument(url: url) else { return }
-            guard let id = SHA1.hexString(fromFile: url.path) else { return }
-            let vc = PdfReaderViewController.instantiate(document: document, hashID: id, url: url)
-            navigationController?.pushViewController(vc, animated: true)
-        } else {
-            let data = try! Data(contentsOf: url)
-            guard let document = PDFDocument(data: data) else { return }
-            // guard let hashID = SHA1.hexString(fromFile: url.path) else { return }
-            let vc = PdfReaderViewController.instantiate(document: document, hashID: hashID, url: url)
-            navigationController?.pushViewController(vc, animated: true)
-        }
-        
-        stopAnimating()
+    /// Go to reader screen with book
+    private func openReader(book: Book?) {
+        guard let book = book else { return }
+        let vc = PdfReaderViewController.instantiate(book: book)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
+    /// open sample.pdf
     private func openSample() {
         guard let path = Bundle.main.path(forResource: "sample", ofType: "pdf") else { return }
         let pdfURL = URL(fileURLWithPath: path)
-        openReader(with: pdfURL, isLocal: true)
+        
+        startAnimating(type: .circleStrokeSpin)
+        
+        guard let id = SHA1.hexString(fromFile: pdfURL.path) else { return }
+        Book.findOrCreate(by: id, fileUrl: pdfURL) { [weak self] book, error in
+            self?.openReader(book: book)
+            self?.stopAnimating()
+        }
     }
     
     // MARK: - IBActions
@@ -94,14 +94,15 @@ class HomeViewController: UIViewController {
     }
 }
 
+// MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let book = dataSource?[indexPath.item] else { return }
-        guard let url = book.contents?.downloadURL else { return }
-        openReader(with: url, hashID: book.id)
+        openReader(book: book)
     }
 }
 
+// MARK: - UICollectionViewDataSource
 extension HomeViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -119,9 +120,9 @@ extension HomeViewController: UICollectionViewDataSource {
     
     func configure(_ cell: BookCollectionViewCell, at indexPath: IndexPath) {
         guard let book = dataSource?[indexPath.item] else { return }
-        cell.render(title: book.id)
+        cell.render(title: book.id, imageURL: book.thumbnail?.downloadURL)
         cell.disposer = book.listen { book, error in
-            cell.render(title: book?.id ?? "")
+            cell.render(title: book?.title ?? "No Name.", imageURL: book?.thumbnail?.downloadURL)
         }
     }
     
@@ -133,7 +134,14 @@ extension HomeViewController: UICollectionViewDataSource {
 // MARK: - UIDocumentPickerDelegate
 extension HomeViewController: UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
-        openReader(with: url, isLocal: true)
+        startAnimating(type: .circleStrokeSpin)
+        
+        guard let id = SHA1.hexString(fromFile: url.path) else { return }
+        
+        Book.findOrCreate(by: id, fileUrl: url) { [weak self] book, error in
+            self?.openReader(book: book)
+            self?.stopAnimating()
+        }
     }
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {

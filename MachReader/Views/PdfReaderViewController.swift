@@ -8,6 +8,7 @@
 
 import UIKit
 import PDFKit
+import Pring
 import NVActivityIndicatorView
 
 class PdfReaderViewController: UIViewController {
@@ -16,30 +17,19 @@ class PdfReaderViewController: UIViewController {
     
     @IBOutlet private weak var pdfView: PDFView!
 
-    private var book: Book! = nil {
-        didSet {
-            drawStoredHighlights()
-            stopAnimating()
-        }
-    }
+    private var book: Book!
     
     private var currentPageNumber: Int {
         let page = pdfView.currentPage
         return pdfView.document?.index(for: page!) ?? 0
     }
     
-    private var document: PDFDocument!
-    private var hashID: String!
-    private var fileUrl: URL!
-    
     // MARK: - Initialize method
     
-    static func instantiate(document: PDFDocument, hashID: String, url: URL) -> PdfReaderViewController {
+    static func instantiate(book: Book) -> PdfReaderViewController {
         let sb = UIStoryboard(name: "PdfReader", bundle: nil)
         let vc = sb.instantiateInitialViewController() as! PdfReaderViewController
-        vc.document = document
-        vc.hashID = hashID
-        vc.fileUrl = url
+        vc.book = book
         return vc
     }
     
@@ -56,6 +46,10 @@ class PdfReaderViewController: UIViewController {
         setupDocument()
         setupPDFView()
         createMenu()
+        
+        drawStoredHighlights()
+
+        stopAnimating()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -77,10 +71,21 @@ class PdfReaderViewController: UIViewController {
     
     /// PDF data handling for init
     private func setupDocument() {
+        guard let url = book.contents?.downloadURL else { return }
+        guard let data = try? Data(contentsOf: url) else { return }
+        guard let document = PDFDocument(data: data) else { return }
         pdfView.document = document
-        Book.findOrCreate(by: hashID, url: fileUrl) { [weak self] book, error in
-            self?.book = book
-        }
+        
+        
+        // this should be executed when this book is opened first time.
+        guard let attr = document.documentAttributes else { return }
+        book.title = attr["Title"] as? String
+        book.author = attr["Author"] as? String
+        guard let page1 = document.page(at: 0) else { return }
+        let uiImage = page1.thumbnail(of: CGSize(width: 400, height: 400 / 0.7), for: .artBox)
+        guard let imageData = UIImagePNGRepresentation(uiImage) else { return }
+        book.thumbnail = File(data: imageData, mimeType: .png)
+        book.update()
     }
     
     /// Base settings for PDFView.
