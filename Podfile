@@ -15,4 +15,6 @@ target 'MachReader' do
   pod 'Firebase/Auth'
   pod 'Pring'
 
+  pod 'Fabric'
+  pod 'Crashlytics'
 end

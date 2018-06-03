@@ -5,6 +5,9 @@ PODS:
   - BoringSSL/Implementation (10.0.2):
     - BoringSSL/Interface (= 10.0.2)
   - BoringSSL/Interface (10.0.2)
+  - Crashlytics (3.10.2):
+    - Fabric (~> 1.7.7)
+  - Fabric (1.7.7)
   - Firebase/Auth (5.0.0):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.0.0)
@@ -85,6 +88,8 @@ PODS:
   - Protobuf (3.5.0)
 
 DEPENDENCIES:
+  - Crashlytics
+  - Fabric
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Firestore
@@ -95,6 +100,8 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   BoringSSL: 60dd24df4af296bf41d78e5841dbb95d75f88c0d
+  Crashlytics: 0360624eea1c978a743feddb2fb1ef8b37fb7a0d
+  Fabric: bda89e242bce1b7b8ab264248cf3407774ce0095
   Firebase: 4bd804448ab2596794698773d41520a0af101e65
   FirebaseAnalytics: 19812b49fa5f283dd6b23edf8a14b5d477029ab8
   FirebaseAuth: acbeef02fe7c3a26624e309849f3fe30c84115af
@@ -115,6 +122,6 @@ SPEC CHECKSUMS:
   Pring: f19fea218069951baf45858effee0acfffe229f9
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
 
-PODFILE CHECKSUM: 30ab838f793e47bc2d85a43863ec906394028464
+PODFILE CHECKSUM: 7ee3037a132100b9f57bb11e0905e7b9f205addc
 
 COCOAPODS: 1.4.0
