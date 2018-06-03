@@ -119,11 +119,9 @@
 		2593F83620B8073D00319C1B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				25DFD00020C38C0E001C84F5 /* Comment */,
+				25DFCFFF20C38BF9001C84F5 /* Reader */,
 				25DFCFF720C2AA33001C84F5 /* Home */,
-				2593F83720B8074D00319C1B /* PdfReaderViewController.swift */,
-				2593F83920B8075500319C1B /* PdfReader.storyboard */,
-				25B2B95520B974E400B8E93B /* AddCommentViewController.swift */,
-				25B2B95720B974F000B8E93B /* AddComment.storyboard */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -174,6 +172,24 @@
 				25DFCFFD20C2AC90001C84F5 /* HomeViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		25DFCFFF20C38BF9001C84F5 /* Reader */ = {
+			isa = PBXGroup;
+			children = (
+				2593F83720B8074D00319C1B /* PdfReaderViewController.swift */,
+				2593F83920B8075500319C1B /* PdfReader.storyboard */,
+			);
+			path = Reader;
+			sourceTree = "<group>";
+		};
+		25DFD00020C38C0E001C84F5 /* Comment */ = {
+			isa = PBXGroup;
+			children = (
+				25B2B95720B974F000B8E93B /* AddComment.storyboard */,
+				25B2B95520B974E400B8E93B /* AddCommentViewController.swift */,
+			);
+			path = Comment;
 			sourceTree = "<group>";
 		};
 		FE96C9E0DFFBF843182152D7 /* Pods */ = {

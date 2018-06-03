@@ -10,6 +10,7 @@ import UIKit
 import PDFKit
 import NVActivityIndicatorView
 import Pring
+import FirebaseAuth
 
 class HomeViewController: UIViewController {
 
@@ -20,8 +21,16 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        startAnimating(type: .circleStrokeSpin)
+        let _ = User.loggedIn {
+            print("Finish session check")
+            self.stopAnimating()
+        }
+        
         setupCollectionView()
         setupObserver()
+        
+        sessionCheck()
     }
 
     // MARK: - Private methods
@@ -40,7 +49,7 @@ class HomeViewController: UIViewController {
     
     /// start observation of Book model
     private func setupObserver() {
-        dataSource = Book.order(by: \Book.updatedAt).limit(to: 30).dataSource()
+        dataSource = Book.order(by: \Book.createdAt).limit(to: 30).dataSource()
             .on({ [weak self] (snapshot, changes) in
                 guard let collectionView = self?.collectionView else { return }
                 switch changes {
@@ -57,6 +66,31 @@ class HomeViewController: UIViewController {
                 }
             })
             .listen()
+    }
+    
+    /// Set auth for every user
+    private func sessionCheck() {
+        User.current() { firebaseUser in
+            // signup or signin
+            Auth.auth().signInAnonymously { (auth, error) in
+                if let error: Error = error {
+                    print(error)
+                    User.signout()
+                    return
+                }
+                
+                let u = User(id: auth!.user.uid)
+                
+                if firebaseUser == nil {
+                    // for registration
+                    u.name = "ngo275"
+                    u.autoSignup()
+                } else {
+                    // for login
+                    u.autoSignin()
+                }
+            }
+        }
     }
     
     // https://dev.classmethod.jp/smartphone/iphone/ios-11-pdfkit/

@@ -93,6 +93,7 @@ class PdfReaderViewController: UIViewController {
         pdfView.backgroundColor = .lightGray
         pdfView.autoScales = true
         pdfView.displayMode = .singlePageContinuous
+        pdfView.displayDirection = .horizontal
         pdfView.usePageViewController(true)
     }
 

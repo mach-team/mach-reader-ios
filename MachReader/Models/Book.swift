@@ -32,17 +32,29 @@ final class Book: Object {
             if book == nil {
                 let book = Book(id: hashID)
                 if let u = fileUrl {
-                    // TODO: name
-                    book.contents = File(url: u, name: "test", mimeType: .pdf)
-                }
-                let tasks = book.save() { ref, error in
+                    book.contents = File(url: u, mimeType: .pdf)
                 }
                 
+                User.current() { user in
+                    guard let user = user else { return }
+                    user.books.insert(book)
+                    user.update()
+                }
+                
+                let tasks = book.save() { ref, error in
+                }
+
                 let task = tasks["contents"]
                 // TODO: show task status
                 
                 block(book, nil)
             } else if book != nil {
+                User.current() { user in
+                    guard let user = user else { return }
+                    user.books.insert(book!)
+                    user.update()
+                }
+                
                 block(book, nil)
             }
         }
@@ -59,7 +71,6 @@ final class Book: Object {
     }
     
     func getHighlights(block: @escaping ((Highlight?, Error?) -> Void)) {
-        
         highlights.order(by: \Highlight.updatedAt).get { snapshot, error in
             guard let ss = snapshot else { return }
             ss.documents.forEach { document in
@@ -76,6 +87,6 @@ final class Book: Object {
 //                storedHighlights.forEach { storedHighlight in
 //                    block(storedHighlight, nil)
 //                }
-//            }
+//            }.listen()
     }
 }
