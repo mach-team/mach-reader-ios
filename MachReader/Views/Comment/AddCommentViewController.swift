@@ -8,12 +8,11 @@
 
 import UIKit
 import PDFKit
-import GrowingTextView
 
 class AddCommentViewController: UIViewController {
 
     @IBOutlet private weak var highlightTextLabel: UILabel!
-    @IBOutlet private weak var commentTextView: GrowingTextView!
+    @IBOutlet private weak var commentTextView: UITextView!
     
     private var highlight = Highlight()
     private var book = Book()
@@ -35,6 +34,7 @@ class AddCommentViewController: UIViewController {
 
         setupNavigationBar()
         highlightTextLabel.text = highlight.text
+        commentTextView.becomeFirstResponder()
     }
     
     // MARK: - Private methods

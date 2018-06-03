@@ -20,6 +20,7 @@ final class Book: Object {
     dynamic var author: String?
     dynamic var contents: File?
     dynamic var thumbnail: File?
+    dynamic var isPublic: Bool = false
     dynamic var viewers: ReferenceCollection<User> = []
     dynamic var highlights: ReferenceCollection<Highlight> = []
     
@@ -45,7 +46,7 @@ final class Book: Object {
                 }
 
                 let task = tasks["contents"]
-                // TODO: show task status
+                // TODO: show task progress
                 
                 block(book, nil)
             } else if book != nil {

@@ -16,7 +16,8 @@ class PdfReaderViewController: UIViewController {
     // MARK: - Properties
     
     @IBOutlet private weak var pdfView: PDFView!
-
+    @IBOutlet private weak var pdfThumbnailView: PDFThumbnailView!
+    
     private var book: Book!
     
     private var currentPageNumber: Int {
@@ -76,8 +77,8 @@ class PdfReaderViewController: UIViewController {
         guard let document = PDFDocument(data: data) else { return }
         pdfView.document = document
         
-        
-        // this should be executed when this book is opened first time.
+        if book.thumbnail?.downloadURL != nil { return }
+
         guard let attr = document.documentAttributes else { return }
         book.title = attr["Title"] as? String
         book.author = attr["Author"] as? String
@@ -85,6 +86,7 @@ class PdfReaderViewController: UIViewController {
         let uiImage = page1.thumbnail(of: CGSize(width: 400, height: 400 / 0.7), for: .artBox)
         guard let imageData = UIImagePNGRepresentation(uiImage) else { return }
         book.thumbnail = File(data: imageData, mimeType: .png)
+        book.isPublic = false
         book.update()
     }
     
@@ -95,6 +97,10 @@ class PdfReaderViewController: UIViewController {
         pdfView.displayMode = .singlePageContinuous
         pdfView.displayDirection = .horizontal
         pdfView.usePageViewController(true)
+        
+        pdfThumbnailView.pdfView = pdfView
+        pdfThumbnailView.layoutMode = .horizontal
+        pdfThumbnailView.backgroundColor = UIColor.gray
     }
 
     /// Customize UIMenuController.
