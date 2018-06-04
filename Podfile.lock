@@ -51,6 +51,7 @@ PODS:
   - GoogleToolboxForMac/Defines (2.1.4)
   - GoogleToolboxForMac/NSData+zlib (2.1.4):
     - GoogleToolboxForMac/Defines (= 2.1.4)
+  - GrowingTextView (0.5.6)
   - gRPC (1.11.0):
     - gRPC-RxLibrary (= 1.11.0)
     - gRPC/Main (= 1.11.0)
@@ -94,6 +95,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Firestore
   - Firebase/Storage
+  - GrowingTextView (~> 0.5)
   - Kingfisher (~> 4.0)
   - NVActivityIndicatorView
   - Pring
@@ -110,6 +112,7 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: 83e0040351565df711a5db3d8ebe5ea21aca998a
   FirebaseStorage: 7ca4bb7b58a25fa647b04f524033fc7cb7eb272b
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
+  GrowingTextView: 8958f4fb7419de58dd622021b2d0696487e00e70
   gRPC: 70703dc9ba31c72341fc7f37745cc1c379edee96
   gRPC-Core: 164639cd8ae18ca8b65477fafb2efbaecf4f181a
   gRPC-ProtoRPC: bb5fddf3424aa4fad74d76736578a79fe40e244e
@@ -122,6 +125,6 @@ SPEC CHECKSUMS:
   Pring: f19fea218069951baf45858effee0acfffe229f9
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
 
-PODFILE CHECKSUM: 7ee3037a132100b9f57bb11e0905e7b9f205addc
+PODFILE CHECKSUM: 527aa9c8010000c441bff4e6f652c1e7b32388f6
 
 COCOAPODS: 1.4.0

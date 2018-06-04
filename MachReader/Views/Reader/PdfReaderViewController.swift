@@ -19,6 +19,7 @@ class PdfReaderViewController: UIViewController {
     @IBOutlet private weak var pdfThumbnailView: PDFThumbnailView!
     
     private var book: Book!
+    private var visibleHighlights: [Highlight] = []
     
     private var currentPageNumber: Int {
         let page = pdfView.currentPage
@@ -60,7 +61,7 @@ class PdfReaderViewController: UIViewController {
     }
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        if action == #selector(highlight(_:)) {
+        if action == #selector(highlightAction(_:)) {
             return true
         } else if action == #selector(comment(_:)) {
             return true
@@ -105,18 +106,25 @@ class PdfReaderViewController: UIViewController {
 
     /// Customize UIMenuController.
     private func createMenu() {
-        let highlightItem = UIMenuItem(title: "Highlight", action: #selector(highlight(_:)))
+        let highlightItem = UIMenuItem(title: "Highlight", action: #selector(highlightAction(_:)))
         let commentItem = UIMenuItem(title: "Comment", action: #selector(comment(_:)))
         UIMenuController.shared.menuItems = [highlightItem, commentItem]
     }
     
     /// Notification handler for hitting of annotation, such as an existing highlight.
     @objc private func handleHitAnnotation(notification: Notification) {
-        print("TODO: show popup")
+        guard let annotation = notification.userInfo?["PDFAnnotationHit"] as? PDFAnnotation else { return }
+        guard let h = Highlight.filter(visibleHighlights, withBounds: annotation.bounds) else { return }
+        
+        let vc = CommentsViewController.instantiate(highlight: h)
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .formSheet
+        present(nav, animated: true)
     }
     
     /// Notification handler for the current page change.
     @objc private func handlePageChanged(notification: Notification) {
+        visibleHighlights = []
         drawStoredHighlights()
     }
     
@@ -129,13 +137,14 @@ class PdfReaderViewController: UIViewController {
             if h.page == self.currentPageNumber {
                 guard let selection = self.pdfView.document?.findString(h.text ?? "", withOptions: .caseInsensitive).first else { return }
                 guard let page = selection.pages.first else { return }
-                self.highlight(selection: selection, page: page)
+                self.visibleHighlights.append(h)
+                self.addHighlightView(selection: selection, page: page)
             }
         }
     }
     
     /// Add highlight annotation view.
-    private func highlight(selection: PDFSelection, page: PDFPage) {
+    private func addHighlightView(selection: PDFSelection, page: PDFPage) {
         selection.selectionsByLine().forEach { s in
             let highlight = PDFAnnotation(bounds: s.bounds(for: page), forType: .highlight, withProperties: nil)
             highlight.endLineStyle = .square
@@ -144,15 +153,15 @@ class PdfReaderViewController: UIViewController {
     }
     
     /// Call above method and save this Highlight at Firestore.
-    @objc private func highlight(_ sender: UIMenuController?) {
+    @objc private func highlightAction(_ sender: UIMenuController?) {
         guard let currentSelection = pdfView.currentSelection else { return }
         guard let page = currentSelection.pages.first else { return }
         
-        highlight(selection: currentSelection, page: page)
-        
+        addHighlightView(selection: currentSelection, page: page)
+        // visibleHighlights.append(highlight) TODO
         pdfView.clearSelection()
         
-        book.saveHighlight(text: currentSelection.string, pageNumber: pdfView.document?.index(for: page))
+        book.saveHighlight(text: currentSelection.string, pageNumber: currentPageNumber, bounds: currentSelection.bounds(for: page))
     }
     
     /// Go to AddCommentViewController to save both Highlight and Comment.
@@ -164,9 +173,10 @@ class PdfReaderViewController: UIViewController {
         
         pdfView.clearSelection()
 
-        let h = Highlight.new(text: text, page: pageNumber)
+        let h = Highlight.new(text: text, page: pageNumber, bounds: currentSelection.bounds(for: page))
         let vc = AddCommentViewController.instantiate(highlight: h, book: book) { [weak self] in
-            self?.highlight(selection: currentSelection, page: page)
+            self?.addHighlightView(selection: currentSelection, page: page)
+            self?.visibleHighlights.append(h)
         }
         let nav = UINavigationController(rootViewController: vc)
         nav.modalPresentationStyle = .formSheet

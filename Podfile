@@ -9,6 +9,8 @@ target 'MachReader' do
   pod 'NVActivityIndicatorView'
   pod 'Kingfisher', '~> 4.0'
 
+  pod 'GrowingTextView', '~> 0.5'
+
   pod 'Firebase/Core'
   pod 'Firebase/Firestore’
   pod 'Firebase/Storage'

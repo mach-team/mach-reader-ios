@@ -61,9 +61,9 @@ final class Book: Object {
         }
     }
     
-    func saveHighlight(text: String?, pageNumber: Int?) {
-        guard let text = text, let page = pageNumber else { return }
-        let highlight = Highlight.new(text: text, page: page)
+    func saveHighlight(text: String?, pageNumber: Int?, bounds: CGRect?) {
+        guard let text = text, let page = pageNumber, let bounds = bounds else { return }
+        let highlight = Highlight.new(text: text, page: page, bounds: bounds)
         highlight.save()
         highlights.insert(highlight)
         // viewers.insert(currentUser)
