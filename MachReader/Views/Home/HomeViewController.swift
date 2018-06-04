@@ -18,6 +18,7 @@ class HomeViewController: UIViewController {
     
     private var currentUser: User! {
         didSet {
+            self.setupObserver()
             self.setupMyBooksObserver()
         }
     }
@@ -40,8 +41,6 @@ class HomeViewController: UIViewController {
         }
         
         setupCollectionView()
-        setupObserver()
-        
         sessionCheck()
     }
 
