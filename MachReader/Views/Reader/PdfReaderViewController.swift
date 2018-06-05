@@ -19,7 +19,7 @@ class PdfReaderViewController: UIViewController {
     @IBOutlet private weak var pdfThumbnailView: PDFThumbnailView!
     
     private var book: Book!
-    private var visibleHighlights: [Highlight] = []
+    private var visibleHighlights: Set<Highlight> = []
     
     private var currentPageNumber: Int {
         let page = pdfView.currentPage
@@ -137,7 +137,7 @@ class PdfReaderViewController: UIViewController {
             if h.page == self.currentPageNumber {
                 guard let selection = self.pdfView.document?.findString(h.text ?? "", withOptions: .caseInsensitive).first else { return }
                 guard let page = selection.pages.first else { return }
-                self.visibleHighlights.append(h)
+                self.visibleHighlights.insert(h)
                 self.addHighlightView(selection: selection, page: page)
             }
         }
@@ -158,10 +158,10 @@ class PdfReaderViewController: UIViewController {
         guard let page = currentSelection.pages.first else { return }
         
         addHighlightView(selection: currentSelection, page: page)
-        // visibleHighlights.append(highlight) TODO
         pdfView.clearSelection()
         
-        book.saveHighlight(text: currentSelection.string, pageNumber: currentPageNumber, bounds: currentSelection.bounds(for: page))
+        let h = book.saveHighlight(text: currentSelection.string, pageNumber: currentPageNumber, bounds: currentSelection.bounds(for: page))
+        if h != nil { visibleHighlights.insert(h!) }
     }
     
     /// Go to AddCommentViewController to save both Highlight and Comment.
@@ -176,7 +176,7 @@ class PdfReaderViewController: UIViewController {
         let h = Highlight.new(text: text, page: pageNumber, bounds: currentSelection.bounds(for: page))
         let vc = AddCommentViewController.instantiate(highlight: h, book: book) { [weak self] in
             self?.addHighlightView(selection: currentSelection, page: page)
-            self?.visibleHighlights.append(h)
+            self?.visibleHighlights.insert(h)
         }
         let nav = UINavigationController(rootViewController: vc)
         nav.modalPresentationStyle = .formSheet

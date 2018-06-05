@@ -32,8 +32,13 @@ final class Highlight: Object {
         return highlight
     }
     
-    static func filter(_ highlights: [Highlight], withBounds bounds: CGRect) -> Highlight? {
-        return highlights.filter { $0.bounds == bounds }.first
+    static func filter(_ highlights: Set<Highlight>, withBounds bounds: CGRect) -> Highlight? {
+        return highlights.filter {
+            $0.bounds.origin.x <= bounds.origin.x &&
+            $0.bounds.origin.y <= bounds.origin.y &&
+            $0.bounds.width >= bounds.width &&
+            $0.bounds.height >= bounds.height
+        }.first
     }
     
     var bounds: CGRect {

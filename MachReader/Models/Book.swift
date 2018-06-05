@@ -61,14 +61,15 @@ final class Book: Object {
         }
     }
     
-    func saveHighlight(text: String?, pageNumber: Int?, bounds: CGRect?) {
-        guard let text = text, let page = pageNumber, let bounds = bounds else { return }
+    func saveHighlight(text: String?, pageNumber: Int?, bounds: CGRect?) -> Highlight? {
+        guard let text = text, let page = pageNumber, let bounds = bounds else { return nil }
         let highlight = Highlight.new(text: text, page: page, bounds: bounds)
         highlight.save()
         highlights.insert(highlight)
         // viewers.insert(currentUser)
         
         update()
+        return highlight
     }
     
     func getHighlights(block: @escaping ((Highlight?, Error?) -> Void)) {
