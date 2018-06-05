@@ -7,13 +7,18 @@
 //
 
 import UIKit
+import Pring
+import GrowingTextView
 
 class CommentsViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var textView: GrowingTextView!
+    @IBOutlet weak var textViewBottomConstraint: NSLayoutConstraint!
     
     private var highlight: Highlight!
-    
+    private var commentsDataSource: DataSource<Comment>?
+
     static func instantiate(highlight: Highlight) -> CommentsViewController {
         let sb = UIStoryboard(name: "Comments", bundle: nil)
         let vc = sb.instantiateInitialViewController() as! CommentsViewController
@@ -24,10 +29,46 @@ class CommentsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        tableView.register(UINib(nibName: "CommentTableViewCell", bundle: nil), forCellReuseIdentifier: "CommentTableViewCell")
+        
+        NotificationObserver.add(name: .UIKeyboardWillChangeFrame, method: keyboardWillChangeFrame)
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapGestureHandler))
+        view.addGestureRecognizer(tapGesture)
+        
+        textView.layer.cornerRadius = 4.0
+        
+        setupObserver()
         setupNavigationBar()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        NotificationObserver.removeAll(from: self)
     }
 
     // MARK: - Private methods
+    
+    private func setupObserver() {
+        commentsDataSource = highlight.comments.order(by: \Comment.createdAt).limit(to: 30).dataSource()
+            .on({ [weak self] (snapshot, changes) in
+                guard let tableView = self?.tableView else { return }
+                switch changes {
+                case .initial:
+                    tableView.reloadData()
+                case .update(let deletions, let insertions, let modifications):
+                    tableView.beginUpdates()
+                    tableView.insertRows(at: insertions.map { IndexPath(row: $0, section: 0) }, with: .automatic)
+                    tableView.deleteRows(at: deletions.map { IndexPath(row: $0, section: 0) }, with: .automatic)
+                    tableView.reloadRows(at: modifications.map { IndexPath(row: $0, section: 0) }, with: .automatic)
+                    tableView.endUpdates()
+                case .error(let error):
+                    print(error)
+                }
+            })
+            .listen()
+    }
     
     private func setupNavigationBar() {
         title = "Comments"
@@ -39,31 +80,38 @@ class CommentsViewController: UIViewController {
     }
     
     @objc private func handleSaveAction(_ sender: Any) {
-//        if commentTextView.text.isEmpty {
-//            dismiss(animated: true)
-//        } else {
-//            // comment
-//            let comment = Comment()
-//            comment.text = commentTextView.text
-//            comment.save()
-//
-//            // highlight
-//            highlight.comments.insert(comment)
-//            highlight.save() // Currently, only save is considered.
-//
-//            // book
-//            book.highlights.insert(highlight)
-//            // book.viewers.insert(currentUser)
-//            book.update()
-//
-//            dismiss(animated: true) { [weak self] in
-//                self?.callback?()
-//            }
-//        }
+        if textView.text.isEmpty {
+            dismiss(animated: true)
+            return
+        }
+        
+        let comment = Comment()
+        comment.text = textView.text
+        comment.save()
+        highlight.comments.insert(comment)
+        highlight.update()
+        dismiss(animated: true)
     }
     
     @objc private func handleCancelAction(_ sender: Any) {
         dismiss(animated: true)
+    }
+    
+    @objc private func keyboardWillChangeFrame(notification: Notification) {
+        if let endFrame = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            var keyboardHeight = UIScreen.main.bounds.height - endFrame.origin.y
+            
+            if keyboardHeight > 0 {
+                keyboardHeight = keyboardHeight - view.safeAreaInsets.bottom
+            }
+
+            textViewBottomConstraint.constant = -keyboardHeight
+            view.layoutIfNeeded()
+        }
+    }
+    
+    @objc func tapGestureHandler() {
+        view.endEditing(true)
     }
 }
 
@@ -79,10 +127,25 @@ extension CommentsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return commentsDataSource?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell") as! CommentTableViewCell
+        configure(cell, at: indexPath)
+        return cell
+    }
+    
+    func configure(_ cell: CommentTableViewCell, at indexPath: IndexPath) {
+        guard let comment = commentsDataSource?[indexPath.item] else { return }
+        
+        cell.render(text: comment.text ?? "")
+        cell.disposer = comment.listen { (comment, error) in
+            cell.render(text: comment?.text ?? "")
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: CommentTableViewCell, forRowAt indexPath: IndexPath) {
+        cell.disposer?.dispose()
     }
 }
