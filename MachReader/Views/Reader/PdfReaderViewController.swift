@@ -18,9 +18,8 @@ class PdfReaderViewController: UIViewController {
     @IBOutlet private weak var pdfView: PDFView!
     @IBOutlet private weak var pdfThumbnailView: PDFThumbnailView!
     
-    private var book: Book!
-    private var visibleHighlights: Set<Highlight> = []
-    
+    private var viewModel: PdfReaderViewModel!
+
     private var currentPageNumber: Int {
         let page = pdfView.currentPage
         return pdfView.document?.index(for: page!) ?? 0
@@ -31,7 +30,7 @@ class PdfReaderViewController: UIViewController {
     static func instantiate(book: Book) -> PdfReaderViewController {
         let sb = UIStoryboard(name: "PdfReader", bundle: nil)
         let vc = sb.instantiateInitialViewController() as! PdfReaderViewController
-        vc.book = book
+        vc.viewModel = PdfReaderViewModel(withBook: book)
         return vc
     }
     
@@ -73,22 +72,9 @@ class PdfReaderViewController: UIViewController {
     
     /// PDF data handling for init
     private func setupDocument() {
-        guard let url = book.contents?.downloadURL else { return }
-        guard let data = try? Data(contentsOf: url) else { return }
-        guard let document = PDFDocument(data: data) else { return }
-        pdfView.document = document
+        pdfView.document = viewModel.document
         
-        if book.thumbnail?.downloadURL != nil { return }
-
-        guard let attr = document.documentAttributes else { return }
-        book.title = attr["Title"] as? String
-        book.author = attr["Author"] as? String
-        guard let page1 = document.page(at: 0) else { return }
-        let uiImage = page1.thumbnail(of: CGSize(width: 400, height: 400 / 0.7), for: .artBox)
-        guard let imageData = UIImagePNGRepresentation(uiImage) else { return }
-        book.thumbnail = File(data: imageData, mimeType: .png)
-        book.isPublic = false
-        book.update()
+        viewModel.registerBookInfo()
     }
     
     /// Base settings for PDFView.
@@ -114,7 +100,7 @@ class PdfReaderViewController: UIViewController {
     /// Notification handler for hitting of annotation, such as an existing highlight.
     @objc private func handleHitAnnotation(notification: Notification) {
         guard let annotation = notification.userInfo?["PDFAnnotationHit"] as? PDFAnnotation else { return }
-        guard let h = Highlight.filter(visibleHighlights, withBounds: annotation.bounds) else { return }
+        guard let h = viewModel.getTappedHighlight(bounds: annotation.bounds) else { return }
         
         let vc = CommentsViewController.instantiate(highlight: h)
         let nav = UINavigationController(rootViewController: vc)
@@ -124,22 +110,16 @@ class PdfReaderViewController: UIViewController {
     
     /// Notification handler for the current page change.
     @objc private func handlePageChanged(notification: Notification) {
-        visibleHighlights = []
+        viewModel.pageChanged()
         drawStoredHighlights()
     }
     
     /// Fetch Highlights stored at Firestore and display those annotation views.
     private func drawStoredHighlights() {
-        book?.getHighlights() { [weak self] highlight, error in
-            guard let `self` = self else { return }
-            guard let h = highlight else { return }
-            
-            if h.page == self.currentPageNumber {
-                guard let selection = self.pdfView.document?.findString(h.text ?? "", withOptions: .caseInsensitive).first else { return }
-                guard let page = selection.pages.first else { return }
-                self.visibleHighlights.insert(h)
-                self.addHighlightView(selection: selection, page: page)
-            }
+        viewModel.loadHighlights(page: currentPageNumber) { highlight in
+            guard let selection = self.pdfView.document?.findString(highlight.text ?? "", withOptions: .caseInsensitive).first else { return }
+            guard let page = selection.pages.first else { return }
+            self.addHighlightView(selection: selection, page: page)
         }
     }
     
@@ -160,8 +140,7 @@ class PdfReaderViewController: UIViewController {
         addHighlightView(selection: currentSelection, page: page)
         pdfView.clearSelection()
         
-        let h = book.saveHighlight(text: currentSelection.string, pageNumber: currentPageNumber, bounds: currentSelection.bounds(for: page))
-        if h != nil { visibleHighlights.insert(h!) }
+        viewModel.saveHighlight(text: currentSelection.string ?? "", page: currentPageNumber, bounds: currentSelection.bounds(for: page))
     }
     
     /// Go to AddCommentViewController to save both Highlight and Comment.
@@ -173,11 +152,13 @@ class PdfReaderViewController: UIViewController {
         
         pdfView.clearSelection()
 
-        let h = Highlight.new(text: text, page: pageNumber, bounds: currentSelection.bounds(for: page))
-        let vc = AddCommentViewController.instantiate(highlight: h, book: book) { [weak self] in
+        let h = viewModel.newHighlight(text: text, page: pageNumber, bounds: currentSelection.bounds(for: page))
+        
+        let vc = AddCommentViewController.instantiate(highlight: h, book: viewModel.book) { [weak self] in
             self?.addHighlightView(selection: currentSelection, page: page)
-            self?.visibleHighlights.insert(h)
+            self?.viewModel.addVisibleHighlight(h)
         }
+        
         let nav = UINavigationController(rootViewController: vc)
         nav.modalPresentationStyle = .formSheet
 
