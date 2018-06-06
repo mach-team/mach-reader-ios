@@ -30,7 +30,7 @@
                                 <rect key="frame" x="0.0" y="607" width="375" height="60"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8H6-oG-oPv" customClass="GrowingTextView" customModule="GrowingTextView">
-                                        <rect key="frame" x="8" y="10" width="359" height="40"/>
+                                        <rect key="frame" x="8" y="10" width="283" height="40"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -44,14 +44,30 @@
                                             <outlet property="delegate" destination="aXb-lY-3ab" id="Gwm-lB-mDt"/>
                                         </connections>
                                     </textView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jMv-K0-fnV">
+                                        <rect key="frame" x="303" y="10" width="60" height="40"/>
+                                        <color key="backgroundColor" red="0.0" green="0.6588235294" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="pF2-vB-KA5"/>
+                                        </constraints>
+                                        <state key="normal" title="Save">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="handleSaveButton:" destination="aXb-lY-3ab" eventType="touchUpInside" id="efk-Is-N2p"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="8H6-oG-oPv" secondAttribute="bottom" constant="10" id="5OT-aj-LvD"/>
                                     <constraint firstItem="8H6-oG-oPv" firstAttribute="top" secondItem="9r9-mA-zcF" secondAttribute="top" constant="10" id="77G-Ny-KH4"/>
                                     <constraint firstAttribute="height" constant="60" id="8JT-qd-m6c"/>
-                                    <constraint firstAttribute="trailing" secondItem="8H6-oG-oPv" secondAttribute="trailing" constant="8" id="IUK-MU-98J"/>
+                                    <constraint firstItem="jMv-K0-fnV" firstAttribute="top" secondItem="9r9-mA-zcF" secondAttribute="top" constant="10" id="8MD-Qu-NMW"/>
+                                    <constraint firstItem="jMv-K0-fnV" firstAttribute="leading" secondItem="8H6-oG-oPv" secondAttribute="trailing" constant="12" id="Rxt-6g-zeW"/>
+                                    <constraint firstAttribute="bottom" secondItem="jMv-K0-fnV" secondAttribute="bottom" constant="10" id="Tgv-XS-EC7"/>
                                     <constraint firstItem="8H6-oG-oPv" firstAttribute="leading" secondItem="9r9-mA-zcF" secondAttribute="leading" constant="8" id="l1Q-Ae-c7d"/>
+                                    <constraint firstAttribute="trailing" secondItem="jMv-K0-fnV" secondAttribute="trailing" constant="12" id="mVi-ib-ty3"/>
                                 </constraints>
                             </view>
                         </subviews>

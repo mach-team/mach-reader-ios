@@ -44,6 +44,7 @@ class HomeViewController: UIViewController {
         sessionCheck()
     }
 
+
     // MARK: - Private methods
     
     /// configure collectionView

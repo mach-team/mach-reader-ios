@@ -90,7 +90,10 @@ class CommentsViewController: UIViewController {
         comment.save()
         highlight.comments.insert(comment)
         highlight.update()
-        dismiss(animated: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.dismiss(animated: true)
+        }
     }
     
     @objc private func handleCancelAction(_ sender: Any) {
@@ -101,10 +104,22 @@ class CommentsViewController: UIViewController {
         if let endFrame = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             var keyboardHeight = UIScreen.main.bounds.height - endFrame.origin.y
             
-            if keyboardHeight > 0 {
-                keyboardHeight = keyboardHeight - view.safeAreaInsets.bottom
+            let isSameWidth = UIScreen.main.bounds.width == view.bounds.width
+            let isSameHeight = UIScreen.main.bounds.height == view.bounds.height
+            if (isSameWidth || isSameHeight) {
+                if keyboardHeight > 0 {
+                    keyboardHeight = keyboardHeight - view.safeAreaInsets.bottom
+                }
+            } else {
+                // iPad
+                if view.bounds.height + keyboardHeight + 20 - UIScreen.main.bounds.height > 0 {
+                    keyboardHeight = view.bounds.height + keyboardHeight + 20 - UIScreen.main.bounds.height
+                } else if view.bounds.height / 2 + keyboardHeight - UIScreen.main.bounds.height / 2 > 0 {
+                    keyboardHeight = view.bounds.height / 2 + keyboardHeight - UIScreen.main.bounds.height / 2
+                } else {
+                    keyboardHeight = 0
+                }
             }
-
             textViewBottomConstraint.constant = -keyboardHeight
             view.layoutIfNeeded()
         }
@@ -112,6 +127,10 @@ class CommentsViewController: UIViewController {
     
     @objc func tapGestureHandler() {
         view.endEditing(true)
+    }
+    
+    @IBAction func handleSaveButton(_ sender: Any) {
+        handleSaveAction(sender)
     }
 }
 
