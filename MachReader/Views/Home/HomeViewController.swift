@@ -16,14 +16,7 @@ class HomeViewController: UIViewController {
 
     @IBOutlet private weak var collectionView: UICollectionView!
     
-    private var currentUser: User! {
-        didSet {
-            self.setupObserver()
-            self.setupMyBooksObserver()
-        }
-    }
-    private var booksDataSource: DataSource<Book>?
-    private var myBooksDataSource: DataSource<Book>?
+    private let viewModel = HomeViewModel()
     
     enum SectionType: Int {
         case all, mine
@@ -35,13 +28,11 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         
         startAnimating(type: .circleStrokeSpin)
-        let _ = User.loggedIn {
-            print("Finish session check")
-            self.stopAnimating()
-        }
         
         setupCollectionView()
-        sessionCheck()
+        
+        viewModel.delegate = self
+        viewModel.sessionStart()
     }
 
 
@@ -60,73 +51,21 @@ class HomeViewController: UIViewController {
         collectionView.collectionViewLayout = flowLayout
     }
     
-    /// start observation of Book model
-    private func setupObserver() {
-        booksDataSource = Book.where(\Book.isPublic, isEqualTo: true).order(by: \Book.createdAt).limit(to: 30).dataSource()
-            .on({ [weak self] (snapshot, changes) in
-                guard let collectionView = self?.collectionView else { return }
-                switch changes {
-                case .initial:
-                    collectionView.reloadData()
-                case .update(let deletions, let insertions, let modifications):
-                    let section = SectionType.all.rawValue
-                    collectionView.performBatchUpdates({
-                        collectionView.insertItems(at: insertions.map { IndexPath(row: $0, section: section) })
-                        collectionView.deleteItems(at: deletions.map { IndexPath(row: $0, section: section) })
-                        collectionView.reloadItems(at: modifications.map { IndexPath(row: $0, section: section) })
-                    })
-                case .error(let error):
-                    print(error)
-                }
-            })
-            .listen()
-    }
-    
-    private func setupMyBooksObserver() {
-        myBooksDataSource = currentUser?.books.order(by: \Book.createdAt).limit(to: 30).dataSource()
-            .on({ [weak self] (snapshot, changes) in
-                guard let collectionView = self?.collectionView else { return }
-                switch changes {
-                case .initial:
-                    collectionView.reloadData()
-                case .update(let deletions, let insertions, let modifications):
-                    let section = SectionType.mine.rawValue
-                    collectionView.performBatchUpdates({
-                        collectionView.insertItems(at: insertions.map { IndexPath(row: $0, section: section) })
-                        collectionView.deleteItems(at: deletions.map { IndexPath(row: $0, section: section) })
-                        collectionView.reloadItems(at: modifications.map { IndexPath(row: $0, section: section) })
-                    })
-                case .error(let error):
-                    print(error)
-                }
-            })
-            .listen()
-    }
-    
-    /// Set auth for every user
-    private func sessionCheck() {
-        User.current() { firebaseUser in
-            // signup or signin
-            Auth.auth().signInAnonymously { [weak self] (auth, error) in
-                if let error: Error = error {
-                    print(error)
-                    User.signout()
-                    return
-                }
-                
-                let u = User(id: auth!.user.uid)
-                
-                if firebaseUser == nil {
-                    // for registration
-                    u.name = "ngo275"
-                    u.autoSignup() { [weak self] ref, error in
-                        self?.currentUser = u
-                    }
-                } else {
-                    // for login
-                    u.autoSignin()
-                    self?.currentUser = firebaseUser
-                }
+    private func loadBooks(isPublic: Bool) {
+        viewModel.loadBooks(isPublic: isPublic) { [weak self] snapshot, changes in
+            guard let collectionView = self?.collectionView else { return }
+            switch changes {
+            case .initial:
+                collectionView.reloadData()
+            case .update(let deletions, let insertions, let modifications):
+                let section = isPublic ? SectionType.all.rawValue : SectionType.mine.rawValue
+                collectionView.performBatchUpdates({
+                    collectionView.insertItems(at: insertions.map { IndexPath(row: $0, section: section) })
+                    collectionView.deleteItems(at: deletions.map { IndexPath(row: $0, section: section) })
+                    collectionView.reloadItems(at: modifications.map { IndexPath(row: $0, section: section) })
+                })
+            case .error(let error):
+                print(error)
             }
         }
     }
@@ -160,10 +99,15 @@ class HomeViewController: UIViewController {
         documentPickerController.delegate = self
         present(documentPickerController, animated: true)
     }
-    
-//    @IBAction func handleOpenSample(_ sender: Any) {
-//        openSample()
-//    }
+}
+
+// MARK: - HomeViewModelDelegate
+extension HomeViewController: HomeViewModelDelegate {
+    func onSignin() {
+        loadBooks(isPublic: true)
+        loadBooks(isPublic: false)
+        stopAnimating()
+    }
 }
 
 // MARK: - UICollectionViewDelegate
@@ -173,9 +117,9 @@ extension HomeViewController: UICollectionViewDelegate {
         var book: Book?
         switch type {
         case .all:
-            book = booksDataSource?[indexPath.item]
+            book = viewModel.booksDataSource?[indexPath.item]
         case .mine:
-            book = myBooksDataSource?[indexPath.item]
+            book = viewModel.myBooksDataSource?[indexPath.item]
         }
         if let b = book {
             openReader(book: b)
@@ -193,9 +137,9 @@ extension HomeViewController: UICollectionViewDataSource {
         guard let type = SectionType(rawValue: section) else { return 0 }
         switch type {
         case .all:
-            return booksDataSource?.count ?? 0
+            return viewModel.booksDataSource?.count ?? 0
         case .mine:
-            return myBooksDataSource?.count ?? 0
+            return viewModel.myBooksDataSource?.count ?? 0
         }
     }
     
@@ -210,9 +154,9 @@ extension HomeViewController: UICollectionViewDataSource {
         guard let type = SectionType(rawValue: indexPath.section) else { return }
         switch type {
         case .all:
-            dataSource = booksDataSource
+            dataSource = viewModel.booksDataSource
         default:
-            dataSource = myBooksDataSource
+            dataSource = viewModel.myBooksDataSource
         }
         guard let book = dataSource?[indexPath.item] else { return }
         cell.render(title: book.id, imageURL: book.thumbnail?.downloadURL)
