@@ -13,6 +13,8 @@ import Firebase
 @objcMembers
 class User: Object {
     
+    static var `default`: User?
+    
     dynamic var name: String?
     dynamic var avatar: File?
     dynamic var books: ReferenceCollection<Book> = []
@@ -23,22 +25,6 @@ class User: Object {
     static let loggedInNotification = NSNotification.Name(rawValue: "loggedInNotification")
     static let loggedOutNotification = NSNotification.Name(rawValue: "loggedOutNotification")
     
-    @discardableResult
-    func autoSignup(_ block: ((DocumentReference?, Error?) -> Void)? = nil) -> [String : StorageUploadTask] {
-        return save { (ref, error) in
-            if let error = error {
-                block?(nil, error)
-                return
-            }
-            NotificationCenter.default.post(name: User.loggedInNotification, object: ref)
-            block?(ref, nil)
-        }
-    }
-    
-    func autoSignin() {
-        NotificationCenter.default.post(name: User.loggedInNotification, object: nil)
-    }
-
     class func loggedIn(_ block: @escaping () -> Void) -> NSObjectProtocol {
         return NotificationCenter.default.addObserver(forName: User.loggedInNotification, object: nil, queue: .main) { (notification) in
             print("login")
@@ -57,21 +43,49 @@ class User: Object {
     
     class func signout() {
         _ = try? Auth.auth().signOut()
+        User.default = nil
     }
-    
-    /// Return current user
-    class func current(_ completionHandler: @escaping ((User?) -> Void)) {
-        guard let currentUser = Auth.auth().currentUser else {
-            completionHandler(nil)
-            return
-        }
-        User.get(currentUser.uid) { (user, _) in
-            guard let user = user else {
-                // the user is not saved in Firebase DB
+
+    class func login(_ completionHandler: @escaping ((User?) -> Void)) {
+        // signup or signin
+        Auth.auth().signInAnonymously { (auth, error) in
+            if let error: Error = error {
+                print(error)
+                User.default = nil
+                User.signout()
                 completionHandler(nil)
                 return
             }
-            completionHandler(user)
+            
+            // In case that FirebaseAuth did not recognize this user
+            guard let currentUser = Auth.auth().currentUser else {
+                print("FirebaseAuth Error")
+                User.default = nil
+                User.signout()
+                completionHandler(nil)
+                return
+            }
+    
+            // FirebaseAuth check is OK, next step is checking user status in Firestore
+            User.get(currentUser.uid) { (user, _) in
+                if let user = user {
+                    // In case of an existing user
+                    print("Success login of an existing user")
+                    User.default = user
+                    completionHandler(user)
+                    NotificationCenter.default.post(name: User.loggedInNotification, object: nil)
+                } else {
+                    // In case of non-existing user
+                    print("Success login of a new user")
+                    let u = User(id: auth!.user.uid)
+                    u.name = "ngo275"
+                    u.save() { ref, error in
+                        User.default = u
+                        completionHandler(u)
+                        NotificationCenter.default.post(name: User.loggedInNotification, object: ref)
+                    }
+                }
+            }
         }
     }
 }

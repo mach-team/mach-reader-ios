@@ -36,11 +36,8 @@ final class Book: Object {
                     book.contents = File(url: u, mimeType: .pdf)
                 }
                 
-                User.current() { user in
-                    guard let user = user else { return }
-                    user.books.insert(book)
-                    user.update()
-                }
+                User.default?.books.insert(book)
+                User.default?.update()
                 
                 let tasks = book.save() { ref, error in
                 }
@@ -50,11 +47,8 @@ final class Book: Object {
                 
                 block(book, nil)
             } else if book != nil {
-                User.current() { user in
-                    guard let user = user else { return }
-                    user.books.insert(book!)
-                    user.update()
-                }
+                User.default?.books.insert(book!)
+                User.default?.update()
                 
                 block(book, nil)
             }

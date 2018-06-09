@@ -85,33 +85,49 @@ class PdfReaderViewModel {
     }
     
     func loadLastClosePageNumber() {
-        User.current() { [weak self] user in
-            guard let `self` = self else { return }
-            guard let user = user else { return }
-            
-            user.readStatuses
-                .get(self.book.id) { readStatus, error in
-                    self.delegate?.go(to: readStatus?.pageNumber ?? 0)
-                }
+//        User.current() { [weak self] user in
+//            guard let `self` = self else { return }
+//            guard let user = user else { return }
+//
+//            user.readStatuses
+//                .get(self.book.id) { readStatus, error in
+//                    self.delegate?.go(to: readStatus?.pageNumber ?? 0)
+//                }
+//        }
+//
+        User.default?.readStatuses.get(self.book.id) { readStatus, error in
+            self.delegate?.go(to: readStatus?.pageNumber ?? 0)
         }
     }
     
     func saveCurrentPageNumber(_ page: Int) {
-        User.current() { [weak self] user in
-            guard let `self` = self else { return }
-            guard let user = user else { return }
-            
-            user.readStatuses
-                .get(self.book.id) { readStatus, error in
-                    if let rs = readStatus {
-                        rs.pageNumber = page
-                        rs.update()
-                    } else {
-                        let readStatus = ReadStatus(id: self.book.id)
-                        readStatus.pageNumber = page
-                        user.readStatuses.insert(readStatus)
-                        user.update()
-                    }
+//        User.current() { [weak self] user in
+//            guard let `self` = self else { return }
+//            guard let user = user else { return }
+//
+//            user.readStatuses
+//                .get(self.book.id) { readStatus, error in
+//                    if let rs = readStatus {
+//                        rs.pageNumber = page
+//                        rs.update()
+//                    } else {
+//                        let readStatus = ReadStatus(id: self.book.id)
+//                        readStatus.pageNumber = page
+//                        user.readStatuses.insert(readStatus)
+//                        user.update()
+//                    }
+//                }
+//        }
+        User.default?.readStatuses
+            .get(self.book.id) { readStatus, error in
+                if let rs = readStatus {
+                    rs.pageNumber = page
+                    rs.update()
+                } else {
+                    let readStatus = ReadStatus(id: self.book.id)
+                    readStatus.pageNumber = page
+                    User.default?.readStatuses.insert(readStatus)
+                    User.default?.update()
                 }
         }
     }
