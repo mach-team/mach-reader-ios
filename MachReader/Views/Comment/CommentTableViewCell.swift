@@ -23,9 +23,11 @@ class CommentTableViewCell: UITableViewCell {
         userImageView.image = nil
     }
 
-    func render(text: String) {
+    func render(text: String, avatarURL: URL?) {
         commentLabel.text = text
-        let url = URL(string: "https://s3-ap-northeast-1.amazonaws.com/credify.assets/images/avatars/avatar-01.svg")
-        userImageView.kf.setImage(with: url)
+        //let url = URL(string: "https://s3-ap-northeast-1.amazonaws.com/credify.assets/images/avatars/avatar-01.svg")
+        //let image = Identicon().icon(from: "string", size: CGSize(width: 80, height: 80))
+        userImageView.kf.setImage(with: avatarURL)
+        //userImageView.image = image
     }
 }

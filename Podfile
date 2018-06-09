@@ -10,6 +10,7 @@ target 'MachReader' do
   pod 'Kingfisher', '~> 4.0'
 
   pod 'GrowingTextView', '~> 0.5'
+  pod 'IGIdenticon'
 
   pod 'Firebase/Core'
   pod 'Firebase/Firestore’

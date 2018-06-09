@@ -6,29 +6,36 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentTableViewCell" rowHeight="95" id="kYc-2d-wzM" customClass="CommentTableViewCell" customModule="MachReader" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="408" height="95"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentTableViewCell" rowHeight="56" id="kYc-2d-wzM" customClass="CommentTableViewCell" customModule="MachReader" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="408" height="56"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kYc-2d-wzM" id="XcI-5D-64d">
-                <rect key="frame" x="0.0" y="0.0" width="408" height="94.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="408" height="55.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yXO-kH-14t">
-                        <rect key="frame" x="8" y="8" width="80" height="80"/>
+                        <rect key="frame" x="8" y="8" width="40" height="40"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="yXO-kH-14t" secondAttribute="height" multiplier="1:1" id="7kD-mQ-h93"/>
-                            <constraint firstAttribute="height" constant="80" id="ks3-9P-Ikt"/>
-                            <constraint firstAttribute="width" constant="80" id="uhU-4n-Ifp"/>
+                            <constraint firstAttribute="height" constant="40" id="ks3-9P-Ikt"/>
+                            <constraint firstAttribute="width" constant="40" id="uhU-4n-Ifp"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="4"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="test" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Oo-q8-qD0">
-                        <rect key="frame" x="104" y="8" width="296" height="79"/>
+                        <rect key="frame" x="64" y="8" width="336" height="39.5"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="40" id="7E9-3q-ow8"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -48,7 +55,7 @@
                 <outlet property="commentLabel" destination="0Oo-q8-qD0" id="68i-Jx-LT7"/>
                 <outlet property="userImageView" destination="yXO-kH-14t" id="6QZ-X8-O31"/>
             </connections>
-            <point key="canvasLocation" x="152" y="81.5"/>
+            <point key="canvasLocation" x="152" y="62"/>
         </tableViewCell>
     </objects>
 </document>

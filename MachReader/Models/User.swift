@@ -9,6 +9,7 @@
 import UIKit
 import Pring
 import Firebase
+import IGIdenticon
 
 @objcMembers
 class User: Object {
@@ -78,7 +79,11 @@ class User: Object {
                     // In case of non-existing user
                     print("Success login of a new user")
                     let u = User(id: auth!.user.uid)
-                    u.name = "ngo275"
+                    let randomName = RandomString.generate(length: 8)
+                    u.name = randomName
+                    guard let avatar = Identicon().icon(from: randomName, size: CGSize(width: 100, height: 100)) else { return }
+                    guard let imageData = UIImagePNGRepresentation(avatar) else { return }
+                    u.avatar = File(data: imageData, mimeType: .png)
                     u.save() { ref, error in
                         User.default = u
                         completionHandler(u)

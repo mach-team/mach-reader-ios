@@ -15,6 +15,7 @@ class CommentsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textView: GrowingTextView!
     @IBOutlet weak var textViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var textViewContainerHeight: NSLayoutConstraint!
     
     private var highlight: Highlight!
     private var commentsDataSource: DataSource<Comment>?
@@ -30,6 +31,7 @@ class CommentsViewController: UIViewController {
         super.viewDidLoad()
 
         tableView.register(UINib(nibName: "CommentTableViewCell", bundle: nil), forCellReuseIdentifier: "CommentTableViewCell")
+        tableView.rowHeight = UITableViewAutomaticDimension
         
         NotificationObserver.add(name: .UIKeyboardWillChangeFrame, method: keyboardWillChangeFrame)
 
@@ -37,6 +39,7 @@ class CommentsViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
         
         textView.layer.cornerRadius = 4.0
+        textView.maxHeight = 120
         
         setupObserver()
         setupNavigationBar()
@@ -63,6 +66,7 @@ class CommentsViewController: UIViewController {
                     tableView.deleteRows(at: deletions.map { IndexPath(row: $0, section: 0) }, with: .automatic)
                     tableView.reloadRows(at: modifications.map { IndexPath(row: $0, section: 0) }, with: .automatic)
                     tableView.endUpdates()
+                    self?.scrollToBottom()
                 case .error(let error):
                     print(error)
                 }
@@ -79,6 +83,12 @@ class CommentsViewController: UIViewController {
         navigationItem.rightBarButtonItem = saveButton
     }
     
+    private func scrollToBottom() {
+        guard let count = commentsDataSource?.count else { return }
+        let indexPath = IndexPath(row: count - 1, section: 0)
+        tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+    }
+    
     @objc private func handleSaveAction(_ sender: Any) {
         if textView.text.isEmpty {
             dismiss(animated: true)
@@ -92,11 +102,13 @@ class CommentsViewController: UIViewController {
         highlight.update()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.view.endEditing(true)
             self.dismiss(animated: true)
         }
     }
     
     @objc private func handleCancelAction(_ sender: Any) {
+        view.endEditing(true)
         dismiss(animated: true)
     }
     
@@ -123,6 +135,7 @@ class CommentsViewController: UIViewController {
             textViewBottomConstraint.constant = -keyboardHeight
             view.layoutIfNeeded()
         }
+        scrollToBottom()
     }
     
     @objc func tapGestureHandler() {
@@ -130,7 +143,18 @@ class CommentsViewController: UIViewController {
     }
     
     @IBAction func handleSaveButton(_ sender: Any) {
+        view.endEditing(true)
+        scrollToBottom()
         handleSaveAction(sender)
+    }
+}
+
+extension CommentsViewController: GrowingTextViewDelegate {
+    func textViewDidChangeHeight(_ textView: GrowingTextView, height: CGFloat) {
+        UIView.animate(withDuration: 0.2) {
+            self.textViewContainerHeight.constant = height + 20
+            self.view.layoutIfNeeded()
+        }
     }
 }
 
@@ -158,9 +182,9 @@ extension CommentsViewController: UITableViewDataSource {
     func configure(_ cell: CommentTableViewCell, at indexPath: IndexPath) {
         guard let comment = commentsDataSource?[indexPath.item] else { return }
         
-        cell.render(text: comment.text ?? "")
+        cell.render(text: comment.text ?? "", avatarURL: User.default?.avatar?.downloadURL)
         cell.disposer = comment.listen { (comment, error) in
-            cell.render(text: comment?.text ?? "")
+            cell.render(text: comment?.text ?? "", avatarURL: User.default?.avatar?.downloadURL)
         }
     }
     
