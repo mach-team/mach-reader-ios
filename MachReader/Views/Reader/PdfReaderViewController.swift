@@ -58,10 +58,6 @@ class PdfReaderViewController: UIViewController {
         super.viewDidAppear(animated)
 
         viewModel.loadLastClosePageNumber()
-//        guard let page = pdfView.document?.page(at: 3) else { return }
-//        pdfView.go(to: page)
-//
-        stopAnimating()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -186,6 +182,7 @@ extension PdfReaderViewController: PdfReaderViewModelDelegate {
     func go(to pageNumber: Int) {
         guard let page = pdfView.document?.page(at: pageNumber) else { return }
         pdfView.go(to: page)
+        stopAnimating()
     }
 }
 
