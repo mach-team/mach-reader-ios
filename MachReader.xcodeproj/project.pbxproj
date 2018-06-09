@@ -35,6 +35,7 @@
 		25DFD00920C6A67B001C84F5 /* PdfReaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFD00820C6A67B001C84F5 /* PdfReaderViewModel.swift */; };
 		25DFD00B20C6AF93001C84F5 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFD00A20C6AF93001C84F5 /* CommentTableViewCell.swift */; };
 		25DFD00D20C6AFA8001C84F5 /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25DFD00C20C6AFA8001C84F5 /* CommentTableViewCell.xib */; };
+		25DFD00F20C96364001C84F5 /* ReadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFD00E20C96364001C84F5 /* ReadStatus.swift */; };
 		BDF1A311C04A47F52E580EF1 /* Pods_MachReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07001BF1EA7BCF832DFA59ED /* Pods_MachReader.framework */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +72,7 @@
 		25DFD00820C6A67B001C84F5 /* PdfReaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfReaderViewModel.swift; sourceTree = "<group>"; };
 		25DFD00A20C6AF93001C84F5 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		25DFD00C20C6AFA8001C84F5 /* CommentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableViewCell.xib; sourceTree = "<group>"; };
+		25DFD00E20C96364001C84F5 /* ReadStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadStatus.swift; sourceTree = "<group>"; };
 		BCA1043EB48565CAFD50F509 /* Pods-MachReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MachReader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MachReader/Pods-MachReader.debug.xcconfig"; sourceTree = "<group>"; };
 		FA562CF4233AE72D14C10969 /* Pods-MachReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MachReader.release.xcconfig"; path = "Pods/Target Support Files/Pods-MachReader/Pods-MachReader.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -152,6 +154,7 @@
 				25B2B94D20B9629800B8E93B /* Highlight.swift */,
 				25B2B95120B9705D00B8E93B /* User.swift */,
 				25B2B95320B9713E00B8E93B /* Book.swift */,
+				25DFD00E20C96364001C84F5 /* ReadStatus.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -408,6 +411,7 @@
 				25B2B95620B974E400B8E93B /* AddCommentViewController.swift in Sources */,
 				25B2B95B20B9A56D00B8E93B /* SHA1.swift in Sources */,
 				25DFCFE720BC3705001C84F5 /* HomeViewController.swift in Sources */,
+				25DFD00F20C96364001C84F5 /* ReadStatus.swift in Sources */,
 				25DFCFFE20C2AC90001C84F5 /* HomeViewModel.swift in Sources */,
 				25DFD00920C6A67B001C84F5 /* PdfReaderViewModel.swift in Sources */,
 				25DFD00B20C6AF93001C84F5 /* CommentTableViewCell.swift in Sources */,

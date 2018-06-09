@@ -17,6 +17,7 @@ class User: Object {
     dynamic var avatar: File?
     dynamic var books: ReferenceCollection<Book> = []
     dynamic var highlights: ReferenceCollection<Highlight> = []
+    dynamic var readStatuses: NestedCollection<ReadStatus> = []
     
     // MARK: -
     static let loggedInNotification = NSNotification.Name(rawValue: "loggedInNotification")

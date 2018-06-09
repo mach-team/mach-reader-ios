@@ -10,8 +10,13 @@ import Foundation
 import PDFKit
 import Pring
 
+protocol PdfReaderViewModelDelegate: class {
+    func go(to: Int) -> Void
+}
+
 class PdfReaderViewModel {
     
+    // a page keeps its highlight list
     private var visibleHighlights: Set<Highlight> = []
     
     init(withBook book: Book) {
@@ -26,6 +31,8 @@ class PdfReaderViewModel {
         guard let document = PDFDocument(data: data) else { return nil }
         return document
     }()
+    
+    weak var delegate: PdfReaderViewModelDelegate?
     
     func registerBookInfo() {
         // once register a book, then downloadURL becomes non null.
@@ -75,5 +82,37 @@ class PdfReaderViewModel {
     
     func addVisibleHighlight(_ highlight: Highlight) {
         visibleHighlights.insert(highlight)
+    }
+    
+    func loadLastClosePageNumber() {
+        User.current() { [weak self] user in
+            guard let `self` = self else { return }
+            guard let user = user else { return }
+            
+            user.readStatuses
+                .get(self.book.id) { readStatus, error in
+                    self.delegate?.go(to: readStatus?.pageNumber ?? 0)
+                }
+        }
+    }
+    
+    func saveCurrentPageNumber(_ page: Int) {
+        User.current() { [weak self] user in
+            guard let `self` = self else { return }
+            guard let user = user else { return }
+            
+            user.readStatuses
+                .get(self.book.id) { readStatus, error in
+                    if let rs = readStatus {
+                        rs.pageNumber = page
+                        rs.update()
+                    } else {
+                        let readStatus = ReadStatus(id: self.book.id)
+                        readStatus.pageNumber = page
+                        user.readStatuses.insert(readStatus)
+                        user.update()
+                    }
+                }
+        }
     }
 }

@@ -41,28 +41,40 @@ class PdfReaderViewController: UIViewController {
         
         startAnimating(type: .circleStrokeSpin)
         
+        viewModel.delegate = self
+        
         NotificationObserver.add(name: .PDFViewAnnotationHit, method: handleHitAnnotation)
         NotificationObserver.add(name: .PDFViewPageChanged, method: handlePageChanged)
+        NotificationObserver.add(name: .UIApplicationWillResignActive, method: handleSaveCurrentPage)
         
         setupDocument()
         setupPDFView()
         createMenu()
         
         drawStoredHighlights()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
 
+        viewModel.loadLastClosePageNumber()
+//        guard let page = pdfView.document?.page(at: 3) else { return }
+//        pdfView.go(to: page)
+//
         stopAnimating()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
+        viewModel.saveCurrentPageNumber(currentPageNumber)
         NotificationObserver.removeAll(from: self)
     }
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         if action == #selector(highlightAction(_:)) {
             return true
-        } else if action == #selector(comment(_:)) {
+        } else if action == #selector(commentAction(_:)) {
             return true
         }
         return false
@@ -93,7 +105,7 @@ class PdfReaderViewController: UIViewController {
     /// Customize UIMenuController.
     private func createMenu() {
         let highlightItem = UIMenuItem(title: "Highlight", action: #selector(highlightAction(_:)))
-        let commentItem = UIMenuItem(title: "Comment", action: #selector(comment(_:)))
+        let commentItem = UIMenuItem(title: "Comment", action: #selector(commentAction(_:)))
         UIMenuController.shared.menuItems = [highlightItem, commentItem]
     }
     
@@ -112,6 +124,10 @@ class PdfReaderViewController: UIViewController {
     @objc private func handlePageChanged(notification: Notification) {
         viewModel.pageChanged()
         drawStoredHighlights()
+    }
+    
+    @objc private func handleSaveCurrentPage(notification: Notification) {
+        viewModel.saveCurrentPageNumber(currentPageNumber)
     }
     
     /// Fetch Highlights stored at Firestore and display those annotation views.
@@ -144,7 +160,7 @@ class PdfReaderViewController: UIViewController {
     }
     
     /// Go to AddCommentViewController to save both Highlight and Comment.
-    @objc private func comment(_ sender: UIMenuController?) {
+    @objc private func commentAction(_ sender: UIMenuController?) {
         guard let currentSelection = pdfView.currentSelection else { return }
         guard let page = currentSelection.pages.first else { return }
         guard let text = currentSelection.string else { return }
@@ -163,6 +179,13 @@ class PdfReaderViewController: UIViewController {
         nav.modalPresentationStyle = .formSheet
 
         present(nav, animated: true)
+    }
+}
+
+extension PdfReaderViewController: PdfReaderViewModelDelegate {
+    func go(to pageNumber: Int) {
+        guard let page = pdfView.document?.page(at: pageNumber) else { return }
+        pdfView.go(to: page)
     }
 }
 
