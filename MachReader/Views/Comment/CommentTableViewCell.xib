@@ -31,28 +31,27 @@
                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                         </userDefinedRuntimeAttributes>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="test" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Oo-q8-qD0">
-                        <rect key="frame" x="64" y="8" width="336" height="39.5"/>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="abi-ft-1wW">
+                        <rect key="frame" x="60" y="0.0" width="336" height="55.5"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="40" id="7E9-3q-ow8"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="56" id="eEy-LV-Fiu"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                        <size key="shadowOffset" width="0.0" height="0.0"/>
-                    </label>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="abi-ft-1wW" firstAttribute="top" secondItem="XcI-5D-64d" secondAttribute="top" id="14L-VE-ib1"/>
                     <constraint firstItem="yXO-kH-14t" firstAttribute="top" secondItem="XcI-5D-64d" secondAttribute="top" constant="8" id="4Ss-0H-myQ"/>
                     <constraint firstItem="yXO-kH-14t" firstAttribute="leading" secondItem="XcI-5D-64d" secondAttribute="leading" constant="8" id="6XZ-IL-XuG"/>
-                    <constraint firstAttribute="trailing" secondItem="0Oo-q8-qD0" secondAttribute="trailing" constant="8" id="8J1-IE-n7F"/>
-                    <constraint firstItem="0Oo-q8-qD0" firstAttribute="leading" secondItem="yXO-kH-14t" secondAttribute="trailing" constant="16" id="PMl-6W-gJ9"/>
-                    <constraint firstItem="0Oo-q8-qD0" firstAttribute="top" secondItem="XcI-5D-64d" secondAttribute="top" constant="8" id="Udu-37-cc3"/>
-                    <constraint firstAttribute="bottom" secondItem="0Oo-q8-qD0" secondAttribute="bottom" constant="8" id="uaV-Cb-yIc"/>
+                    <constraint firstItem="abi-ft-1wW" firstAttribute="leading" secondItem="yXO-kH-14t" secondAttribute="trailing" constant="12" id="LCD-Eh-sVN"/>
+                    <constraint firstAttribute="trailing" secondItem="abi-ft-1wW" secondAttribute="trailing" constant="12" id="kbI-ms-q56"/>
+                    <constraint firstAttribute="bottom" secondItem="abi-ft-1wW" secondAttribute="bottom" id="uQI-wy-7Uh"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="commentLabel" destination="0Oo-q8-qD0" id="68i-Jx-LT7"/>
+                <outlet property="commentTextView" destination="abi-ft-1wW" id="CXO-dM-NgB"/>
                 <outlet property="userImageView" destination="yXO-kH-14t" id="6QZ-X8-O31"/>
             </connections>
             <point key="canvasLocation" x="152" y="62"/>

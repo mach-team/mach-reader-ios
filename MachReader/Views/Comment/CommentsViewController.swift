@@ -40,6 +40,7 @@ class CommentsViewController: UIViewController {
         
         textView.layer.cornerRadius = 4.0
         textView.maxHeight = 120
+        tableView.tableFooterView = UIView()
         
         setupObserver()
         setupNavigationBar()
@@ -85,6 +86,7 @@ class CommentsViewController: UIViewController {
     
     private func scrollToBottom() {
         guard let count = commentsDataSource?.count else { return }
+        if count == 0 { return }
         let indexPath = IndexPath(row: count - 1, section: 0)
         tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }

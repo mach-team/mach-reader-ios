@@ -13,7 +13,8 @@ import Kingfisher
 class CommentTableViewCell: UITableViewCell {
 
     @IBOutlet weak var userImageView: UIImageView!
-    @IBOutlet weak var commentLabel: UILabel!
+    @IBOutlet weak var commentTextView: UITextView!
+    
     
     var disposer: Disposer<Comment>?
     
@@ -24,10 +25,7 @@ class CommentTableViewCell: UITableViewCell {
     }
 
     func render(text: String, avatarURL: URL?) {
-        commentLabel.text = text
-        //let url = URL(string: "https://s3-ap-northeast-1.amazonaws.com/credify.assets/images/avatars/avatar-01.svg")
-        //let image = Identicon().icon(from: "string", size: CGSize(width: 80, height: 80))
+        commentTextView.text = text
         userImageView.kf.setImage(with: avatarURL)
-        //userImageView.image = image
     }
 }
