@@ -12,6 +12,7 @@ import GrowingTextView
 
 class CommentsViewController: UIViewController {
 
+    @IBOutlet weak var highlightTextView: UITextView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textView: GrowingTextView!
     @IBOutlet weak var textViewBottomConstraint: NSLayoutConstraint!
@@ -37,6 +38,8 @@ class CommentsViewController: UIViewController {
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapGestureHandler))
         view.addGestureRecognizer(tapGesture)
+        
+        highlightTextView.text = highlight.text
         
         textView.layer.cornerRadius = 4.0
         textView.maxHeight = 120

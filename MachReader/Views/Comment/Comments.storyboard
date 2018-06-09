@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="56" estimatedRowHeight="56" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gFd-lf-dTt">
-                                <rect key="frame" x="0.0" y="20" width="375" height="595"/>
+                                <rect key="frame" x="0.0" y="100" width="375" height="515"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="aXb-lY-3ab" id="er5-qK-FsP"/>
@@ -75,20 +75,49 @@
                                     <constraint firstAttribute="trailing" secondItem="jMv-K0-fnV" secondAttribute="trailing" constant="12" id="mVi-ib-ty3"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ePp-0l-FUa">
+                                <rect key="frame" x="0.0" y="20" width="375" height="80"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lwx-fg-37H">
+                                        <rect key="frame" x="8" y="8" width="359" height="64"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </textView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.6588235294" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="Lwx-fg-37H" firstAttribute="top" secondItem="ePp-0l-FUa" secondAttribute="top" constant="8" id="GMY-UG-DRw"/>
+                                    <constraint firstAttribute="height" constant="80" id="K0G-A1-TQn"/>
+                                    <constraint firstItem="Lwx-fg-37H" firstAttribute="leading" secondItem="ePp-0l-FUa" secondAttribute="leading" constant="8" id="Oho-Uh-HOm"/>
+                                    <constraint firstAttribute="bottom" secondItem="Lwx-fg-37H" secondAttribute="bottom" constant="8" id="aJ7-r2-Caf"/>
+                                    <constraint firstAttribute="trailing" secondItem="Lwx-fg-37H" secondAttribute="trailing" constant="8" id="uUV-qH-9GM"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="9r9-mA-zcF" firstAttribute="trailing" secondItem="OPf-KE-u9N" secondAttribute="trailing" id="EWs-9Y-dCq"/>
                             <constraint firstItem="OPf-KE-u9N" firstAttribute="trailing" secondItem="gFd-lf-dTt" secondAttribute="trailing" id="P2d-Ju-bbD"/>
+                            <constraint firstItem="ePp-0l-FUa" firstAttribute="top" secondItem="OPf-KE-u9N" secondAttribute="top" id="QjN-iJ-Upf"/>
                             <constraint firstItem="gFd-lf-dTt" firstAttribute="leading" secondItem="OPf-KE-u9N" secondAttribute="leading" id="Tur-6d-l0N"/>
-                            <constraint firstItem="gFd-lf-dTt" firstAttribute="top" secondItem="OPf-KE-u9N" secondAttribute="top" id="UJh-Ig-Gdt"/>
                             <constraint firstItem="9r9-mA-zcF" firstAttribute="leading" secondItem="OPf-KE-u9N" secondAttribute="leading" id="Vqs-t9-lcP"/>
                             <constraint firstItem="9r9-mA-zcF" firstAttribute="bottom" secondItem="OPf-KE-u9N" secondAttribute="bottom" id="mwp-nE-M6v"/>
+                            <constraint firstItem="gFd-lf-dTt" firstAttribute="top" secondItem="ePp-0l-FUa" secondAttribute="bottom" id="rke-6T-6Hq"/>
+                            <constraint firstItem="ePp-0l-FUa" firstAttribute="leading" secondItem="OPf-KE-u9N" secondAttribute="leading" id="un1-yA-rbF"/>
+                            <constraint firstItem="OPf-KE-u9N" firstAttribute="trailing" secondItem="ePp-0l-FUa" secondAttribute="trailing" id="yAL-XY-dj8"/>
                             <constraint firstItem="9r9-mA-zcF" firstAttribute="top" secondItem="gFd-lf-dTt" secondAttribute="bottom" id="yUb-xt-fAk"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="OPf-KE-u9N"/>
                     </view>
                     <connections>
+                        <outlet property="highlightTextView" destination="Lwx-fg-37H" id="1zZ-E1-2t0"/>
                         <outlet property="tableView" destination="gFd-lf-dTt" id="di8-Zq-YUx"/>
                         <outlet property="textView" destination="8H6-oG-oPv" id="JfD-do-3nk"/>
                         <outlet property="textViewBottomConstraint" destination="mwp-nE-M6v" id="vCG-Dt-Zed"/>
