@@ -13,4 +13,5 @@ import Pring
 final class Comment: Object {
     dynamic var text: String?
     // dynamic var threadID: String?
+    dynamic var userID: String?
 }

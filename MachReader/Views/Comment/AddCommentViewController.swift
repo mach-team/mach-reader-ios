@@ -52,20 +52,16 @@ class AddCommentViewController: UIViewController {
         if commentTextView.text.isEmpty {
             dismiss(animated: true)
         } else {
-            // comment
-            let comment = Comment()
-            comment.text = commentTextView.text
-            comment.save()
-            
-            // highlight
-            highlight.comments.insert(comment)
-            highlight.save() // Currently, only save is considered.
-            
             // book
             book.highlights.insert(highlight)
-            // book.viewers.insert(currentUser)
-            book.update()
-            
+            book.update() { [weak self] error in
+                if error == nil {
+                    self?.highlight.saveComment(text: self?.commentTextView.text)
+                } else {
+                    print(error.debugDescription)
+                }
+            }
+
             dismiss(animated: true) { [weak self] in
                 self?.callback?()
             }

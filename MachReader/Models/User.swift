@@ -60,10 +60,10 @@ class User: Object {
             
             // In case that FirebaseAuth did not recognize this user
             guard let currentUser = Auth.auth().currentUser else {
-                print("FirebaseAuth Error")
                 User.default = nil
                 User.signout()
                 completionHandler(nil)
+                print("FirebaseAuth Error")
                 return
             }
     
@@ -71,13 +71,12 @@ class User: Object {
             User.get(currentUser.uid) { (user, _) in
                 if let user = user {
                     // In case of an existing user
-                    print("Success login of an existing user")
                     User.default = user
                     completionHandler(user)
+                    print("Success login of an existing user")
                     NotificationCenter.default.post(name: User.loggedInNotification, object: nil)
                 } else {
                     // In case of non-existing user
-                    print("Success login of a new user")
                     let u = User(id: auth!.user.uid)
                     let randomName = RandomString.generate(length: 8)
                     u.name = randomName
@@ -87,6 +86,7 @@ class User: Object {
                     u.save() { ref, error in
                         User.default = u
                         completionHandler(u)
+                        print("Success login of a new user")
                         NotificationCenter.default.post(name: User.loggedInNotification, object: ref)
                     }
                 }

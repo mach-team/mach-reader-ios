@@ -100,11 +100,7 @@ class CommentsViewController: UIViewController {
             return
         }
         
-        let comment = Comment()
-        comment.text = textView.text
-        comment.save()
-        highlight.comments.insert(comment)
-        highlight.update()
+        highlight.saveComment(text: textView.text)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.view.endEditing(true)

@@ -22,7 +22,10 @@ final class Book: Object {
     dynamic var thumbnail: File?
     dynamic var isPublic: Bool = false
     dynamic var viewers: ReferenceCollection<User> = []
-    dynamic var highlights: ReferenceCollection<Highlight> = []
+    dynamic var highlights: NestedCollection<Highlight> = []
+    
+    private(set) var highlightDataSource: DataSource<Highlight>?
+    private(set) var myHighlightsDataSource: DataSource<UserHighlight>?
     
     static func findOrCreate(by hashID: String, fileUrl: URL? = nil, block: @escaping (Book?, Error?) -> Void) {
         Book.get(hashID) { (book, error) in
@@ -58,31 +61,22 @@ final class Book: Object {
     func saveHighlight(text: String?, pageNumber: Int?, bounds: CGRect?) -> Highlight? {
         guard let text = text, let page = pageNumber, let bounds = bounds else { return nil }
         let highlight = Highlight.new(text: text, page: page, bounds: bounds)
-        highlight.save()
         highlights.insert(highlight)
-        // viewers.insert(currentUser)
-        
         update()
         return highlight
     }
     
-    func getHighlights(block: @escaping ((Highlight?, Error?) -> Void)) {
-        highlights.order(by: \Highlight.updatedAt).get { snapshot, error in
-            guard let ss = snapshot else { return }
-            ss.documents.forEach { document in
-                let highlightID = document.reference.documentID
-                Highlight.get(highlightID) { highlight, error in
-                    block(highlight, error)
+    func getHighlights(page: Int, block: @escaping ((Highlight?, Error?) -> Void)) {
+        highlightDataSource = highlights
+            .where(\Highlight.page, isEqualTo: String(page))
+            .dataSource()
+            .on({ (snapshot, changes) in
+                // do something
+            })
+            .onCompleted() { snapshot, storedHighlights in
+                storedHighlights.forEach { storedHighlight in
+                    block(storedHighlight, nil)
                 }
-            }
-        }
-//        highlights
-//            .order(by: \Highlight.updatedAt)
-//            //.where(\Highlight.text, isEqualTo: "acroread")
-//            .dataSource().onCompleted() { snapshot, storedHighlights in
-//                storedHighlights.forEach { storedHighlight in
-//                    block(storedHighlight, nil)
-//                }
-//            }.listen()
+            }.listen()
     }
 }
