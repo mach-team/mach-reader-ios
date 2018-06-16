@@ -25,7 +25,6 @@ final class Book: Object {
     dynamic var highlights: NestedCollection<Highlight> = []
     
     private(set) var highlightDataSource: DataSource<Highlight>?
-    private(set) var myHighlightsDataSource: DataSource<UserHighlight>?
     
     static func findOrCreate(by hashID: String, fileUrl: URL? = nil, block: @escaping (Book?, Error?) -> Void) {
         Book.get(hashID) { (book, error) in

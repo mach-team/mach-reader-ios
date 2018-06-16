@@ -18,13 +18,13 @@ class CommentsViewController: UIViewController {
     @IBOutlet weak var textViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var textViewContainerHeight: NSLayoutConstraint!
     
-    private var highlight: Highlight!
-    private var commentsDataSource: DataSource<Comment>?
+    private var viewModel: CommentsViewModel!
 
     static func instantiate(highlight: Highlight) -> CommentsViewController {
         let sb = UIStoryboard(name: "Comments", bundle: nil)
         let vc = sb.instantiateInitialViewController() as! CommentsViewController
-        vc.highlight = highlight
+        let vm = CommentsViewModel(highlight)
+        vc.viewModel = vm
         return vc
     }
     
@@ -39,7 +39,7 @@ class CommentsViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapGestureHandler))
         view.addGestureRecognizer(tapGesture)
         
-        highlightTextView.text = highlight.text
+        highlightTextView.text = viewModel.highlightText
         
         textView.layer.cornerRadius = 4.0
         textView.maxHeight = 120
@@ -58,24 +58,22 @@ class CommentsViewController: UIViewController {
     // MARK: - Private methods
     
     private func setupObserver() {
-        commentsDataSource = highlight.comments.order(by: \Comment.createdAt).limit(to: 30).dataSource()
-            .on({ [weak self] (snapshot, changes) in
-                guard let tableView = self?.tableView else { return }
-                switch changes {
-                case .initial:
-                    tableView.reloadData()
-                case .update(let deletions, let insertions, let modifications):
-                    tableView.beginUpdates()
-                    tableView.insertRows(at: insertions.map { IndexPath(row: $0, section: 0) }, with: .automatic)
-                    tableView.deleteRows(at: deletions.map { IndexPath(row: $0, section: 0) }, with: .automatic)
-                    tableView.reloadRows(at: modifications.map { IndexPath(row: $0, section: 0) }, with: .automatic)
-                    tableView.endUpdates()
-                    self?.scrollToBottom()
-                case .error(let error):
-                    print(error)
-                }
-            })
-            .listen()
+        viewModel.loadComments() { [weak self] (snapshot, changes) in
+            guard let tableView = self?.tableView else { return }
+            switch changes {
+            case .initial:
+                tableView.reloadData()
+            case .update(let deletions, let insertions, let modifications):
+                tableView.beginUpdates()
+                tableView.insertRows(at: insertions.map { IndexPath(row: $0, section: 0) }, with: .automatic)
+                tableView.deleteRows(at: deletions.map { IndexPath(row: $0, section: 0) }, with: .automatic)
+                tableView.reloadRows(at: modifications.map { IndexPath(row: $0, section: 0) }, with: .automatic)
+                tableView.endUpdates()
+                self?.scrollToBottom()
+            case .error(let error):
+                print(error)
+            }
+        }
     }
     
     private func setupNavigationBar() {
@@ -88,9 +86,8 @@ class CommentsViewController: UIViewController {
     }
     
     private func scrollToBottom() {
-        guard let count = commentsDataSource?.count else { return }
-        if count == 0 { return }
-        let indexPath = IndexPath(row: count - 1, section: 0)
+        if viewModel.commentsCount == 0 { return }
+        let indexPath = IndexPath(row: viewModel.commentsCount - 1, section: 0)
         tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }
     
@@ -100,7 +97,7 @@ class CommentsViewController: UIViewController {
             return
         }
         
-        highlight.saveComment(text: textView.text)
+        viewModel.saveComment(text: textView.text)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.view.endEditing(true)
@@ -171,7 +168,7 @@ extension CommentsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return commentsDataSource?.count ?? 0
+        return viewModel.commentsCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -181,7 +178,7 @@ extension CommentsViewController: UITableViewDataSource {
     }
     
     func configure(_ cell: CommentTableViewCell, at indexPath: IndexPath) {
-        guard let comment = commentsDataSource?[indexPath.item] else { return }
+        guard let comment = viewModel.comment(at: indexPath) else { return }
         
         cell.render(text: comment.text ?? "", avatarURL: User.default?.avatar?.downloadURL)
         cell.disposer = comment.listen { (comment, error) in
