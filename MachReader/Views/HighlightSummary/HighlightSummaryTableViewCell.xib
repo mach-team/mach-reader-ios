@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="HighlightSummaryTableViewCell" id="Vcy-9p-eHO" customClass="HighlightSummaryTableViewCell" customModule="MachReader" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="429" height="171"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Vcy-9p-eHO" id="x2w-Cc-1xT">
+                <rect key="frame" x="0.0" y="0.0" width="429" height="170.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="vYL-ss-8mH">
+                        <rect key="frame" x="8" y="8" width="413" height="154.5"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="highlight texts" translatesAutoresizingMaskIntoConstraints="NO" id="nAX-Zj-sxb">
+                                <rect key="frame" x="0.0" y="0.0" width="413" height="80"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="kou-aa-bIU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="comments " translatesAutoresizingMaskIntoConstraints="NO" id="i1N-Cw-VrY">
+                                <rect key="frame" x="0.0" y="88" width="413" height="66.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="80" id="6mB-Lm-Dkf"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="vYL-ss-8mH" firstAttribute="leading" secondItem="x2w-Cc-1xT" secondAttribute="leading" constant="8" id="C1A-Cx-BHG"/>
+                    <constraint firstAttribute="trailing" secondItem="vYL-ss-8mH" secondAttribute="trailing" constant="8" id="NPw-ef-jR4"/>
+                    <constraint firstAttribute="bottom" secondItem="vYL-ss-8mH" secondAttribute="bottom" constant="8" id="OKf-5z-fZC"/>
+                    <constraint firstItem="vYL-ss-8mH" firstAttribute="top" secondItem="x2w-Cc-1xT" secondAttribute="top" constant="8" id="ihQ-3T-1FB"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="commentTextView" destination="i1N-Cw-VrY" id="E7h-Rk-wJA"/>
+                <outlet property="highlightTextView" destination="nAX-Zj-sxb" id="9rm-9t-dvx"/>
+            </connections>
+            <point key="canvasLocation" x="-50.5" y="159.5"/>
+        </tableViewCell>
+    </objects>
+</document>

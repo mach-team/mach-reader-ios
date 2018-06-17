@@ -31,21 +31,11 @@ class CommentsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.register(UINib(nibName: "CommentTableViewCell", bundle: nil), forCellReuseIdentifier: "CommentTableViewCell")
-        tableView.rowHeight = UITableViewAutomaticDimension
-        
         NotificationObserver.add(name: .UIKeyboardWillChangeFrame, method: keyboardWillChangeFrame)
 
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapGestureHandler))
-        view.addGestureRecognizer(tapGesture)
-        
-        highlightTextView.text = viewModel.highlightText
-        
-        textView.layer.cornerRadius = 4.0
-        textView.maxHeight = 120
-        tableView.tableFooterView = UIView()
-        
-        setupObserver()
+        setupTextView()
+        setupTableView()
+        setupData()
         setupNavigationBar()
     }
     
@@ -57,7 +47,23 @@ class CommentsViewController: UIViewController {
 
     // MARK: - Private methods
     
-    private func setupObserver() {
+    private func setupTableView() {
+        tableView.register(UINib(nibName: "CommentTableViewCell", bundle: nil), forCellReuseIdentifier: "CommentTableViewCell")
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.tableFooterView = UIView()
+    }
+    
+    private func setupTextView() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapGestureHandler))
+        view.addGestureRecognizer(tapGesture)
+        
+        highlightTextView.text = viewModel.highlightText
+        
+        textView.layer.cornerRadius = 4.0
+        textView.maxHeight = 120
+    }
+    
+    private func setupData() {
         viewModel.loadComments() { [weak self] (snapshot, changes) in
             guard let tableView = self?.tableView else { return }
             switch changes {

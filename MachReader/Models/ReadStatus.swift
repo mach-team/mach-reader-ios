@@ -11,6 +11,6 @@ import Pring
 
 @objcMembers
 final class ReadStatus: Object {
+    // NOTE: this model's primary key is book id
     dynamic var pageNumber: Int = 0
-    //dynamic var bookID: String?
 }

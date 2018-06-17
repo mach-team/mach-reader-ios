@@ -38,6 +38,11 @@
 		25DFD00F20C96364001C84F5 /* ReadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFD00E20C96364001C84F5 /* ReadStatus.swift */; };
 		25DFD01120CB852D001C84F5 /* RandomString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFD01020CB852D001C84F5 /* RandomString.swift */; };
 		25DFD01920D494A0001C84F5 /* CommentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFD01820D494A0001C84F5 /* CommentsViewModel.swift */; };
+		25DFD02020D678EE001C84F5 /* HighlightListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFD01F20D678EE001C84F5 /* HighlightListViewController.swift */; };
+		25DFD02220D6795B001C84F5 /* HighlightListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFD02120D6795B001C84F5 /* HighlightListViewModel.swift */; };
+		25DFD02420D67BB3001C84F5 /* HighlightList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25DFD02320D67BB3001C84F5 /* HighlightList.storyboard */; };
+		25DFD02620D69749001C84F5 /* HighlightSummaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFD02520D69749001C84F5 /* HighlightSummaryTableViewCell.swift */; };
+		25DFD02820D69758001C84F5 /* HighlightSummaryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25DFD02720D69758001C84F5 /* HighlightSummaryTableViewCell.xib */; };
 		BDF1A311C04A47F52E580EF1 /* Pods_MachReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07001BF1EA7BCF832DFA59ED /* Pods_MachReader.framework */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +82,11 @@
 		25DFD00E20C96364001C84F5 /* ReadStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadStatus.swift; sourceTree = "<group>"; };
 		25DFD01020CB852D001C84F5 /* RandomString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomString.swift; sourceTree = "<group>"; };
 		25DFD01820D494A0001C84F5 /* CommentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewModel.swift; sourceTree = "<group>"; };
+		25DFD01F20D678EE001C84F5 /* HighlightListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightListViewController.swift; sourceTree = "<group>"; };
+		25DFD02120D6795B001C84F5 /* HighlightListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightListViewModel.swift; sourceTree = "<group>"; };
+		25DFD02320D67BB3001C84F5 /* HighlightList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HighlightList.storyboard; sourceTree = "<group>"; };
+		25DFD02520D69749001C84F5 /* HighlightSummaryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightSummaryTableViewCell.swift; sourceTree = "<group>"; };
+		25DFD02720D69758001C84F5 /* HighlightSummaryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HighlightSummaryTableViewCell.xib; sourceTree = "<group>"; };
 		BCA1043EB48565CAFD50F509 /* Pods-MachReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MachReader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MachReader/Pods-MachReader.debug.xcconfig"; sourceTree = "<group>"; };
 		FA562CF4233AE72D14C10969 /* Pods-MachReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MachReader.release.xcconfig"; path = "Pods/Target Support Files/Pods-MachReader/Pods-MachReader.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -135,6 +145,7 @@
 		2593F83620B8073D00319C1B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				25DFD01E20D67884001C84F5 /* HighlightSummary */,
 				25DFD00020C38C0E001C84F5 /* Comment */,
 				25DFCFFF20C38BF9001C84F5 /* Reader */,
 				25DFCFF720C2AA33001C84F5 /* Home */,
@@ -190,6 +201,7 @@
 				25DFCFFD20C2AC90001C84F5 /* HomeViewModel.swift */,
 				25DFD00820C6A67B001C84F5 /* PdfReaderViewModel.swift */,
 				25DFD01820D494A0001C84F5 /* CommentsViewModel.swift */,
+				25DFD02120D6795B001C84F5 /* HighlightListViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -214,6 +226,17 @@
 				25DFD00C20C6AFA8001C84F5 /* CommentTableViewCell.xib */,
 			);
 			path = Comment;
+			sourceTree = "<group>";
+		};
+		25DFD01E20D67884001C84F5 /* HighlightSummary */ = {
+			isa = PBXGroup;
+			children = (
+				25DFD01F20D678EE001C84F5 /* HighlightListViewController.swift */,
+				25DFD02320D67BB3001C84F5 /* HighlightList.storyboard */,
+				25DFD02520D69749001C84F5 /* HighlightSummaryTableViewCell.swift */,
+				25DFD02720D69758001C84F5 /* HighlightSummaryTableViewCell.xib */,
+			);
+			path = HighlightSummary;
 			sourceTree = "<group>";
 		};
 		FE96C9E0DFFBF843182152D7 /* Pods */ = {
@@ -298,11 +321,13 @@
 			files = (
 				2593F83A20B8075500319C1B /* PdfReader.storyboard in Resources */,
 				2593F82F20B8073200319C1B /* LaunchScreen.storyboard in Resources */,
+				25DFD02820D69758001C84F5 /* HighlightSummaryTableViewCell.xib in Resources */,
 				2593F82C20B8073200319C1B /* Assets.xcassets in Resources */,
 				2593F82A20B8073200319C1B /* Main.storyboard in Resources */,
 				25DFCFFB20C2AA91001C84F5 /* BookCollectionViewCell.xib in Resources */,
 				2593F83C20B808D600319C1B /* sample.pdf in Resources */,
 				25DFD00720C565CF001C84F5 /* Comments.storyboard in Resources */,
+				25DFD02420D67BB3001C84F5 /* HighlightList.storyboard in Resources */,
 				25B2B95820B974F000B8E93B /* AddComment.storyboard in Resources */,
 				25DFD00D20C6AFA8001C84F5 /* CommentTableViewCell.xib in Resources */,
 				2593F84220B842AF00319C1B /* GoogleService-Info.plist in Resources */,
@@ -419,10 +444,13 @@
 				25B2B95620B974E400B8E93B /* AddCommentViewController.swift in Sources */,
 				25B2B95B20B9A56D00B8E93B /* SHA1.swift in Sources */,
 				25DFCFE720BC3705001C84F5 /* HomeViewController.swift in Sources */,
+				25DFD02220D6795B001C84F5 /* HighlightListViewModel.swift in Sources */,
 				25DFD00F20C96364001C84F5 /* ReadStatus.swift in Sources */,
 				25DFCFFE20C2AC90001C84F5 /* HomeViewModel.swift in Sources */,
 				25DFD01120CB852D001C84F5 /* RandomString.swift in Sources */,
 				25DFD00920C6A67B001C84F5 /* PdfReaderViewModel.swift in Sources */,
+				25DFD02020D678EE001C84F5 /* HighlightListViewController.swift in Sources */,
+				25DFD02620D69749001C84F5 /* HighlightSummaryTableViewCell.swift in Sources */,
 				25DFD00B20C6AF93001C84F5 /* CommentTableViewCell.swift in Sources */,
 				2593F82520B8073200319C1B /* AppDelegate.swift in Sources */,
 				25DFCFF920C2AA82001C84F5 /* BookCollectionViewCell.swift in Sources */,

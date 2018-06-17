@@ -49,6 +49,7 @@ class PdfReaderViewController: UIViewController {
         
         setupDocument()
         setupPDFView()
+        setupNavBar()
         createMenu()
         
         drawStoredHighlights()
@@ -98,6 +99,12 @@ class PdfReaderViewController: UIViewController {
         pdfThumbnailView.backgroundColor = UIColor.gray
     }
 
+    private func setupNavBar() {
+        let openHighlightListButton = UIBarButtonItem(title: "Highlights", style: .plain, target: self, action: #selector(handleHighlightListAction(_:)))
+        
+        navigationItem.rightBarButtonItem = openHighlightListButton
+    }
+    
     /// Customize UIMenuController.
     private func createMenu() {
         let highlightItem = UIMenuItem(title: "Highlight", action: #selector(highlightAction(_:)))
@@ -124,6 +131,13 @@ class PdfReaderViewController: UIViewController {
     
     @objc private func handleSaveCurrentPage(notification: Notification) {
         viewModel.saveCurrentPageNumber(currentPageNumber)
+    }
+    
+    @objc private func handleHighlightListAction(_ sender: Any) {
+        let vc = HighlightListViewController.instantiate(book: viewModel.book)
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .formSheet
+        present(nav, animated: true)
     }
     
     /// Fetch Highlights stored at Firestore and display those annotation views.

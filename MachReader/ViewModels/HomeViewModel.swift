@@ -45,6 +45,20 @@ class HomeViewModel {
             .listen()
     }
     
+    /**
+     * FIXME: this is not goog way to load recent books...
+    private func loadRecentBooks(completion: @escaping ((QuerySnapshot?, CollectionChange) -> Void)) {
+        User.default?.readStatuses.order(by: \ReadStatus.updatedAt).get() { (snapshot, error) in
+            snapshot?.documents.forEach { document in
+                Book.get(document.documentID) { [weak self] (book, error) in
+                    guard let book = book else { return }
+                    self?.recentBooks.append(book)
+                }
+            }
+        }
+    }
+    **/
+    
     // MARK: - public methods
     
     func loadBooks(isPublic: Bool, completion: @escaping ((QuerySnapshot?, CollectionChange) -> Void)) {
