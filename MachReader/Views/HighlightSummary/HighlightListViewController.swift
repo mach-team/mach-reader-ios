@@ -68,7 +68,10 @@ class HighlightListViewController: UIViewController {
 // MARK: - UITableViewDelegate
 extension HighlightListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("tapped!!!")
+        guard let highlight = viewModel.highlight(at: indexPath) else { return }
+        guard let page = highlight.page else { return }
+        guard let pageNumber = Int(page) else { return }
+        // TODO: pageNumber page in PDF
     }
 }
 
@@ -90,10 +93,10 @@ extension HighlightListViewController: UITableViewDataSource {
     
     func configure(_ cell: HighlightSummaryTableViewCell, at indexPath: IndexPath) {
         guard let highlight = viewModel.highlight(at: indexPath) else { return }
-        
-        cell.render(highlightText: highlight.text ?? "", commentText: nil)
-        cell.disposer = highlight.listen { (highlight, error) in
-            cell.render(highlightText: highlight?.text ?? "", commentText: nil)
+        print(highlight.comments.count)
+        cell.render(highlightText: highlight.text ?? "", commentText: viewModel.commentText(at: indexPath))
+        cell.disposer = highlight.listen { [weak self] (highlight, error) in
+            cell.render(highlightText: highlight?.text ?? "", commentText: self?.viewModel.commentText(at: indexPath))
         }
     }
     

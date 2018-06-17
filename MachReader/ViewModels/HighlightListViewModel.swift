@@ -30,12 +30,26 @@ class HighlightListViewModel {
             .dataSource()
             .on() { (snapshot, changes) in
                 completion(snapshot, changes)
-            }.listen()
+            }
+            .on(parse: { (_, highlight, done) in
+                highlight.comments.get() { (snapshot, comments) in
+                    done(highlight)
+                }
+            })
+            .listen()
     }
     
     func highlight(at indexPath: IndexPath) -> Highlight? {
         guard let dataSource = highlightDataSource else { return nil }
         if dataSource.isEmpty { return nil }
         return dataSource[indexPath.item]
+    }
+    
+    func commentText(at indexPath: IndexPath) -> String? {
+        guard let comments = highlight(at: indexPath)?.comments else { return nil }
+        if comments.isEmpty { return nil }
+        var str = ""
+        comments.forEach { str.append("\($0.text ?? "")\n") }
+        return str
     }
 }
