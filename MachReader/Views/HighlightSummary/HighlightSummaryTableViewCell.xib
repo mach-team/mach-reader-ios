@@ -11,30 +11,53 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="HighlightSummaryTableViewCell" id="Vcy-9p-eHO" customClass="HighlightSummaryTableViewCell" customModule="MachReader" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="429" height="171"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="HighlightSummaryTableViewCell" rowHeight="133" id="Vcy-9p-eHO" customClass="HighlightSummaryTableViewCell" customModule="MachReader" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="429" height="133"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Vcy-9p-eHO" id="x2w-Cc-1xT">
-                <rect key="frame" x="0.0" y="0.0" width="429" height="170.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="429" height="132.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="vYL-ss-8mH">
-                        <rect key="frame" x="8" y="8" width="413" height="154.5"/>
+                        <rect key="frame" x="8" y="8" width="413" height="116.5"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="highlight texts" translatesAutoresizingMaskIntoConstraints="NO" id="nAX-Zj-sxb">
-                                <rect key="frame" x="0.0" y="0.0" width="413" height="80"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="0.0" y="0.0" width="413" height="40"/>
+                                <color key="backgroundColor" red="0.98567858462093272" green="1" blue="0.10686481954170512" alpha="0.3008882705479452" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="kou-aa-bIU"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="kou-aa-bIU"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0We-ht-t4R">
+                                <rect key="frame" x="0.0" y="48" width="413" height="20.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="date" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UHj-xw-uce">
+                                        <rect key="frame" x="0.0" y="0.0" width="381" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="page" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bCs-DM-Zlk">
+                                        <rect key="frame" x="381" y="0.0" width="32" height="20.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="32" id="avx-sH-YrF"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="6Um-nC-rvU"/>
+                                </constraints>
+                            </stackView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="comments " translatesAutoresizingMaskIntoConstraints="NO" id="i1N-Cw-VrY">
-                                <rect key="frame" x="0.0" y="88" width="413" height="66.5"/>
+                                <rect key="frame" x="0.0" y="76.5" width="413" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="80" id="6mB-Lm-Dkf"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="40" id="6mB-Lm-Dkf"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -44,16 +67,18 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="vYL-ss-8mH" firstAttribute="leading" secondItem="x2w-Cc-1xT" secondAttribute="leading" constant="8" id="C1A-Cx-BHG"/>
+                    <constraint firstAttribute="bottom" secondItem="vYL-ss-8mH" secondAttribute="bottom" constant="8" id="I8D-dm-chz"/>
                     <constraint firstAttribute="trailing" secondItem="vYL-ss-8mH" secondAttribute="trailing" constant="8" id="NPw-ef-jR4"/>
-                    <constraint firstAttribute="bottom" secondItem="vYL-ss-8mH" secondAttribute="bottom" constant="8" id="OKf-5z-fZC"/>
                     <constraint firstItem="vYL-ss-8mH" firstAttribute="top" secondItem="x2w-Cc-1xT" secondAttribute="top" constant="8" id="ihQ-3T-1FB"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="commentTextView" destination="i1N-Cw-VrY" id="E7h-Rk-wJA"/>
+                <outlet property="dateLabel" destination="UHj-xw-uce" id="lxD-a2-nTE"/>
                 <outlet property="highlightTextView" destination="nAX-Zj-sxb" id="9rm-9t-dvx"/>
+                <outlet property="pageLabel" destination="bCs-DM-Zlk" id="Tcc-N3-1E9"/>
             </connections>
-            <point key="canvasLocation" x="-50.5" y="159.5"/>
+            <point key="canvasLocation" x="-50.5" y="140.5"/>
         </tableViewCell>
     </objects>
 </document>

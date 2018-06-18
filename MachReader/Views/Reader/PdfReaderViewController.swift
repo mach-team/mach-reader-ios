@@ -145,14 +145,19 @@ class PdfReaderViewController: UIViewController {
         viewModel.loadHighlights(page: currentPageNumber) { highlight in
             guard let selection = self.pdfView.document?.findString(highlight.text ?? "", withOptions: .caseInsensitive).first else { return }
             guard let page = selection.pages.first else { return }
-            self.addHighlightView(selection: selection, page: page)
+            let isMine = highlight.userID == User.default?.id
+            
+            self.addHighlightView(selection: selection, page: page, isMine: isMine)
         }
     }
     
     /// Add highlight annotation view.
-    private func addHighlightView(selection: PDFSelection, page: PDFPage) {
+    private func addHighlightView(selection: PDFSelection, page: PDFPage, isMine: Bool) {
         selection.selectionsByLine().forEach { s in
             let highlight = PDFAnnotation(bounds: s.bounds(for: page), forType: .highlight, withProperties: nil)
+            if !isMine {
+                highlight.color = UIColor.cyan
+            }
             highlight.endLineStyle = .square
             page.addAnnotation(highlight)
         }
@@ -163,7 +168,7 @@ class PdfReaderViewController: UIViewController {
         guard let currentSelection = pdfView.currentSelection else { return }
         guard let page = currentSelection.pages.first else { return }
         
-        addHighlightView(selection: currentSelection, page: page)
+        addHighlightView(selection: currentSelection, page: page, isMine: true)
         pdfView.clearSelection()
         
         viewModel.saveHighlight(text: currentSelection.string ?? "", page: currentPageNumber, bounds: currentSelection.bounds(for: page))
@@ -181,7 +186,7 @@ class PdfReaderViewController: UIViewController {
         let h = viewModel.newHighlight(text: text, page: pageNumber, bounds: currentSelection.bounds(for: page))
         
         let vc = AddCommentViewController.instantiate(highlight: h, book: viewModel.book) { [weak self] in
-            self?.addHighlightView(selection: currentSelection, page: page)
+            self?.addHighlightView(selection: currentSelection, page: page, isMine: true)
             self?.viewModel.addVisibleHighlight(h)
         }
         
