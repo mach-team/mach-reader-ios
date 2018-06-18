@@ -36,9 +36,21 @@ final class Highlight: Object {
     }
     
     static func filter(_ highlights: Set<Highlight>, withBounds bounds: CGRect) -> Highlight? {
+        let sameHighlight = highlights.filter {
+            $0.bounds.origin.x == bounds.origin.x &&
+            $0.bounds.origin.y == bounds.origin.y &&
+            $0.bounds.width == bounds.width &&
+            $0.bounds.height == bounds.height
+        }.first
+        if sameHighlight != nil {
+            return sameHighlight
+        }
+        
         return highlights.filter {
             $0.bounds.origin.x <= bounds.origin.x &&
+            $0.bounds.origin.x + $0.bounds.width >= bounds.origin.x &&
             $0.bounds.origin.y <= bounds.origin.y &&
+            $0.bounds.origin.y + $0.bounds.height >= bounds.origin.y &&
             $0.bounds.width >= bounds.width &&
             $0.bounds.height >= bounds.height
         }.first
