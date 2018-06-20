@@ -30,6 +30,7 @@ class HomeViewController: UIViewController {
         startAnimating(type: .circleStrokeSpin)
         
         setupCollectionView()
+        setup3DTouch()
         
         viewModel.delegate = self
         viewModel.sessionStart()
@@ -49,6 +50,12 @@ class HomeViewController: UIViewController {
         flowLayout.minimumInteritemSpacing = margin
         flowLayout.sectionInset = UIEdgeInsets(top: margin * 2, left: margin * 2, bottom: margin * 2, right: margin * 2)
         collectionView.collectionViewLayout = flowLayout
+    }
+    
+    private func setup3DTouch() {
+        if traitCollection.forceTouchCapability == .available {
+            registerForPreviewing(with: self, sourceView: view)
+        }
     }
     
     private func loadBooks(isPublic: Bool) {
@@ -74,7 +81,7 @@ class HomeViewController: UIViewController {
     /// Go to reader screen with book
     private func openReader(book: Book?) {
         guard let book = book else { return }
-//        book.remove()
+        // book.remove()
         let vc = PdfReaderViewController.instantiate(book: book)
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -219,6 +226,37 @@ extension HomeViewController: UIDocumentPickerDelegate {
                 compleation()
             }
         }
+    }
+}
+
+// MARK: - UIViewControllerPreviewingDelegate
+extension HomeViewController: UIViewControllerPreviewingDelegate {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        if let indexPath = collectionView.indexPathForItem(at: location), let cellAttributes = collectionView.layoutAttributesForItem(at: indexPath) {
+            previewingContext.sourceRect = cellAttributes.frame
+            
+            // TODO: move to VM
+            guard let type = SectionType(rawValue: indexPath.section) else { return nil }
+            var dataSource: DataSource<Book>?
+            switch type {
+            case .all:
+                dataSource = viewModel.booksDataSource
+            default:
+                dataSource = viewModel.myBooksDataSource
+            }
+            guard let book = dataSource?[indexPath.item] else { return nil }
+
+            return PdfReaderViewController.instantiate(book: book)
+        }
+        return nil
+    }
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        navigationController?.pushViewController(viewControllerToCommit, animated: true)
+    }
+    
+    override var previewActionItems: [UIPreviewActionItem] {
+        return []
     }
 }
 

@@ -53,8 +53,11 @@ final class Book: Object {
                     block(book, nil)
                 }
 
-                let task = tasks["contents"]
-                // TODO: show task progress
+                let _ = tasks["contents"]?.observe(.progress) { snapshot in
+                    // TODO: show task progress
+                    // https://firebase.google.com/docs/storage/ios/upload-files?authuser=0
+                    print(snapshot)
+                }
                 
             // In case when this book is already stored on server
             } else if book != nil {
