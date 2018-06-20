@@ -8,6 +8,7 @@
 
 import UIKit
 import Pring
+import FirebaseFirestore
 
 @objcMembers
 final class Book: Object {
@@ -32,29 +33,49 @@ final class Book: Object {
                 print(e.localizedDescription)
                 return
             }
+            
+            // In case when this book is totally new
             if book == nil {
                 let book = Book(id: hashID)
                 if let u = fileUrl {
-                    book.contents = File(url: u, mimeType: .pdf)
+                    book.contents = File(url: u, name: "book", mimeType: .pdf)
                 }
                 
                 User.default?.books.insert(book)
                 User.default?.update()
                 
                 let tasks = book.save() { ref, error in
+                    if let e = error {
+                        print(e.localizedDescription)
+                        return
+                    }
+
+                    block(book, nil)
                 }
 
                 let task = tasks["contents"]
                 // TODO: show task progress
                 
-                block(book, nil)
+            // In case when this book is already stored on server
             } else if book != nil {
+                // record as a current user's reading book
                 User.default?.books.insert(book!)
                 User.default?.update()
                 
                 block(book, nil)
             }
         }
+    }
+    
+    func remove() {
+        let batch = Firestore.firestore().batch()
+        batch.add(.delete, object: self)
+        
+        // FIXME: these remove should be executed in a batch
+        User.default?.books.delete(id: id)
+        User.default?.readStatuses.delete(id: id)
+        
+        batch.commit()
     }
     
     func saveHighlight(text: String?, pageNumber: Int?, bounds: CGRect?) -> Highlight? {

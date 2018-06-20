@@ -74,6 +74,7 @@ class HomeViewController: UIViewController {
     /// Go to reader screen with book
     private func openReader(book: Book?) {
         guard let book = book else { return }
+//        book.remove()
         let vc = PdfReaderViewController.instantiate(book: book)
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -92,9 +93,13 @@ class HomeViewController: UIViewController {
         }
     }
     
+    private func removeBook() {
+        
+    }
+    
     // MARK: - IBActions
     
-    @IBAction func handleOpenICloud(_ sender: Any) {
+    @IBAction private func handleOpenICloud(_ sender: Any) {
         let documentPickerController = UIDocumentPickerViewController(documentTypes: [/* "org.idpf.epub-container", */"com.adobe.pdf"], in: .import)
         documentPickerController.delegate = self
         present(documentPickerController, animated: true)
@@ -114,6 +119,7 @@ extension HomeViewController: HomeViewModelDelegate {
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let type = SectionType(rawValue: indexPath.section) else { return }
+        
         var book: Book?
         switch type {
         case .all:
