@@ -18,12 +18,6 @@ class HomeViewController: UIViewController {
     
     private let viewModel = HomeViewModel()
     
-    enum SectionType: Int {
-        case all, mine
-        
-        static func numberOfItems() -> Int { return 2 }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,8 +42,12 @@ class HomeViewController: UIViewController {
         flowLayout.itemSize = CGSize(width: cellWidth, height: cellWidth * 1.8)
         flowLayout.minimumLineSpacing = margin
         flowLayout.minimumInteritemSpacing = margin
-        flowLayout.sectionInset = UIEdgeInsets(top: margin * 2, left: margin * 2, bottom: margin * 2, right: margin * 2)
+        flowLayout.sectionInset = UIEdgeInsets(top: margin, left: margin * 2, bottom: margin * 2, right: margin * 2)
+        flowLayout.headerReferenceSize = CGSize(width: view.bounds.width, height: 40)
+
         collectionView.collectionViewLayout = flowLayout
+        
+        collectionView.register(HomeBooksHeaderView.instantiate(), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: HomeBooksHeaderView.identifier)
     }
     
     private func setup3DTouch() {
@@ -58,18 +56,17 @@ class HomeViewController: UIViewController {
         }
     }
     
-    private func loadBooks(isPublic: Bool) {
-        viewModel.loadBooks(isPublic: isPublic) { [weak self] snapshot, changes in
+    private func loadBooks(type: HomeSectionType) {
+        viewModel.loadBooks(type: type) { [weak self] snapshot, changes in
             guard let collectionView = self?.collectionView else { return }
             switch changes {
             case .initial:
                 collectionView.reloadData()
             case .update(let deletions, let insertions, let modifications):
-                let section = isPublic ? SectionType.all.rawValue : SectionType.mine.rawValue
                 collectionView.performBatchUpdates({
-                    collectionView.insertItems(at: insertions.map { IndexPath(row: $0, section: section) })
-                    collectionView.deleteItems(at: deletions.map { IndexPath(row: $0, section: section) })
-                    collectionView.reloadItems(at: modifications.map { IndexPath(row: $0, section: section) })
+                    collectionView.insertItems(at: insertions.map { IndexPath(row: $0, section: type.rawValue) })
+                    collectionView.deleteItems(at: deletions.map { IndexPath(row: $0, section: type.rawValue) })
+                    collectionView.reloadItems(at: modifications.map { IndexPath(row: $0, section: type.rawValue) })
                 })
             case .error(let error):
                 print(error)
@@ -116,8 +113,8 @@ class HomeViewController: UIViewController {
 // MARK: - HomeViewModelDelegate
 extension HomeViewController: HomeViewModelDelegate {
     func onSignin() {
-        loadBooks(isPublic: true)
-        loadBooks(isPublic: false)
+        loadBooks(type: .all)
+        loadBooks(type: .mine)
         stopAnimating()
     }
 }
@@ -125,35 +122,19 @@ extension HomeViewController: HomeViewModelDelegate {
 // MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let type = SectionType(rawValue: indexPath.section) else { return }
-        
-        var book: Book?
-        switch type {
-        case .all:
-            book = viewModel.booksDataSource?[indexPath.item]
-        case .mine:
-            book = viewModel.myBooksDataSource?[indexPath.item]
-        }
-        if let b = book {
-            openReader(book: b)
-        }
+        guard let book = viewModel.book(at: indexPath) else { return }
+        openReader(book: book)
     }
 }
 
 // MARK: - UICollectionViewDataSource
 extension HomeViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return SectionType.numberOfItems()
+        return HomeSectionType.numberOfItems()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let type = SectionType(rawValue: section) else { return 0 }
-        switch type {
-        case .all:
-            return viewModel.booksDataSource?.count ?? 0
-        case .mine:
-            return viewModel.myBooksDataSource?.count ?? 0
-        }
+        return viewModel.booksCount(at: section)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -162,16 +143,17 @@ extension HomeViewController: UICollectionViewDataSource {
         return cell
     }
     
-    func configure(_ cell: BookCollectionViewCell, at indexPath: IndexPath) {
-        var dataSource: DataSource<Book>?
-        guard let type = SectionType(rawValue: indexPath.section) else { return }
-        switch type {
-        case .all:
-            dataSource = viewModel.booksDataSource
-        default:
-            dataSource = viewModel.myBooksDataSource
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionElementKindSectionHeader {
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: HomeBooksHeaderView.identifier, for: indexPath) as! HomeBooksHeaderView
+            header.render(text: viewModel.headerText(at: indexPath))
+            return header
         }
-        guard let book = dataSource?[indexPath.item] else { return }
+        return UICollectionReusableView()
+    }
+    
+    func configure(_ cell: BookCollectionViewCell, at indexPath: IndexPath) {
+        guard let book = viewModel.book(at: indexPath) else { return }
         cell.render(title: book.id, imageURL: book.thumbnail?.downloadURL)
         cell.disposer = book.listen { book, error in
             cell.render(title: book?.title ?? "No Name.", imageURL: book?.thumbnail?.downloadURL)
@@ -235,17 +217,7 @@ extension HomeViewController: UIViewControllerPreviewingDelegate {
         if let indexPath = collectionView.indexPathForItem(at: location), let cellAttributes = collectionView.layoutAttributesForItem(at: indexPath) {
             previewingContext.sourceRect = cellAttributes.frame
             
-            // TODO: move to VM
-            guard let type = SectionType(rawValue: indexPath.section) else { return nil }
-            var dataSource: DataSource<Book>?
-            switch type {
-            case .all:
-                dataSource = viewModel.booksDataSource
-            default:
-                dataSource = viewModel.myBooksDataSource
-            }
-            guard let book = dataSource?[indexPath.item] else { return nil }
-
+            guard let book = viewModel.book(at: indexPath) else { return nil }
             return PdfReaderViewController.instantiate(book: book)
         }
         return nil

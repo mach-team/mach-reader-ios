@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HomeBooksHeaderView" id="cPc-wx-7rY" customClass="HomeBooksHeaderView" customModule="MachReader" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="484" height="77"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="header" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O6a-Ma-KHE">
+                    <rect key="frame" x="24" y="28.5" width="76" height="20"/>
+                    <fontDescription key="fontDescription" name="HiraginoSans-W6" family="Hiragino Sans" pointSize="20"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <constraints>
+                <constraint firstItem="O6a-Ma-KHE" firstAttribute="leading" secondItem="lMF-Fl-DsP" secondAttribute="leading" constant="24" id="Exc-EO-mnB"/>
+                <constraint firstItem="O6a-Ma-KHE" firstAttribute="centerY" secondItem="cPc-wx-7rY" secondAttribute="centerY" id="l2X-sp-d21"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="lMF-Fl-DsP"/>
+            <connections>
+                <outlet property="headerLabel" destination="O6a-Ma-KHE" id="NZn-95-PBq"/>
+            </connections>
+            <point key="canvasLocation" x="46" y="-183.5"/>
+        </collectionReusableView>
+    </objects>
+</document>

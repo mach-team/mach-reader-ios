@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Home View Controller-->
+        <!--マッハリーダー-->
         <scene sceneID="cec-zL-vG3">
             <objects>
                 <viewController id="a05-Is-u2L" customClass="HomeViewController" customModule="MachReader" customModuleProvider="target" sceneMemberID="viewController">
@@ -77,7 +77,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hhG-Au-fnr"/>
                     </view>
-                    <navigationItem key="navigationItem" id="CLX-Dg-ren"/>
+                    <navigationItem key="navigationItem" title="マッハリーダー" id="CLX-Dg-ren"/>
                     <connections>
                         <outlet property="collectionView" destination="jEv-vG-DeT" id="W4h-xV-WOd"/>
                     </connections>
@@ -91,9 +91,15 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="5tm-Rb-YWg" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="fon-vp-i3s">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="fon-vp-i3s">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="textShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

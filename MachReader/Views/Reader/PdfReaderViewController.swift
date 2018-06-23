@@ -103,6 +103,7 @@ class PdfReaderViewController: UIViewController {
         let openHighlightListButton = UIBarButtonItem(title: "Highlights", style: .plain, target: self, action: #selector(handleHighlightListAction(_:)))
         let settingsButton = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(handleSettingsAction(_:)))
 
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         //navigationItem.rightBarButtonItem = openHighlightListButton
         navigationItem.rightBarButtonItems = [openHighlightListButton, settingsButton]
     }
