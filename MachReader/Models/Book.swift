@@ -22,10 +22,18 @@ final class Book: Object {
     dynamic var contents: File?
     dynamic var thumbnail: File?
     dynamic var isPublic: Bool = false
+    dynamic var uploadUserID: String?
     dynamic var viewers: ReferenceCollection<User> = []
     dynamic var highlights: NestedCollection<Highlight> = []
     
     private(set) var highlightDataSource: DataSource<Highlight>?
+    
+    var isMine: Bool {
+        if let uploader = uploadUserID, let userID = User.default?.id {
+            return uploader == userID
+        }
+        return false
+    }
     
     static func findOrCreate(by hashID: String, fileUrl: URL? = nil, block: @escaping (Book?, Error?) -> Void) {
         Book.get(hashID) { (book, error) in
@@ -37,6 +45,7 @@ final class Book: Object {
             // In case when this book is totally new
             if book == nil {
                 let book = Book(id: hashID)
+                book.uploadUserID = User.default?.id
                 if let u = fileUrl {
                     book.contents = File(url: u, name: "book", mimeType: .pdf)
                 }
@@ -89,17 +98,32 @@ final class Book: Object {
         return highlight
     }
     
-    func getHighlights(page: Int, block: @escaping ((Highlight?, Error?) -> Void)) {
-        highlightDataSource = highlights
-            .where(\Highlight.page, isEqualTo: String(page))
-            .dataSource()
-            .on({ (snapshot, changes) in
-                // do something
-            })
-            .onCompleted() { snapshot, storedHighlights in
-                storedHighlights.forEach { storedHighlight in
-                    block(storedHighlight, nil)
-                }
-            }.listen()
+    func getHighlights(page: Int, withOthers: Bool, block: @escaping ((Highlight?, Error?) -> Void)) {
+        if withOthers {
+            highlightDataSource = highlights
+                .where(\Highlight.page, isEqualTo: String(page))
+                .dataSource()
+                .on({ (snapshot, changes) in
+                    // do something
+                })
+                .onCompleted() { snapshot, storedHighlights in
+                    storedHighlights.forEach { storedHighlight in
+                        block(storedHighlight, nil)
+                    }
+                }.listen()
+        } else {
+            highlightDataSource = highlights
+                .where(\Highlight.page, isEqualTo: String(page))
+                .where(\Highlight.userID, isEqualTo: User.default!.id)
+                .dataSource()
+                .on({ (snapshot, changes) in
+                    // do something
+                })
+                .onCompleted() { snapshot, storedHighlights in
+                    storedHighlights.forEach { storedHighlight in
+                        block(storedHighlight, nil)
+                    }
+                }.listen()
+        }
     }
 }

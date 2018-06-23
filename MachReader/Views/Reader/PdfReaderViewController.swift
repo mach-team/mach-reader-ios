@@ -101,8 +101,10 @@ class PdfReaderViewController: UIViewController {
 
     private func setupNavBar() {
         let openHighlightListButton = UIBarButtonItem(title: "Highlights", style: .plain, target: self, action: #selector(handleHighlightListAction(_:)))
-        
-        navigationItem.rightBarButtonItem = openHighlightListButton
+        let settingsButton = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(handleSettingsAction(_:)))
+
+        //navigationItem.rightBarButtonItem = openHighlightListButton
+        navigationItem.rightBarButtonItems = [openHighlightListButton, settingsButton]
     }
     
     /// Customize UIMenuController.
@@ -135,6 +137,13 @@ class PdfReaderViewController: UIViewController {
     
     @objc private func handleHighlightListAction(_ sender: Any) {
         let vc = HighlightListViewController.instantiate(book: viewModel.book)
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .formSheet
+        present(nav, animated: true)
+    }
+    
+    @objc private func handleSettingsAction(_ sender: Any) {
+        let vc = BookSettingsViewController.instantiate(book: viewModel.book)
         let nav = UINavigationController(rootViewController: vc)
         nav.modalPresentationStyle = .formSheet
         present(nav, animated: true)
@@ -197,6 +206,7 @@ class PdfReaderViewController: UIViewController {
     }
 }
 
+// MAEK: - PdfReaderViewModelDelegate
 extension PdfReaderViewController: PdfReaderViewModelDelegate {
     func go(to pageNumber: Int) {
         guard let page = pdfView.document?.page(at: pageNumber) else { return }

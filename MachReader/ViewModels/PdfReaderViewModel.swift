@@ -60,7 +60,8 @@ class PdfReaderViewModel {
     }
     
     func loadHighlights(page: Int, completion: @escaping (Highlight) -> ()) {
-        book.getHighlights(page: page) { [weak self] highlight, error in
+        let withOthers = UserDefaultsUtil.showOthersHighlight
+        book.getHighlights(page: page, withOthers: withOthers) { [weak self] highlight, error in
             guard let `self` = self else { return }
             guard let h = highlight else { return }
             
