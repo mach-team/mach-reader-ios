@@ -44,8 +44,8 @@ class PdfReaderViewModel {
             book.author = attr["Author"] as? String
             guard let firstPage = document.page(at: 0) else { return }
             let uiImage = firstPage.thumbnail(of: CGSize(width: 400, height: 400 / 0.7), for: .artBox)
-            guard let imageData = UIImagePNGRepresentation(uiImage) else { return }
-            book.thumbnail = File(data: imageData, mimeType: .png)
+            guard let imageData = UIImageJPEGRepresentation(uiImage, 1) else { return }
+            book.thumbnail = File(data: imageData, mimeType: .jpeg)
             book.isPublic = false
             book.update()
         }

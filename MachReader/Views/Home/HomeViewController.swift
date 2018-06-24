@@ -88,7 +88,7 @@ class HomeViewController: UIViewController {
         }
         
         // FOR DEBUG
-        // book.remove()
+//         book.remove()
     }
     
     /// open sample.pdf
@@ -185,9 +185,17 @@ extension HomeViewController: UIDocumentPickerDelegate {
         }
         
         wait( { return id == nil } ) {
-            Book.findOrCreate(by: id!, fileUrl: url) { [weak self] book, error in
-                self?.openReader(book: book)
-                self?.stopAnimating()
+            Book.findOrCreate(by: id!, fileUrl: url) { [unowned self] book, error in
+                self.stopAnimating()
+                    
+                if let e = error {
+                    DispatchQueue.main.async {
+                        self.stopAnimating()
+                        e.displayAlert()
+                    }
+                }
+                
+                self.openReader(book: book)
             }
         }
     }
