@@ -84,7 +84,7 @@ class HomeViewModel {
     // MARK: - private methods
     
     private func loadPublicBooks(completion: @escaping ((QuerySnapshot?, CollectionChange) -> Void)) {
-        booksDataSource = Book.where(\Book.isPublic, isEqualTo: true).order(by: \Book.createdAt).limit(to: 30).dataSource()
+        booksDataSource = Book.where(\Book.isPublic, isEqualTo: true).order(by: \Book.updatedAt).limit(to: 30).dataSource()
             .on({ (snapshot, changes) in
                 completion(snapshot, changes)
             })

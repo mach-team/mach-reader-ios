@@ -78,9 +78,17 @@ class HomeViewController: UIViewController {
     /// Go to reader screen with book
     private func openReader(book: Book?) {
         guard let book = book else { return }
+        
+        startAnimating(type: .circleStrokeSpin)
+        
+        // Note: without this asyncAfter animation does not start
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+            let vc = PdfReaderViewController.instantiate(book: book)
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
+        // FOR DEBUG
         // book.remove()
-        let vc = PdfReaderViewController.instantiate(book: book)
-        navigationController?.pushViewController(vc, animated: true)
     }
     
     /// open sample.pdf

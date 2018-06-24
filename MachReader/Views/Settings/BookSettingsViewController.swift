@@ -64,7 +64,7 @@ class BookSettingsViewController: UIViewController {
     }
     
     @IBAction func handleBookPrivateSwitch(_ sender: UISwitch) {
-        viewModel.changeBookOpenScope(isPublic: !sender.isOn)
+        viewModel.changeBookOpenScope(isPublic: sender.isOn)
     }
     
 }

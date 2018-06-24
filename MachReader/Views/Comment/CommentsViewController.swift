@@ -42,7 +42,7 @@ class CommentsViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        NotificationObserver.removeAll(from: self)
+        NotificationObserver.remove(name: .UIKeyboardWillChangeFrame)
     }
 
     // MARK: - Private methods

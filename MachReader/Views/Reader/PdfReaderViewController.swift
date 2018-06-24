@@ -39,20 +39,26 @@ class PdfReaderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        startAnimating(type: .circleStrokeSpin)
+        // this is not necessary becasuse animation is triggered in previous screen.
+        // startAnimating(type: .circleStrokeSpin)
         
         viewModel.delegate = self
-        
-        NotificationObserver.add(name: .PDFViewAnnotationHit, method: handleHitAnnotation)
-        NotificationObserver.add(name: .PDFViewPageChanged, method: handlePageChanged)
-        NotificationObserver.add(name: .UIApplicationWillResignActive, method: handleSaveCurrentPage)
         
         setupDocument()
         setupPDFView()
         setupNavBar()
         createMenu()
         
+        
         drawStoredHighlights()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NotificationObserver.add(name: .PDFViewAnnotationHit, method: handleHitAnnotation)
+        NotificationObserver.add(name: .PDFViewPageChanged, method: handlePageChanged)
+        NotificationObserver.add(name: .UIApplicationWillResignActive, method: handleSaveCurrentPage)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -65,7 +71,10 @@ class PdfReaderViewController: UIViewController {
         super.viewDidDisappear(animated)
         
         viewModel.saveCurrentPageNumber(currentPageNumber)
-        NotificationObserver.removeAll(from: self)
+    }
+    
+    deinit {
+        NotificationObserver.removeAll()
     }
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
@@ -152,12 +161,12 @@ class PdfReaderViewController: UIViewController {
     
     /// Fetch Highlights stored at Firestore and display those annotation views.
     private func drawStoredHighlights() {
-        viewModel.loadHighlights(page: currentPageNumber) { highlight in
-            guard let selection = self.pdfView.document?.findString(highlight.text ?? "", withOptions: .caseInsensitive).first else { return }
+        viewModel.loadHighlights(page: currentPageNumber) { [weak self] highlight in
+            guard let selection = self?.pdfView.document?.findString(highlight.text ?? "", withOptions: .caseInsensitive).first else { return }
             guard let page = selection.pages.first else { return }
             let isMine = highlight.userID == User.default?.id
             
-            self.addHighlightView(selection: selection, page: page, isMine: isMine)
+            self?.addHighlightView(selection: selection, page: page, isMine: isMine)
         }
     }
     
