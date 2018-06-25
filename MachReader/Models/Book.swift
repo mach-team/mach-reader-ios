@@ -130,8 +130,10 @@ final class Book: Object {
         return highlight
     }
     
+    // TODO: This method should be moved to VM
     func getHighlights(page: Int, withOthers: Bool, block: @escaping ((Highlight?, Error?) -> Void)) {
         if withOthers {
+            // TODO: filter with isPublic but this should consider the case if a user set isPrivateActivity true, the query is not easy...
             highlightDataSource = highlights
                 .where(\Highlight.page, isEqualTo: String(page))
                 .dataSource()

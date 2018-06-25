@@ -19,6 +19,7 @@ final class Highlight: Object {
     dynamic var width: Double = 0
     dynamic var height: Double = 0
     dynamic var userID: String?
+    dynamic var isPublic: Bool = true
     dynamic var comments: NestedCollection<Comment> = []
     
     static func new(text: String, page: Int, bounds: CGRect) -> Highlight {
@@ -31,6 +32,7 @@ final class Highlight: Object {
         highlight.width = Double(bounds.width)
         highlight.height = Double(bounds.height)
         highlight.userID = User.default?.id
+        highlight.isPublic = !UserDefaultsUtil.isPrivateActivity
         
         return highlight
     }
@@ -59,6 +61,13 @@ final class Highlight: Object {
     var bounds: CGRect {
         let b = CGRect(x: CGFloat(originX), y: CGFloat(originY), width: CGFloat(width), height: CGFloat(height))
         return b
+    }
+    
+    var isMine: Bool {
+        if let uid = userID, let userID = User.default?.id {
+            return uid == userID
+        }
+        return false
     }
     
     func saveComment(text: String?) {
