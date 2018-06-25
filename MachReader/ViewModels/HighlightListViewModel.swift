@@ -30,14 +30,14 @@ class HighlightListViewModel {
             .where(\Highlight.userID, isEqualTo: userID)
             .order(by: \Highlight.createdAt)
             .dataSource()
-            .on() { (snapshot, changes) in
-                completion(snapshot, changes)
-            }
             .on(parse: { (_, highlight, done) in
                 highlight.comments.get() { (snapshot, comments) in
                     done(highlight)
                 }
             })
+            .on() { (snapshot, changes) in
+                completion(snapshot, changes)
+            }
             .listen()
     }
     

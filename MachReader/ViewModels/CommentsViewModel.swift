@@ -28,7 +28,12 @@ class CommentsViewModel {
     }
     
     func loadComments(completion: @escaping ((QuerySnapshot?, CollectionChange) -> Void)) {
-        dataSource = highlight.comments.order(by: \Comment.createdAt).limit(to: 30).dataSource()
+        dataSource = highlight.comments.order(by: \Comment.updatedAt).limit(to: 30).dataSource()
+            .on(parse: { (_, comment, done) in
+                comment.loadUser() {
+                    done(comment)
+                }
+            })
             .on({ (snapshot, changes) in
                 completion(snapshot, changes)
             })

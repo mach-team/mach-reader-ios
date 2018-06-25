@@ -185,10 +185,12 @@ extension CommentsViewController: UITableViewDataSource {
     
     func configure(_ cell: CommentTableViewCell, at indexPath: IndexPath) {
         guard let comment = viewModel.comment(at: indexPath) else { return }
-        
-        cell.render(text: comment.text ?? "", avatarURL: User.default?.avatar?.downloadURL)
+
+        cell.render(text: comment.text ?? "", avatarURL: comment.user?.avatar?.downloadURL)
         cell.disposer = comment.listen { (comment, error) in
-            cell.render(text: comment?.text ?? "", avatarURL: User.default?.avatar?.downloadURL)
+            comment?.loadUser() {
+                cell.render(text: comment?.text ?? "", avatarURL: comment?.user?.avatar?.downloadURL)
+            }
         }
     }
     
