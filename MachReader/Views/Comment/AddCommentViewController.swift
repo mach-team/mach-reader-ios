@@ -16,14 +16,12 @@ class AddCommentViewController: UIViewController {
     
     private var highlight = Highlight()
     private var book = Book()
-    private var callback: (() -> Void)? = nil
     
-    static func instantiate(highlight: Highlight, book: Book, block: (() -> Void)? = nil) -> AddCommentViewController {
+    static func instantiate(highlight: Highlight, book: Book) -> AddCommentViewController {
         let sb = UIStoryboard(name: "AddComment", bundle: nil)
         let vc = sb.instantiateInitialViewController() as! AddCommentViewController
         vc.highlight = highlight
         vc.book = book
-        vc.callback = block
         return vc
     }
     
@@ -62,9 +60,7 @@ class AddCommentViewController: UIViewController {
                 }
             }
 
-            dismiss(animated: true) { [weak self] in
-                self?.callback?()
-            }
+            dismiss(animated: true)
         }
     }
     

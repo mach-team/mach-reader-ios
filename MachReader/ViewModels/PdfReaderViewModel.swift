@@ -15,9 +15,8 @@ protocol PdfReaderViewModelDelegate: class {
 }
 
 class PdfReaderViewModel {
-    
-    // a page keeps its highlight list
-    private var visibleHighlights: Set<Highlight> = []
+
+    private var highlightDataSource: DataSource<Highlight>?
     
     init(withBook book: Book) {
         self.book = book
@@ -34,7 +33,7 @@ class PdfReaderViewModel {
     
     weak var delegate: PdfReaderViewModelDelegate?
     
-    func registerBookInfo() {
+    func registerBookInfoIfNeeded() {
         // once register a book, then downloadURL becomes non null.
         if book.thumbnail?.downloadURL != nil { return }
         
@@ -52,37 +51,48 @@ class PdfReaderViewModel {
     }
     
     func getTappedHighlight(bounds: CGRect) -> Highlight? {
-        return Highlight.filter(visibleHighlights, withBounds: bounds)
-    }
-    
-    func pageChanged() {
-        visibleHighlights = []
+        return Highlight.filter(highlightDataSource, withBounds: bounds)
     }
     
     func loadHighlights(page: Int, completion: @escaping (Highlight) -> ()) {
         let withOthers = UserDefaultsUtil.showOthersHighlight
-        book.getHighlights(page: page, withOthers: withOthers) { [weak self] highlight, error in
-            guard let `self` = self else { return }
-            guard let h = highlight else { return }
-            
-            self.visibleHighlights.insert(h)
-            completion(h)
+        if withOthers {
+            // TODO: filter with isPublic but this should consider the case if a user set isPrivateActivity true, the query is not easy...
+            highlightDataSource = book.highlights
+                .where(\Highlight.page, isEqualTo: String(page))
+                .dataSource()
+                .on({ (snapshot, changes) in
+                    // do something
+                })
+                .onCompleted() { snapshot, storedHighlights in
+                    storedHighlights.forEach { storedHighlight in
+                        completion(storedHighlight)
+                    }
+                }.listen()
+        } else {
+            highlightDataSource = book.highlights
+                .where(\Highlight.page, isEqualTo: String(page))
+                .where(\Highlight.userID, isEqualTo: User.default!.id)
+                .dataSource()
+                .on({ (snapshot, changes) in
+                    // do something
+                })
+                .onCompleted() { snapshot, storedHighlights in
+                    storedHighlights.forEach { storedHighlight in
+                        completion(storedHighlight)
+                    }
+                }.listen()
         }
     }
     
     func saveHighlight(text: String, page: Int, bounds: CGRect) {
-        let highlight = book.saveHighlight(text: text, pageNumber: page, bounds: bounds)
-        if highlight != nil { addVisibleHighlight(highlight!) }
+        let _ = book.saveHighlight(text: text, pageNumber: page, bounds: bounds)
     }
     
     func newHighlight(text: String, page: Int, bounds: CGRect) -> Highlight {
         return Highlight.new(text: text, page: page, bounds: bounds)
     }
-    
-    func addVisibleHighlight(_ highlight: Highlight) {
-        visibleHighlights.insert(highlight)
-    }
-    
+
     func loadLastClosePageNumber() {
         User.default?.readStatuses.get(self.book.id) { readStatus, error in
             self.delegate?.go(to: readStatus?.pageNumber ?? 0)
@@ -90,17 +100,6 @@ class PdfReaderViewModel {
     }
     
     func saveCurrentPageNumber(_ page: Int) {
-        User.default?.readStatuses
-            .get(self.book.id) { readStatus, error in
-                if let rs = readStatus {
-                    rs.pageNumber = page
-                    rs.update()
-                } else {
-                    let readStatus = ReadStatus(id: self.book.id)
-                    readStatus.pageNumber = page
-                    User.default?.readStatuses.insert(readStatus)
-                    User.default?.update()
-                }
-        }
+        ReadStatus.saveCurrentPageNumber(page, byBookID: book.id)
     }
 }

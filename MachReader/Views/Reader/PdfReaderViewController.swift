@@ -49,7 +49,6 @@ class PdfReaderViewController: UIViewController {
         setupNavBar()
         createMenu()
         
-        
         drawStoredHighlights()
     }
     
@@ -92,7 +91,7 @@ class PdfReaderViewController: UIViewController {
     private func setupDocument() {
         pdfView.document = viewModel.document
         
-        viewModel.registerBookInfo()
+        viewModel.registerBookInfoIfNeeded()
     }
     
     /// Base settings for PDFView.
@@ -137,7 +136,6 @@ class PdfReaderViewController: UIViewController {
     
     /// Notification handler for the current page change.
     @objc private func handlePageChanged(notification: Notification) {
-        viewModel.pageChanged()
         drawStoredHighlights()
     }
     
@@ -164,9 +162,8 @@ class PdfReaderViewController: UIViewController {
         viewModel.loadHighlights(page: currentPageNumber) { [weak self] highlight in
             guard let selection = self?.pdfView.document?.findString(highlight.text ?? "", withOptions: .caseInsensitive).first else { return }
             guard let page = selection.pages.first else { return }
-            let isMine = highlight.userID == User.default?.id
             
-            self?.addHighlightView(selection: selection, page: page, isMine: isMine)
+            self?.addHighlightView(selection: selection, page: page, isMine: highlight.isMine)
         }
     }
     
@@ -204,10 +201,7 @@ class PdfReaderViewController: UIViewController {
 
         let h = viewModel.newHighlight(text: text, page: pageNumber, bounds: currentSelection.bounds(for: page))
         
-        let vc = AddCommentViewController.instantiate(highlight: h, book: viewModel.book) { [weak self] in
-            self?.addHighlightView(selection: currentSelection, page: page, isMine: true)
-            self?.viewModel.addVisibleHighlight(h)
-        }
+        let vc = AddCommentViewController.instantiate(highlight: h, book: viewModel.book)
         
         let nav = UINavigationController(rootViewController: vc)
         nav.modalPresentationStyle = .formSheet
