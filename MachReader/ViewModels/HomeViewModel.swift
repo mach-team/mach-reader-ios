@@ -30,8 +30,8 @@ enum HomeSectionType: Int {
 }
 
 class HomeViewModel {
-    private(set) var booksDataSource: DataSource<Book>?
-    private(set) var myBooksDataSource: DataSource<Book>?
+    private var booksDataSource: DataSource<Book>?
+    private var myBooksDataSource: DataSource<Book>?
     
     weak var delegate: HomeViewModelDelegate?
     

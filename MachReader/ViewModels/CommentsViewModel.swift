@@ -13,7 +13,7 @@ import Firebase
 class CommentsViewModel {
     
     private let highlight: Highlight
-    private(set) var dataSource: DataSource<Comment>?
+    private var dataSource: DataSource<Comment>?
     
     init(_ highlight: Highlight) {
         self.highlight = highlight
@@ -45,6 +45,6 @@ class CommentsViewModel {
     }
     
     func saveComment(text: String?) {
-        highlight.saveComment(text: text)
+        Comment.save(text: text, highlight: highlight)
     }
 }

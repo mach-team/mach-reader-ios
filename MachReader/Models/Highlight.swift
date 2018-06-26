@@ -72,14 +72,10 @@ final class Highlight: Object {
         return false
     }
     
-    func saveComment(text: String?) {
-        guard let text = text else { return }
-        let comment = Comment()
-        comment.text = text
-        comment.userID = User.default?.id
-        comments.insert(comment)
-        update() { error in
-            print(error.debugDescription)
-        }
+    static func save(inBook book: Book, text: String, pageNumber: Int, bounds: CGRect) -> Highlight? {
+        let highlight = Highlight.new(text: text, page: pageNumber, bounds: bounds)
+        book.highlights.insert(highlight)
+        book.update() { error in print(error.debugDescription) }
+        return highlight
     }
 }

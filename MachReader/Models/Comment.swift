@@ -24,4 +24,15 @@ final class Comment: Object {
             completion()
         }
     }
+    
+    static func save(text: String?, highlight: Highlight) {
+        guard let text = text else { return }
+        let comment = Comment()
+        comment.text = text
+        comment.userID = User.default?.id
+        highlight.comments.insert(comment)
+        highlight.update() { error in
+            print(error.debugDescription)
+        }
+    }
 }

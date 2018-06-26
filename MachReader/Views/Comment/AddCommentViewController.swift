@@ -54,7 +54,7 @@ class AddCommentViewController: UIViewController {
             book.highlights.insert(highlight)
             book.update() { [weak self] error in
                 if error == nil {
-                    self?.highlight.saveComment(text: self?.commentTextView.text)
+                    Comment.save(text: self?.commentTextView.text, highlight: self!.highlight)
                 } else {
                     print(error.debugDescription)
                 }

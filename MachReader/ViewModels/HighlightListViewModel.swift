@@ -24,7 +24,6 @@ class HighlightListViewModel {
 
     func loadHighlights(completion: @escaping ((QuerySnapshot?, CollectionChange) -> Void)) {
         guard let userID = User.default?.id else { return }
-        // FIXME: same logic is written in Book model...
         // TODO: switch using withOthers option
         highlightDataSource = book.highlights
             .where(\Highlight.userID, isEqualTo: userID)

@@ -38,15 +38,7 @@ class PdfReaderViewModel {
         if book.thumbnail?.downloadURL != nil { return }
         
         if let document = document {
-            guard let attr = document.documentAttributes else { return }
-            book.title = attr["Title"] as? String
-            book.author = attr["Author"] as? String
-            guard let firstPage = document.page(at: 0) else { return }
-            let uiImage = firstPage.thumbnail(of: CGSize(width: 400, height: 400 / 0.7), for: .artBox)
-            guard let imageData = UIImageJPEGRepresentation(uiImage, 1) else { return }
-            book.thumbnail = File(data: imageData, mimeType: .jpeg)
-            book.isPublic = false
-            book.update()
+            book.update(fromDocument: document)
         }
     }
     
@@ -86,7 +78,7 @@ class PdfReaderViewModel {
     }
     
     func saveHighlight(text: String, page: Int, bounds: CGRect) {
-        let _ = book.saveHighlight(text: text, pageNumber: page, bounds: bounds)
+        let _ = Highlight.save(inBook: book, text: text, pageNumber: page, bounds: bounds)
     }
     
     func newHighlight(text: String, page: Int, bounds: CGRect) -> Highlight {

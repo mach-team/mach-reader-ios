@@ -10,6 +10,7 @@ import UIKit
 import Pring
 import Firebase
 import FirebaseFirestore
+import PDFKit
 
 @objcMembers
 final class Book: Object {
@@ -26,8 +27,6 @@ final class Book: Object {
     dynamic var uploadUserID: String?
     dynamic var viewers: ReferenceCollection<User> = []
     dynamic var highlights: NestedCollection<Highlight> = []
-    
-    private(set) var highlightDataSource: DataSource<Highlight>?
     
     var isMine: Bool {
         if let uploader = uploadUserID, let userID = User.default?.id {
@@ -122,42 +121,15 @@ final class Book: Object {
         batch.commit()
     }
     
-    func saveHighlight(text: String?, pageNumber: Int?, bounds: CGRect?) -> Highlight? {
-        guard let text = text, let page = pageNumber, let bounds = bounds else { return nil }
-        let highlight = Highlight.new(text: text, page: page, bounds: bounds)
-        highlights.insert(highlight)
-        update()
-        return highlight
-    }
-    
-    // TODO: This method should be moved to VM
-    func getHighlights(page: Int, withOthers: Bool, block: @escaping ((Highlight?, Error?) -> Void)) {
-        if withOthers {
-            // TODO: filter with isPublic but this should consider the case if a user set isPrivateActivity true, the query is not easy...
-            highlightDataSource = highlights
-                .where(\Highlight.page, isEqualTo: String(page))
-                .dataSource()
-                .on({ (snapshot, changes) in
-                    // do something
-                })
-                .onCompleted() { snapshot, storedHighlights in
-                    storedHighlights.forEach { storedHighlight in
-                        block(storedHighlight, nil)
-                    }
-                }.listen()
-        } else {
-            highlightDataSource = highlights
-                .where(\Highlight.page, isEqualTo: String(page))
-                .where(\Highlight.userID, isEqualTo: User.default!.id)
-                .dataSource()
-                .on({ (snapshot, changes) in
-                    // do something
-                })
-                .onCompleted() { snapshot, storedHighlights in
-                    storedHighlights.forEach { storedHighlight in
-                        block(storedHighlight, nil)
-                    }
-                }.listen()
-        }
+    func update(fromDocument document: PDFDocument) {
+        guard let attr = document.documentAttributes else { return }
+        title = attr["Title"] as? String
+        author = attr["Author"] as? String
+        guard let firstPage = document.page(at: 0) else { return }
+        let uiImage = firstPage.thumbnail(of: CGSize(width: 400, height: 400 / 0.7), for: .artBox)
+        guard let imageData = UIImageJPEGRepresentation(uiImage, 1) else { return }
+        thumbnail = File(data: imageData, mimeType: .jpeg)
+        isPublic = false
+        update() { error in print(error.debugDescription) }
     }
 }

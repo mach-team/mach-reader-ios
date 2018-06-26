@@ -33,6 +33,10 @@ class CommentsViewController: UIViewController {
 
         NotificationObserver.add(name: .UIKeyboardWillChangeFrame, method: keyboardWillChangeFrame)
 
+        Comment.get("1CfY1g3n6oeEnFu3EvLU") { comment, error  in
+            print(comment)
+            print(error)
+        }
         setupTextView()
         setupTableView()
         setupData()
