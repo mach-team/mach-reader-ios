@@ -93,7 +93,6 @@ extension HighlightListViewController: UITableViewDataSource {
     
     func configure(_ cell: HighlightSummaryTableViewCell, at indexPath: IndexPath) {
         guard let highlight = viewModel.highlight(at: indexPath) else { return }
-        print(highlight.comments.count)
         cell.render(highlightText: highlight.text ?? "", page: highlight.page ?? "", date: highlight.createdAt, commentText: viewModel.commentText(at: indexPath))
         cell.disposer = highlight.listen { [weak self] (highlight, error) in
             cell.render(highlightText: highlight?.text ?? "", page: highlight?.page ?? "", date: highlight?.createdAt, commentText: self?.viewModel.commentText(at: indexPath))

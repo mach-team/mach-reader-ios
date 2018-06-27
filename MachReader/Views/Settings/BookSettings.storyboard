@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="W54-fm-7Oq">
-                                <rect key="frame" x="0.0" y="20" width="375" height="180"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="240"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0SS-hc-kxZ">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
@@ -124,12 +124,49 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KAp-Mx-e3q">
+                                        <rect key="frame" x="0.0" y="180" width="375" height="60"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="この本を削除する" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Zh-tH-fCG">
+                                                <rect key="frame" x="8" y="20" width="139" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NBk-aS-szb">
+                                                <rect key="frame" x="307" y="8" width="60" height="44"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="aeS-i8-mys"/>
+                                                    <constraint firstAttribute="width" constant="60" id="zof-IZ-Iiz"/>
+                                                </constraints>
+                                                <state key="normal" title="削除"/>
+                                                <connections>
+                                                    <action selector="handleRemoveBookButton:" destination="5ZZ-jM-Htm" eventType="touchUpInside" id="QiE-cl-x8P"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="8Zh-tH-fCG" firstAttribute="centerY" secondItem="KAp-Mx-e3q" secondAttribute="centerY" id="Aip-12-tM2"/>
+                                            <constraint firstItem="8Zh-tH-fCG" firstAttribute="leading" secondItem="KAp-Mx-e3q" secondAttribute="leading" constant="8" id="MQB-mg-ybT"/>
+                                            <constraint firstItem="8Zh-tH-fCG" firstAttribute="centerY" secondItem="NBk-aS-szb" secondAttribute="centerY" id="NpK-49-gZc"/>
+                                            <constraint firstAttribute="height" constant="60" id="RTe-NT-cPt"/>
+                                            <constraint firstAttribute="trailing" secondItem="NBk-aS-szb" secondAttribute="trailing" constant="8" id="nfM-Yq-BsG"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                <integer key="value" value="0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="layer.cornerColor">
+                                                <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="YSn-vc-icb" firstAttribute="top" secondItem="umw-j8-cwF" secondAttribute="bottom" id="Dq9-8H-JYI"/>
                                     <constraint firstItem="0SS-hc-kxZ" firstAttribute="leading" secondItem="W54-fm-7Oq" secondAttribute="leading" id="NHD-91-WZR"/>
                                     <constraint firstAttribute="trailing" secondItem="0SS-hc-kxZ" secondAttribute="trailing" id="R18-5G-yU9"/>
-                                    <constraint firstAttribute="bottom" secondItem="YSn-vc-icb" secondAttribute="bottom" id="dQh-w0-eek"/>
                                     <constraint firstItem="0SS-hc-kxZ" firstAttribute="top" secondItem="W54-fm-7Oq" secondAttribute="top" id="das-zD-NQg"/>
                                     <constraint firstItem="umw-j8-cwF" firstAttribute="top" secondItem="0SS-hc-kxZ" secondAttribute="bottom" id="fFz-7A-CBV"/>
                                     <constraint firstItem="umw-j8-cwF" firstAttribute="leading" secondItem="W54-fm-7Oq" secondAttribute="leading" id="ohK-zW-lwv"/>
@@ -151,6 +188,7 @@
                         <outlet property="activityPrivateSwitch" destination="DjT-Ei-ERr" id="9j9-LA-S2W"/>
                         <outlet property="bookPrivateSwitch" destination="hRc-pV-HpG" id="E2i-on-wcS"/>
                         <outlet property="bookPrivateView" destination="YSn-vc-icb" id="QXO-Q4-vif"/>
+                        <outlet property="bookRemoveView" destination="KAp-Mx-e3q" id="Y15-px-isF"/>
                         <outlet property="othersHighlightSwitch" destination="o89-3I-Mbq" id="vyK-bs-TBy"/>
                     </connections>
                 </viewController>

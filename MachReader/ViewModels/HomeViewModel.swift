@@ -15,8 +15,9 @@ protocol HomeViewModelDelegate: class {
 }
 
 enum HomeSectionType: Int {
-    case all, mine
+    case all, mine, recent
     
+    // Currently, set 2 not 3 to hide .recent
     static func numberOfItems() -> Int { return 2 }
     
     func headerText() -> String {
@@ -25,6 +26,8 @@ enum HomeSectionType: Int {
             return "公開中の本"
         case .mine:
             return "自分の本"
+        case .recent:
+            return "最近開いた本"
         }
     }
 }
@@ -32,6 +35,12 @@ enum HomeSectionType: Int {
 class HomeViewModel {
     private var booksDataSource: DataSource<Book>?
     private var myBooksDataSource: DataSource<Book>?
+    private var recentBookStatusDataSource: DataSource<ReadStatus>?
+    private var recentBooks: [Book] = [] {
+        didSet {
+            print(recentBooks)
+        }
+    }
     
     weak var delegate: HomeViewModelDelegate?
     
@@ -48,6 +57,8 @@ class HomeViewModel {
             return booksDataSource?[indexPath.item]
         case .mine:
             return myBooksDataSource?[indexPath.item]
+        case .recent:
+            return recentBooks[indexPath.item]
         }
     }
     
@@ -58,6 +69,8 @@ class HomeViewModel {
             return booksDataSource?.count ?? 0
         case .mine:
             return myBooksDataSource?.count ?? 0
+        case .recent:
+            return recentBooks.count
         }
     }
     
@@ -72,6 +85,8 @@ class HomeViewModel {
             loadPublicBooks(completion: completion)
         case .mine:
             loadPrivateBooks(completion: completion)
+        case .recent:
+            loadRecentBooks(completion: completion)
         }
     }
     
@@ -99,17 +114,18 @@ class HomeViewModel {
             .listen()
     }
     
-    /**
-     * FIXME: this is not good way to load recent books...
-     private func loadRecentBooks(completion: @escaping ((QuerySnapshot?, CollectionChange) -> Void)) {
-     User.default?.readStatuses.order(by: \ReadStatus.updatedAt).get() { (snapshot, error) in
-     snapshot?.documents.forEach { document in
-     Book.get(document.documentID) { [weak self] (book, error) in
-     guard let book = book else { return }
-     self?.recentBooks.append(book)
-     }
-     }
-     }
-     }
-     **/
+    private func loadRecentBooks(completion: @escaping ((QuerySnapshot?, CollectionChange) -> Void)) {
+        recentBookStatusDataSource = User.default?.readStatuses.order(by: \ReadStatus.updatedAt).limit(to: 30).dataSource()
+            .on(parse: { (_, readStatus, done) in
+                Book.get(readStatus.id) { book, error in
+                    self.recentBooks.append(book!)
+                }
+            })
+            .on({ (snapshot, changes) in
+            })
+            .onCompleted() { (snapshot, readStatuses) in
+            }
+            .listen()
+    }
+    
 }

@@ -21,6 +21,18 @@ final class Highlight: Object {
     dynamic var userID: String?
     dynamic var isPublic: Bool = true
     dynamic var comments: NestedCollection<Comment> = []
+
+    var bounds: CGRect {
+        let b = CGRect(x: CGFloat(originX), y: CGFloat(originY), width: CGFloat(width), height: CGFloat(height))
+        return b
+    }
+    
+    var isMine: Bool {
+        if let uid = userID, let userID = User.default?.id {
+            return uid == userID
+        }
+        return false
+    }
     
     static func new(text: String, page: Int, bounds: CGRect) -> Highlight {
         let id = SHA1.hexString(from: "\(text)\(page)")!
@@ -60,22 +72,21 @@ final class Highlight: Object {
         }.first
     }
     
-    var bounds: CGRect {
-        let b = CGRect(x: CGFloat(originX), y: CGFloat(originY), width: CGFloat(width), height: CGFloat(height))
-        return b
-    }
-    
-    var isMine: Bool {
-        if let uid = userID, let userID = User.default?.id {
-            return uid == userID
-        }
-        return false
-    }
-    
-    static func save(inBook book: Book, text: String, pageNumber: Int, bounds: CGRect) -> Highlight? {
+    static func create(inBook book: Book, text: String, pageNumber: Int, bounds: CGRect) -> Highlight? {
         let highlight = Highlight.new(text: text, page: pageNumber, bounds: bounds)
         book.highlights.insert(highlight)
         book.update() { error in print(error.debugDescription) }
         return highlight
+    }
+    
+    func save(inBook book: Book, completion: (() -> Void)? = nil) {
+        book.highlights.insert(self)
+        book.update() { error in
+            if error == nil {
+                completion?()
+            } else {
+                print(error.debugDescription)
+            }
+        }
     }
 }

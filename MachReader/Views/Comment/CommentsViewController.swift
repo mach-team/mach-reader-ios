@@ -20,10 +20,10 @@ class CommentsViewController: UIViewController {
     
     private var viewModel: CommentsViewModel!
 
-    static func instantiate(highlight: Highlight) -> CommentsViewController {
+    static func instantiate(highlight: Highlight, isNew: Bool, book: Book? = nil) -> CommentsViewController {
         let sb = UIStoryboard(name: "Comments", bundle: nil)
         let vc = sb.instantiateInitialViewController() as! CommentsViewController
-        let vm = CommentsViewModel(highlight)
+        let vm = CommentsViewModel(highlight, isNew: isNew, book: book)
         vc.viewModel = vm
         return vc
     }
@@ -33,10 +33,6 @@ class CommentsViewController: UIViewController {
 
         NotificationObserver.add(name: .UIKeyboardWillChangeFrame, method: keyboardWillChangeFrame)
 
-        Comment.get("1CfY1g3n6oeEnFu3EvLU") { comment, error  in
-            print(comment)
-            print(error)
-        }
         setupTextView()
         setupTableView()
         setupData()

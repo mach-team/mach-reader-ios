@@ -14,6 +14,8 @@ class BookSettingsViewController: UIViewController {
     @IBOutlet private weak var othersHighlightSwitch: UISwitch!
     @IBOutlet private weak var activityPrivateSwitch: UISwitch!
     @IBOutlet private weak var bookPrivateSwitch: UISwitch!
+    @IBOutlet private weak var bookRemoveView: UIView!
+    
     
     private var viewModel: BookSettingsViewModel!
     
@@ -47,7 +49,10 @@ class BookSettingsViewController: UIViewController {
         othersHighlightSwitch.isOn = !UserDefaultsUtil.showOthersHighlight
         activityPrivateSwitch.isOn = UserDefaultsUtil.isPrivateActivity
         bookPrivateSwitch.isOn = viewModel.isBookPublic
-        bookPrivateView.isHidden = viewModel.shouldHideBookPrivacyView
+        
+        // not display these views when a book is not mine.
+        bookPrivateView.isHidden = !viewModel.isBookMine
+        bookRemoveView.isHidden = !viewModel.isBookMine
     }
     
 
@@ -67,4 +72,18 @@ class BookSettingsViewController: UIViewController {
         viewModel.changeBookOpenScope(isPublic: sender.isOn)
     }
     
+    @IBAction func handleRemoveBookButton(_ sender: Any) {
+        let alert = AlertController(title: "本の削除", message: "本当に本を削除しますか？", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel)
+        let removeAction = UIAlertAction(title: "削除", style: .destructive) { [weak self] action in
+            self?.viewModel.removeBook()
+            let prevVC = self?.presentingViewController as! UINavigationController
+            self?.dismiss(animated: true) {
+                prevVC.popToRootViewController(animated: true)
+            }
+        }
+        alert.addAction(removeAction)
+        alert.addAction(cancelAction)
+        alert.show()
+    }
 }

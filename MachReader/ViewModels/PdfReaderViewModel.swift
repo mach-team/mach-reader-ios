@@ -77,8 +77,8 @@ class PdfReaderViewModel {
         }
     }
     
-    func saveHighlight(text: String, page: Int, bounds: CGRect) {
-        let _ = Highlight.save(inBook: book, text: text, pageNumber: page, bounds: bounds)
+    func createHighlight(text: String, page: Int, bounds: CGRect) {
+        let _ = Highlight.create(inBook: book, text: text, pageNumber: page, bounds: bounds)
     }
     
     func newHighlight(text: String, page: Int, bounds: CGRect) -> Highlight {

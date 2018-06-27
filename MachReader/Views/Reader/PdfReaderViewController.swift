@@ -128,7 +128,7 @@ class PdfReaderViewController: UIViewController {
         guard let annotation = notification.userInfo?["PDFAnnotationHit"] as? PDFAnnotation else { return }
         guard let h = viewModel.getTappedHighlight(bounds: annotation.bounds) else { return }
         
-        let vc = CommentsViewController.instantiate(highlight: h)
+        let vc = CommentsViewController.instantiate(highlight: h, isNew: false)
         let nav = UINavigationController(rootViewController: vc)
         nav.modalPresentationStyle = .formSheet
         present(nav, animated: true)
@@ -183,11 +183,10 @@ class PdfReaderViewController: UIViewController {
     @objc private func highlightAction(_ sender: UIMenuController?) {
         guard let currentSelection = pdfView.currentSelection else { return }
         guard let page = currentSelection.pages.first else { return }
-        
-        addHighlightView(selection: currentSelection, page: page, isMine: true)
+
         pdfView.clearSelection()
         
-        viewModel.saveHighlight(text: currentSelection.string ?? "", page: currentPageNumber, bounds: currentSelection.bounds(for: page))
+        viewModel.createHighlight(text: currentSelection.string ?? "", page: currentPageNumber, bounds: currentSelection.bounds(for: page))
     }
     
     /// Go to AddCommentViewController to save both Highlight and Comment.
@@ -201,11 +200,9 @@ class PdfReaderViewController: UIViewController {
 
         let h = viewModel.newHighlight(text: text, page: pageNumber, bounds: currentSelection.bounds(for: page))
         
-        let vc = AddCommentViewController.instantiate(highlight: h, book: viewModel.book)
-        
+        let vc = CommentsViewController.instantiate(highlight: h, isNew: true, book: viewModel.book)
         let nav = UINavigationController(rootViewController: vc)
         nav.modalPresentationStyle = .formSheet
-
         present(nav, animated: true)
     }
 }

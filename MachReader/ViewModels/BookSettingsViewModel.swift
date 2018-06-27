@@ -20,8 +20,8 @@ class BookSettingsViewModel {
         return book.isPublic
     }
     
-    var shouldHideBookPrivacyView: Bool {
-        return !book.isMine
+    var isBookMine: Bool {
+        return book.isMine
     }
     
     func showOthersHighlight(isOn: Bool) {
@@ -35,5 +35,9 @@ class BookSettingsViewModel {
     func changeBookOpenScope(isPublic: Bool) {
         book.isPublic = isPublic
         book.update()
+    }
+    
+    func removeBook() {
+        book.remove()
     }
 }

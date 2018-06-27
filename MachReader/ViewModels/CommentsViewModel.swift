@@ -13,10 +13,14 @@ import Firebase
 class CommentsViewModel {
     
     private let highlight: Highlight
+    private let book: Book?
+    private let isNewHighlight: Bool
     private var dataSource: DataSource<Comment>?
     
-    init(_ highlight: Highlight) {
+    init(_ highlight: Highlight, isNew: Bool, book: Book?) {
         self.highlight = highlight
+        self.isNewHighlight = isNew
+        self.book = book
     }
     
     var highlightText: String {
@@ -45,6 +49,13 @@ class CommentsViewModel {
     }
     
     func saveComment(text: String?) {
-        Comment.save(text: text, highlight: highlight)
+        if isNewHighlight {
+            guard let book = book else { return }
+            highlight.save(inBook: book) { [unowned self] in
+                Comment.save(text: text, highlight: self.highlight)
+            }
+        } else {
+            Comment.save(text: text, highlight: highlight)
+        }
     }
 }

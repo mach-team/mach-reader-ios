@@ -59,6 +59,7 @@ class HomeViewController: UIViewController {
     private func loadBooks(type: HomeSectionType) {
         viewModel.loadBooks(type: type) { [weak self] snapshot, changes in
             guard let collectionView = self?.collectionView else { return }
+    
             switch changes {
             case .initial:
                 collectionView.reloadData()
@@ -86,27 +87,6 @@ class HomeViewController: UIViewController {
             let vc = PdfReaderViewController.instantiate(book: book)
             self.navigationController?.pushViewController(vc, animated: true)
         }
-        
-        // FOR DEBUG
-//         book.remove()
-    }
-    
-    /// open sample.pdf
-    private func openSample() {
-        guard let path = Bundle.main.path(forResource: "sample", ofType: "pdf") else { return }
-        let pdfURL = URL(fileURLWithPath: path)
-        
-        startAnimating(type: .circleStrokeSpin)
-        
-        guard let id = SHA1.hexString(fromFile: pdfURL.path) else { return }
-        Book.findOrCreate(by: id, fileUrl: pdfURL) { [weak self] book, error in
-            self?.openReader(book: book)
-            self?.stopAnimating()
-        }
-    }
-    
-    private func removeBook() {
-        
     }
     
     // MARK: - IBActions
@@ -123,6 +103,7 @@ extension HomeViewController: HomeViewModelDelegate {
     func onSignin() {
         loadBooks(type: .all)
         loadBooks(type: .mine)
+        //loadBooks(type: .recent)
         stopAnimating()
     }
 }
