@@ -13,6 +13,7 @@ class UserDefaultsUtil {
     
     private static let keyShowOthersHighlight = "SHOW_OTHERS_HIGHLIGHT"
     private static let keyIsPrivateActivity = "IS_PRIVATE_ACTIVITY"
+    private static let keyShowOthersHighlightList = "SHOW_OTHERS_HIGHLIGHT_LIST"
 
     static var showOthersHighlight: Bool {
         set {
@@ -35,4 +36,16 @@ class UserDefaultsUtil {
             return userDefaults.bool(forKey: keyIsPrivateActivity)
         }
     }
+    
+    static var showOthersHighlightList: Bool {
+        set {
+            userDefaults.set(newValue, forKey: keyShowOthersHighlightList)
+            userDefaults.synchronize()
+        }
+        
+        get {
+            return userDefaults.bool(forKey: keyShowOthersHighlightList)
+        }
+    }
+    
 }

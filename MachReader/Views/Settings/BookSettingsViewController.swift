@@ -40,8 +40,7 @@ class BookSettingsViewController: UIViewController {
     
     private func setupNavigationBar() {
         title = "Setting"
-        // UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(handleCancelAction(_:)))
-        let backButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(handleCancelAction(_:)))
+        let backButtonItem = UIBarButtonItem(image: UIImage(named: "ic_close"), style: .plain, target: self, action: #selector(handleCancelAction(_:)))
         navigationItem.leftBarButtonItem = backButtonItem
     }
     

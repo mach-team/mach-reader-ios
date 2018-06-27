@@ -108,12 +108,12 @@ class PdfReaderViewController: UIViewController {
     }
 
     private func setupNavBar() {
-        let openHighlightListButton = UIBarButtonItem(title: "Highlights", style: .plain, target: self, action: #selector(handleHighlightListAction(_:)))
-        let settingsButton = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(handleSettingsAction(_:)))
+        let openHighlightListButton = UIBarButtonItem(image: UIImage(named: "ic_list"), style: .plain, target: self, action: #selector(handleHighlightListAction(_:)))
+        let settingsButton = UIBarButtonItem(image: UIImage(named: "ic_setting"), style: .plain, target: self, action: #selector(handleSettingsAction(_:)))
 
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        //navigationItem.rightBarButtonItem = openHighlightListButton
-        navigationItem.rightBarButtonItems = [openHighlightListButton, settingsButton]
+        navigationController?.view.tintColor = UIColor.white
+        navigationItem.rightBarButtonItems = [settingsButton, openHighlightListButton]
     }
     
     /// Customize UIMenuController.

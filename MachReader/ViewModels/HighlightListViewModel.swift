@@ -21,23 +21,42 @@ class HighlightListViewModel {
     var highlightsCount: Int {
         return highlightDataSource?.count ?? 0
     }
+    
+    var showOthersHighlightList: Bool {
+        return UserDefaultsUtil.showOthersHighlightList
+    }
 
     func loadHighlights(completion: @escaping ((QuerySnapshot?, CollectionChange) -> Void)) {
         guard let userID = User.default?.id else { return }
-        // TODO: switch using withOthers option
-        highlightDataSource = book.highlights
-            .where(\Highlight.userID, isEqualTo: userID)
-            .order(by: \Highlight.createdAt)
-            .dataSource()
-            .on(parse: { (_, highlight, done) in
-                highlight.comments.get() { (snapshot, comments) in
-                    done(highlight)
+        
+        if showOthersHighlightList {
+            highlightDataSource = book.highlights
+                .order(by: \Highlight.createdAt)
+                .dataSource()
+                .on(parse: { (_, highlight, done) in
+                    highlight.comments.get() { (snapshot, comments) in
+                        done(highlight)
+                    }
+                })
+                .on() { (snapshot, changes) in
+                    completion(snapshot, changes)
                 }
-            })
-            .on() { (snapshot, changes) in
-                completion(snapshot, changes)
-            }
-            .listen()
+                .listen()
+        } else {
+            highlightDataSource = book.highlights
+                .where(\Highlight.userID, isEqualTo: userID)
+                .order(by: \Highlight.createdAt)
+                .dataSource()
+                .on(parse: { (_, highlight, done) in
+                    highlight.comments.get() { (snapshot, comments) in
+                        done(highlight)
+                    }
+                })
+                .on() { (snapshot, changes) in
+                    completion(snapshot, changes)
+                }
+                .listen()
+        }
     }
     
     func highlight(at indexPath: IndexPath) -> Highlight? {
@@ -52,5 +71,9 @@ class HighlightListViewModel {
         var str = ""
         comments.forEach { str.append("\($0.text ?? "")\n") }
         return str
+    }
+    
+    func switchHighlightListRange() {
+        UserDefaultsUtil.showOthersHighlightList = !showOthersHighlightList
     }
 }

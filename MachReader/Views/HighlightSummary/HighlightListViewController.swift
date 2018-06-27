@@ -38,7 +38,11 @@ class HighlightListViewController: UIViewController {
     
     private func setupNavBar() {
         title = "My Note"
-        let backButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancelAction(_:)))
+        let backButtonItem = UIBarButtonItem(image: UIImage(named: "ic_close"), style: .plain, target: self, action: #selector(handleCancelAction(_:)))
+        let switchImage = viewModel.showOthersHighlightList ? UIImage(named: "ic_person") : UIImage(named: "ic_group")
+        let switchRangeButton = UIBarButtonItem(image: switchImage, style: .plain, target: self, action: #selector(handleSwitchFetchRange(_:)))
+        
+        navigationItem.rightBarButtonItem = switchRangeButton
         navigationItem.leftBarButtonItem = backButtonItem
     }
     
@@ -60,8 +64,18 @@ class HighlightListViewController: UIViewController {
         }
     }
     
+    private func refresh() {
+        // setData() FIXME: this crashes
+        setupNavBar()
+    }
+    
     @objc private func handleCancelAction(_ sender: Any) {
         dismiss(animated: true)
+    }
+    
+    @objc private func handleSwitchFetchRange(_ sender: Any) {
+        viewModel.switchHighlightListRange()
+        refresh()
     }
 }
 

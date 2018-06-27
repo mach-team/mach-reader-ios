@@ -84,9 +84,8 @@ class CommentsViewController: UIViewController {
     
     private func setupNavigationBar() {
         title = "Comments"
-        // UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(handleCancelAction(_:)))
-        let backButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancelAction(_:)))
-        let saveButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSaveAction(_:)))
+        let backButtonItem = UIBarButtonItem(image: UIImage(named: "ic_close"), style: .plain, target: self, action: #selector(handleCancelAction(_:)))
+        let saveButton = UIBarButtonItem(image: UIImage(named: "ic_check"), style: .plain, target: self, action: #selector(handleSaveAction(_:)))
         navigationItem.leftBarButtonItem = backButtonItem
         navigationItem.rightBarButtonItem = saveButton
     }
