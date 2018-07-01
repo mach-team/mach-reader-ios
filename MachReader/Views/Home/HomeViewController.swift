@@ -31,6 +31,12 @@ class HomeViewController: UIViewController {
         viewModel.delegate = self
         viewModel.sessionStart()
     }
+    
+    static func instantiate() -> UINavigationController {
+        let sb = UIStoryboard(name: "Home", bundle: nil)
+        let vc = sb.instantiateInitialViewController() as! UINavigationController
+        return vc
+    }
 
 
     // MARK: - Private methods
@@ -64,6 +70,7 @@ class HomeViewController: UIViewController {
     
     private func setupFAB() {
         let floaty = Floaty()
+        floaty.buttonColor = UIColor(red: 0/255.0, green: 168/255.0, blue: 117/255.0, alpha: 1)
         floaty.addItem("Import PDF from iCloud", icon: #imageLiteral(resourceName: "ic_icloud")) { [weak self] item in
             self?.handleOpenICloud()
             floaty.close()

@@ -51,6 +51,8 @@
 		25DFD09420E45B63001C84F5 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFD09320E45B63001C84F5 /* ShareViewController.swift */; };
 		25DFD09720E45B63001C84F5 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25DFD09520E45B63001C84F5 /* MainInterface.storyboard */; };
 		25DFD09B20E45B63001C84F5 /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 25DFD09120E45B63001C84F5 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		25DFD0B720E91675001C84F5 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFD0B620E91675001C84F5 /* InitialViewController.swift */; };
+		25DFD0B920E9167E001C84F5 /* Initial.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25DFD0B820E9167E001C84F5 /* Initial.storyboard */; };
 		BDF1A311C04A47F52E580EF1 /* Pods_MachReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07001BF1EA7BCF832DFA59ED /* Pods_MachReader.framework */; };
 		F5F6B09C1110922480412CEF /* Pods_MachReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25DFD0B320E8D656001C84F5 /* Pods_MachReader.framework */; };
 /* End PBXBuildFile section */
@@ -131,6 +133,8 @@
 		25DFD09820E45B63001C84F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25DFD09F20E67926001C84F5 /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
 		25DFD0B320E8D656001C84F5 /* Pods_MachReader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_MachReader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		25DFD0B620E91675001C84F5 /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
+		25DFD0B820E9167E001C84F5 /* Initial.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Initial.storyboard; sourceTree = "<group>"; };
 		BCA1043EB48565CAFD50F509 /* Pods-MachReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MachReader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MachReader/Pods-MachReader.debug.xcconfig"; sourceTree = "<group>"; };
 		FA562CF4233AE72D14C10969 /* Pods-MachReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MachReader.release.xcconfig"; path = "Pods/Target Support Files/Pods-MachReader/Pods-MachReader.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -197,6 +201,7 @@
 		2593F83620B8073D00319C1B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				25DFD0B520E91657001C84F5 /* Initial */,
 				25DFD02B20DBF57A001C84F5 /* Settings */,
 				25DFD01E20D67884001C84F5 /* HighlightSummary */,
 				25DFD00020C38C0E001C84F5 /* Comment */,
@@ -318,6 +323,15 @@
 			path = ShareExtension;
 			sourceTree = "<group>";
 		};
+		25DFD0B520E91657001C84F5 /* Initial */ = {
+			isa = PBXGroup;
+			children = (
+				25DFD0B620E91675001C84F5 /* InitialViewController.swift */,
+				25DFD0B820E9167E001C84F5 /* Initial.storyboard */,
+			);
+			path = Initial;
+			sourceTree = "<group>";
+		};
 		FE96C9E0DFFBF843182152D7 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -433,6 +447,7 @@
 				2593F83A20B8075500319C1B /* PdfReader.storyboard in Resources */,
 				2593F82F20B8073200319C1B /* LaunchScreen.storyboard in Resources */,
 				25DFD02820D69758001C84F5 /* HighlightSummaryTableViewCell.xib in Resources */,
+				25DFD0B920E9167E001C84F5 /* Initial.storyboard in Resources */,
 				25DFD03720DDF16E001C84F5 /* HomeBooksHeaderView.xib in Resources */,
 				2593F82C20B8073200319C1B /* Assets.xcassets in Resources */,
 				25DFCFFB20C2AA91001C84F5 /* BookCollectionViewCell.xib in Resources */,
@@ -517,6 +532,7 @@
 				"${BUILT_PRODUCTS_DIR}/GrowingTextView/GrowingTextView.framework",
 				"${BUILT_PRODUCTS_DIR}/IGIdenticon/IGIdenticon.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/LTMorphingLabel/LTMorphingLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
@@ -535,6 +551,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GrowingTextView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGIdenticon.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LTMorphingLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
@@ -571,6 +588,7 @@
 				25DFCFFE20C2AC90001C84F5 /* HomeViewModel.swift in Sources */,
 				25DFD01120CB852D001C84F5 /* RandomString.swift in Sources */,
 				25DFD03120DC6EF3001C84F5 /* UserDefaultsUtil.swift in Sources */,
+				25DFD0B720E91675001C84F5 /* InitialViewController.swift in Sources */,
 				25DFD00920C6A67B001C84F5 /* PdfReaderViewModel.swift in Sources */,
 				25DFD02020D678EE001C84F5 /* HighlightListViewController.swift in Sources */,
 				25DFD02620D69749001C84F5 /* HighlightSummaryTableViewCell.swift in Sources */,

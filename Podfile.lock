@@ -76,6 +76,7 @@ PODS:
   - IGIdenticon (0.5)
   - Kingfisher (4.8.0)
   - leveldb-library (1.20)
+  - LTMorphingLabel (0.5.6)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
@@ -101,6 +102,7 @@ DEPENDENCIES:
   - GrowingTextView (~> 0.5)
   - IGIdenticon
   - Kingfisher (~> 4.0)
+  - LTMorphingLabel
   - NVActivityIndicatorView
   - Pring
 
@@ -126,11 +128,12 @@ SPEC CHECKSUMS:
   IGIdenticon: 0f8fa2c776e35d4cb204bedbc5005ef748b263d8
   Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
+  LTMorphingLabel: bdb51d4682e9822da89da6f567bd8aa456fd6650
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NVActivityIndicatorView: 8068ba3ad39cb44cbaab25d89ff2546b3f092681
   Pring: f19fea218069951baf45858effee0acfffe229f9
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
 
-PODFILE CHECKSUM: 96fedc21386691c20101c252469d55fb8b7dcfca
+PODFILE CHECKSUM: cfd33107e278817d04accafc7fcef2cfa9271739
 
 COCOAPODS: 1.4.0

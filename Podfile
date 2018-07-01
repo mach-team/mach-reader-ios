@@ -12,6 +12,7 @@ target 'MachReader' do
   pod 'GrowingTextView', '~> 0.5'
   pod 'IGIdenticon'
   pod "Floaty", "~> 4.0.0"
+  pod 'LTMorphingLabel'
 
   pod 'Firebase/Core'
   pod 'Firebase/Firestore’
