@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2593F82520B8073200319C1B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2593F82420B8073200319C1B /* AppDelegate.swift */; };
-		2593F82720B8073200319C1B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2593F82620B8073200319C1B /* ViewController.swift */; };
-		2593F82A20B8073200319C1B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2593F82820B8073200319C1B /* Main.storyboard */; };
 		2593F82C20B8073200319C1B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2593F82B20B8073200319C1B /* Assets.xcassets */; };
 		2593F82F20B8073200319C1B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2593F82D20B8073200319C1B /* LaunchScreen.storyboard */; };
 		2593F83820B8074D00319C1B /* PdfReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2593F83720B8074D00319C1B /* PdfReaderViewController.swift */; };
@@ -54,6 +52,7 @@
 		25DFD09720E45B63001C84F5 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25DFD09520E45B63001C84F5 /* MainInterface.storyboard */; };
 		25DFD09B20E45B63001C84F5 /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 25DFD09120E45B63001C84F5 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BDF1A311C04A47F52E580EF1 /* Pods_MachReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07001BF1EA7BCF832DFA59ED /* Pods_MachReader.framework */; };
+		F5F6B09C1110922480412CEF /* Pods_MachReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25DFD0B320E8D656001C84F5 /* Pods_MachReader.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,8 +83,6 @@
 		07001BF1EA7BCF832DFA59ED /* Pods_MachReader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MachReader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2593F82120B8073200319C1B /* MachReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MachReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2593F82420B8073200319C1B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2593F82620B8073200319C1B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		2593F82920B8073200319C1B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2593F82B20B8073200319C1B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2593F82E20B8073200319C1B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2593F83020B8073200319C1B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -145,6 +142,7 @@
 			files = (
 				2593F84020B83E1E00319C1B /* CloudKit.framework in Frameworks */,
 				BDF1A311C04A47F52E580EF1 /* Pods_MachReader.framework in Frameworks */,
+				F5F6B09C1110922480412CEF /* Pods_MachReader.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,8 +186,6 @@
 				2593F83B20B808D600319C1B /* sample.pdf */,
 				2593F83620B8073D00319C1B /* Views */,
 				2593F82420B8073200319C1B /* AppDelegate.swift */,
-				2593F82620B8073200319C1B /* ViewController.swift */,
-				2593F82820B8073200319C1B /* Main.storyboard */,
 				2593F82B20B8073200319C1B /* Assets.xcassets */,
 				2593F82D20B8073200319C1B /* LaunchScreen.storyboard */,
 				2593F83020B8073200319C1B /* Info.plist */,
@@ -439,7 +435,6 @@
 				25DFD02820D69758001C84F5 /* HighlightSummaryTableViewCell.xib in Resources */,
 				25DFD03720DDF16E001C84F5 /* HomeBooksHeaderView.xib in Resources */,
 				2593F82C20B8073200319C1B /* Assets.xcassets in Resources */,
-				2593F82A20B8073200319C1B /* Main.storyboard in Resources */,
 				25DFCFFB20C2AA91001C84F5 /* BookCollectionViewCell.xib in Resources */,
 				2593F83C20B808D600319C1B /* sample.pdf in Resources */,
 				25DFD00720C565CF001C84F5 /* Comments.storyboard in Resources */,
@@ -516,6 +511,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-MachReader/Pods-MachReader-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
+				"${BUILT_PRODUCTS_DIR}/Floaty/Floaty.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/GrowingTextView/GrowingTextView.framework",
@@ -533,6 +529,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Floaty.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GrowingTextView.framework",
@@ -559,7 +556,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2593F82720B8073200319C1B /* ViewController.swift in Sources */,
 				2593F83820B8074D00319C1B /* PdfReaderViewController.swift in Sources */,
 				25DFD03320DDDE59001C84F5 /* BookSettingsViewModel.swift in Sources */,
 				25DFD00520C565C6001C84F5 /* CommentsViewController.swift in Sources */,
@@ -609,14 +605,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		2593F82820B8073200319C1B /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2593F82920B8073200319C1B /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		2593F82D20B8073200319C1B /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

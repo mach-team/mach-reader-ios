@@ -144,7 +144,9 @@ class PdfReaderViewController: UIViewController {
     }
     
     @objc private func handleHighlightListAction(_ sender: Any) {
-        let vc = HighlightListViewController.instantiate(book: viewModel.book)
+        let vc = HighlightListViewController.instantiate(book: viewModel.book) { [weak self] page in
+            self?.go(to: page)
+        }
         let nav = UINavigationController(rootViewController: vc)
         nav.modalPresentationStyle = .formSheet
         present(nav, animated: true)

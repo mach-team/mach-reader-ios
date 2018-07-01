@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="jEv-vG-DeT">
-                                <rect key="frame" x="0.0" y="64" width="375" height="543"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.79620612157534243" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="kY2-oi-vBD">
                                     <size key="itemSize" width="50" height="50"/>
@@ -42,38 +42,12 @@
                                     <outlet property="delegate" destination="a05-Is-u2L" id="owv-iC-d1X"/>
                                 </connections>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WIf-ZU-SCP">
-                                <rect key="frame" x="0.0" y="607" width="375" height="60"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uhZ-mS-Ogh">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
-                                        <fontDescription key="fontDescription" name="HiraginoSans-W6" family="Hiragino Sans" pointSize="20"/>
-                                        <state key="normal" title="Import PDF From iCloud">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="handleOpenICloud:" destination="a05-Is-u2L" eventType="touchUpInside" id="VF5-Ee-Jfd"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="uhZ-mS-Ogh" secondAttribute="bottom" id="NsA-kd-cgC"/>
-                                    <constraint firstAttribute="height" constant="60" id="Vlx-tZ-fWh"/>
-                                    <constraint firstItem="uhZ-mS-Ogh" firstAttribute="top" secondItem="WIf-ZU-SCP" secondAttribute="top" id="kOK-aQ-Ok9"/>
-                                    <constraint firstAttribute="trailing" secondItem="uhZ-mS-Ogh" secondAttribute="trailing" id="khC-Of-QhG"/>
-                                    <constraint firstItem="uhZ-mS-Ogh" firstAttribute="leading" secondItem="WIf-ZU-SCP" secondAttribute="leading" id="sav-oA-Ttk"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="hhG-Au-fnr" firstAttribute="bottom" secondItem="WIf-ZU-SCP" secondAttribute="bottom" id="Iez-Um-X83"/>
                             <constraint firstItem="hhG-Au-fnr" firstAttribute="trailing" secondItem="jEv-vG-DeT" secondAttribute="trailing" id="LBZ-6V-RmN"/>
-                            <constraint firstItem="WIf-ZU-SCP" firstAttribute="top" secondItem="jEv-vG-DeT" secondAttribute="bottom" id="Li2-MK-0lg"/>
                             <constraint firstItem="jEv-vG-DeT" firstAttribute="top" secondItem="hhG-Au-fnr" secondAttribute="top" id="Uot-D5-xMT"/>
-                            <constraint firstItem="hhG-Au-fnr" firstAttribute="trailing" secondItem="WIf-ZU-SCP" secondAttribute="trailing" id="W8b-cc-dN8"/>
+                            <constraint firstItem="hhG-Au-fnr" firstAttribute="bottom" secondItem="jEv-vG-DeT" secondAttribute="bottom" id="XtL-KB-ZsG"/>
                             <constraint firstItem="jEv-vG-DeT" firstAttribute="leading" secondItem="hhG-Au-fnr" secondAttribute="leading" id="b90-Gi-Aub"/>
-                            <constraint firstItem="WIf-ZU-SCP" firstAttribute="leading" secondItem="hhG-Au-fnr" secondAttribute="leading" id="h3a-Hn-JX6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hhG-Au-fnr"/>
                     </view>

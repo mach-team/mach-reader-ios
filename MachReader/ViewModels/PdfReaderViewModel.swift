@@ -22,6 +22,7 @@ class PdfReaderViewModel {
         self.book = book
     }
     
+    var hasInitialized = false
     let book: Book
     
     lazy var document: PDFDocument? = {
@@ -86,8 +87,10 @@ class PdfReaderViewModel {
     }
 
     func loadLastClosePageNumber() {
+        if hasInitialized { return }
         User.default?.readStatuses.get(self.book.id) { readStatus, error in
             self.delegate?.go(to: readStatus?.pageNumber ?? 0)
+            self.hasInitialized = true
         }
     }
     

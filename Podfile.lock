@@ -48,6 +48,7 @@ PODS:
   - FirebaseStorage (3.0.0):
     - FirebaseCore (~> 5.0)
     - GTMSessionFetcher/Core (~> 1.1)
+  - Floaty (4.0.1)
   - GoogleToolboxForMac/Defines (2.1.4)
   - GoogleToolboxForMac/NSData+zlib (2.1.4):
     - GoogleToolboxForMac/Defines (= 2.1.4)
@@ -96,6 +97,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Firestore
   - Firebase/Storage
+  - Floaty (~> 4.0.0)
   - GrowingTextView (~> 0.5)
   - IGIdenticon
   - Kingfisher (~> 4.0)
@@ -113,6 +115,7 @@ SPEC CHECKSUMS:
   FirebaseFirestore: c3fd43060679baeaeb0f9b78bc5258904d2e4946
   FirebaseInstanceID: 83e0040351565df711a5db3d8ebe5ea21aca998a
   FirebaseStorage: 7ca4bb7b58a25fa647b04f524033fc7cb7eb272b
+  Floaty: 82854e1a5ef4fa208281ebd4da2f3d1e51ba67a6
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   GrowingTextView: 8958f4fb7419de58dd622021b2d0696487e00e70
   gRPC: 70703dc9ba31c72341fc7f37745cc1c379edee96
@@ -128,6 +131,6 @@ SPEC CHECKSUMS:
   Pring: f19fea218069951baf45858effee0acfffe229f9
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
 
-PODFILE CHECKSUM: 658554455a2927796b223e9ad3b284609ec61f11
+PODFILE CHECKSUM: 96fedc21386691c20101c252469d55fb8b7dcfca
 
 COCOAPODS: 1.4.0

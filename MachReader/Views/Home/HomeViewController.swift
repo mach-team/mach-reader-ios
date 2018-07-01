@@ -11,6 +11,7 @@ import PDFKit
 import NVActivityIndicatorView
 import Pring
 import FirebaseAuth
+import Floaty
 
 class HomeViewController: UIViewController {
 
@@ -26,6 +27,7 @@ class HomeViewController: UIViewController {
         setupCollectionView()
         setup3DTouch()
         setupObserver()
+        setupFAB()
         viewModel.delegate = self
         viewModel.sessionStart()
     }
@@ -58,6 +60,15 @@ class HomeViewController: UIViewController {
     
     private func setupObserver() {
         NotificationObserver.add(name: .UIApplicationDidBecomeActive, method: handleAppDidBecomeActive)
+    }
+    
+    private func setupFAB() {
+        let floaty = Floaty()
+        floaty.addItem("Import PDF from iCloud", icon: #imageLiteral(resourceName: "ic_icloud")) { [weak self] item in
+            self?.handleOpenICloud()
+            floaty.close()
+        }
+        view.addSubview(floaty)
     }
     
     private func loadBooks(type: HomeSectionType) {
@@ -93,16 +104,14 @@ class HomeViewController: UIViewController {
         }
     }
     
-    @objc private func handleAppDidBecomeActive(notification: Notification) {
-        viewModel.uploadBookIfNeeded()
-    }
-    
-    // MARK: - IBActions
-    
-    @IBAction private func handleOpenICloud(_ sender: Any) {
+    private func handleOpenICloud() {
         let documentPickerController = UIDocumentPickerViewController(documentTypes: [/* "org.idpf.epub-container", */"com.adobe.pdf"], in: .import)
         documentPickerController.delegate = self
         present(documentPickerController, animated: true)
+    }
+    
+    @objc private func handleAppDidBecomeActive(notification: Notification) {
+        viewModel.uploadBookIfNeeded()
     }
 }
 

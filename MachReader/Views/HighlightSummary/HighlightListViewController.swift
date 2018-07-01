@@ -12,11 +12,13 @@ class HighlightListViewController: UIViewController {
 
     @IBOutlet private weak var tableView: UITableView!
     private var viewModel: HighlightListViewModel!
+    private var tapCallback: ((Int) -> ())!
     
-    static func instantiate(book: Book) -> HighlightListViewController {
+    static func instantiate(book: Book, tapCallback: @escaping (Int) -> Void) -> HighlightListViewController {
         let sb = UIStoryboard(name: "HighlightList", bundle: nil)
         let vc = sb.instantiateInitialViewController() as! HighlightListViewController
         vc.viewModel = HighlightListViewModel(book: book)
+        vc.tapCallback = tapCallback
         return vc
     }
     
@@ -37,7 +39,7 @@ class HighlightListViewController: UIViewController {
     }
     
     private func setupNavBar() {
-        title = "My Note"
+        title = viewModel.showOthersHighlightList ? "Every Note" : "My Note"
         let backButtonItem = UIBarButtonItem(image: UIImage(named: "ic_close"), style: .plain, target: self, action: #selector(handleCancelAction(_:)))
         let switchImage = viewModel.showOthersHighlightList ? UIImage(named: "ic_person") : UIImage(named: "ic_group")
         let switchRangeButton = UIBarButtonItem(image: switchImage, style: .plain, target: self, action: #selector(handleSwitchFetchRange(_:)))
@@ -85,7 +87,10 @@ extension HighlightListViewController: UITableViewDelegate {
         guard let highlight = viewModel.highlight(at: indexPath) else { return }
         guard let page = highlight.page else { return }
         guard let pageNumber = Int(page) else { return }
-        // TODO: pageNumber page in PDF
+
+        dismiss(animated: true) { [weak self] in
+            self?.tapCallback(pageNumber)
+        }
     }
 }
 
