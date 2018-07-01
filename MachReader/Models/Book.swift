@@ -13,7 +13,7 @@ import FirebaseFirestore
 import PDFKit
 
 @objcMembers
-final class Book: Object {
+final public class Book: Object {
     @objc enum BookType: Int {
         case pdf
         case epub
@@ -35,7 +35,7 @@ final class Book: Object {
         return false
     }
     
-    static func findOrCreate(by hashID: String, fileUrl: URL? = nil, block: @escaping (Book?, Error?) -> Void) {
+    static func findOrCreate(by hashID: String, fileUrl: URL? = nil, data: Data? = nil, block: @escaping (Book?, Error?) -> Void) {
         Book.get(hashID) { (book, error) in
             if let e = error {
                 print(e.localizedDescription)
@@ -49,6 +49,9 @@ final class Book: Object {
                 book.uploadUserID = User.default?.id
                 if let u = fileUrl {
                     book.contents = File(url: u, name: "book", mimeType: .pdf)
+                }
+                if let d = data {
+                    book.contents = File(data: d, name: "book", mimeType: .pdf)
                 }
                 
                 User.default?.books.insert(book)

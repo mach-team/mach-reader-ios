@@ -4,10 +4,32 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>MachReader.xcscheme</key>
+		<key>MachReader.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
-			<integer>21</integer>
+			<integer>22</integer>
+		</dict>
+		<key>ShareExtension.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>23</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>2593F82020B8073200319C1B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>25DFD09020E45B63001C84F5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

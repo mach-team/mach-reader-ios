@@ -26,6 +26,10 @@ class User: Object {
     static let loggedInNotification = NSNotification.Name(rawValue: "loggedInNotification")
     static let loggedOutNotification = NSNotification.Name(rawValue: "loggedOutNotification")
     
+    static var isLoggedin: Bool {
+        return `default` != nil
+    }
+    
     class func loggedIn(_ block: @escaping () -> Void) -> NSObjectProtocol {
         return NotificationCenter.default.addObserver(forName: User.loggedInNotification, object: nil, queue: .main) { (notification) in
             print("login")

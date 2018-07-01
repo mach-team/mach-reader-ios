@@ -50,8 +50,35 @@
 		25DFD03720DDF16E001C84F5 /* HomeBooksHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25DFD03620DDF16E001C84F5 /* HomeBooksHeaderView.xib */; };
 		25DFD03920DF2EEE001C84F5 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFD03820DF2EEE001C84F5 /* Errors.swift */; };
 		25DFD03B20DF3BFC001C84F5 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFD03A20DF3BFC001C84F5 /* AlertController.swift */; };
+		25DFD09420E45B63001C84F5 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFD09320E45B63001C84F5 /* ShareViewController.swift */; };
+		25DFD09720E45B63001C84F5 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25DFD09520E45B63001C84F5 /* MainInterface.storyboard */; };
+		25DFD09B20E45B63001C84F5 /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 25DFD09120E45B63001C84F5 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BDF1A311C04A47F52E580EF1 /* Pods_MachReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07001BF1EA7BCF832DFA59ED /* Pods_MachReader.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		25DFD09920E45B63001C84F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2593F81920B8073200319C1B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 25DFD09020E45B63001C84F5;
+			remoteInfo = ShareExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		25DFD08820E4584F001C84F5 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				25DFD09B20E45B63001C84F5 /* ShareExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		07001BF1EA7BCF832DFA59ED /* Pods_MachReader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MachReader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,6 +128,12 @@
 		25DFD03620DDF16E001C84F5 /* HomeBooksHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeBooksHeaderView.xib; sourceTree = "<group>"; };
 		25DFD03820DF2EEE001C84F5 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		25DFD03A20DF3BFC001C84F5 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
+		25DFD09120E45B63001C84F5 /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		25DFD09320E45B63001C84F5 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		25DFD09620E45B63001C84F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		25DFD09820E45B63001C84F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25DFD09F20E67926001C84F5 /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
+		25DFD0B320E8D656001C84F5 /* Pods_MachReader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_MachReader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCA1043EB48565CAFD50F509 /* Pods-MachReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MachReader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MachReader/Pods-MachReader.debug.xcconfig"; sourceTree = "<group>"; };
 		FA562CF4233AE72D14C10969 /* Pods-MachReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MachReader.release.xcconfig"; path = "Pods/Target Support Files/Pods-MachReader/Pods-MachReader.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,6 +148,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		25DFD08E20E45B63001C84F5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -122,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				2593F82320B8073200319C1B /* MachReader */,
+				25DFD09220E45B63001C84F5 /* ShareExtension */,
 				2593F82220B8073200319C1B /* Products */,
 				2593F83E20B83E1E00319C1B /* Frameworks */,
 				FE96C9E0DFFBF843182152D7 /* Pods */,
@@ -132,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				2593F82120B8073200319C1B /* MachReader.app */,
+				25DFD09120E45B63001C84F5 /* ShareExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -171,6 +213,7 @@
 		2593F83E20B83E1E00319C1B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				25DFD0B320E8D656001C84F5 /* Pods_MachReader.framework */,
 				2593F83F20B83E1E00319C1B /* CloudKit.framework */,
 				07001BF1EA7BCF832DFA59ED /* Pods_MachReader.framework */,
 			);
@@ -268,6 +311,17 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		25DFD09220E45B63001C84F5 /* ShareExtension */ = {
+			isa = PBXGroup;
+			children = (
+				25DFD09F20E67926001C84F5 /* ShareExtension.entitlements */,
+				25DFD09320E45B63001C84F5 /* ShareViewController.swift */,
+				25DFD09520E45B63001C84F5 /* MainInterface.storyboard */,
+				25DFD09820E45B63001C84F5 /* Info.plist */,
+			);
+			path = ShareExtension;
+			sourceTree = "<group>";
+		};
 		FE96C9E0DFFBF843182152D7 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -291,15 +345,34 @@
 				F36B36615FAB32E4F9C76B02 /* [CP] Embed Pods Frameworks */,
 				EDBDAAE912F32AC58B0D173A /* [CP] Copy Pods Resources */,
 				25DFD00320C42D19001C84F5 /* ShellScript */,
+				25DFD08820E4584F001C84F5 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				25DFD09A20E45B63001C84F5 /* PBXTargetDependency */,
 			);
 			name = MachReader;
 			productName = MachReader;
 			productReference = 2593F82120B8073200319C1B /* MachReader.app */;
 			productType = "com.apple.product-type.application";
+		};
+		25DFD09020E45B63001C84F5 /* ShareExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 25DFD09C20E45B63001C84F5 /* Build configuration list for PBXNativeTarget "ShareExtension" */;
+			buildPhases = (
+				25DFD08D20E45B63001C84F5 /* Sources */,
+				25DFD08E20E45B63001C84F5 /* Frameworks */,
+				25DFD08F20E45B63001C84F5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShareExtension;
+			productName = ShareExtension;
+			productReference = 25DFD09120E45B63001C84F5 /* ShareExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -307,7 +380,7 @@
 		2593F81920B8073200319C1B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0920;
+				LastSwiftUpdateCheck = 0930;
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "mach-technologies";
 				TargetAttributes = {
@@ -315,10 +388,22 @@
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
 							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
+					};
+					25DFD09020E45B63001C84F5 = {
+						CreatedOnToolsVersion = 9.3.1;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
 							};
 						};
@@ -339,6 +424,7 @@
 			projectRoot = "";
 			targets = (
 				2593F82020B8073200319C1B /* MachReader */,
+				25DFD09020E45B63001C84F5 /* ShareExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -362,6 +448,14 @@
 				2593F84220B842AF00319C1B /* GoogleService-Info.plist in Resources */,
 				25DFD02F20DBF925001C84F5 /* BookSettings.storyboard in Resources */,
 				25DFCFE920BC3710001C84F5 /* Home.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25DFD08F20E45B63001C84F5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25DFD09720E45B63001C84F5 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,7 +590,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		25DFD08D20E45B63001C84F5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25DFD09420E45B63001C84F5 /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		25DFD09A20E45B63001C84F5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 25DFD09020E45B63001C84F5 /* ShareExtension */;
+			targetProxy = 25DFD09920E45B63001C84F5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		2593F82820B8073200319C1B /* Main.storyboard */ = {
@@ -513,6 +623,14 @@
 				2593F82E20B8073200319C1B /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		25DFD09520E45B63001C84F5 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				25DFD09620E45B63001C84F5 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -629,6 +747,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BCA1043EB48565CAFD50F509 /* Pods-MachReader.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MachReader/MachReader.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -646,6 +765,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA562CF4233AE72D14C10969 /* Pods-MachReader.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MachReader/MachReader.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -654,6 +774,46 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "tech.mach.mach-reader";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		25DFD09D20E45B63001C84F5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NAJPYUJBUB;
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "tech.mach.mach-reader.ShareExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		25DFD09E20E45B63001C84F5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NAJPYUJBUB;
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "tech.mach.mach-reader.ShareExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -676,6 +836,15 @@
 			buildConfigurations = (
 				2593F83420B8073200319C1B /* Debug */,
 				2593F83520B8073200319C1B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		25DFD09C20E45B63001C84F5 /* Build configuration list for PBXNativeTarget "ShareExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25DFD09D20E45B63001C84F5 /* Debug */,
+				25DFD09E20E45B63001C84F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

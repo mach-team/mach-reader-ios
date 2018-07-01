@@ -9,6 +9,7 @@
 import Foundation
 import Pring
 import Firebase
+import PDFKit
 
 protocol HomeViewModelDelegate: class {
     func onSignin() -> Void
@@ -93,6 +94,21 @@ class HomeViewModel {
     func sessionStart() {
         User.login() { [weak self] user in
             self?.delegate?.onSignin()
+        }
+    }
+    
+    func uploadBookIfNeeded() {
+        if !User.isLoggedin { return }
+        guard var sharedData = UserDefaultsUtil.sharedBookData else { return }
+        guard let sha1 = SHA1.hexString(from: &sharedData) else { return }
+        Book.findOrCreate(by: sha1, data: sharedData) { book, error in
+            if let e = error {
+                e.displayAlert()
+            } else if let b = book {
+                guard let doc = PDFDocument(data: sharedData) else { return }
+                b.update(fromDocument: doc)
+            }
+            UserDefaultsUtil.sharedBookData = nil
         }
     }
     

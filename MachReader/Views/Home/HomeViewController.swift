@@ -25,7 +25,7 @@ class HomeViewController: UIViewController {
         
         setupCollectionView()
         setup3DTouch()
-        
+        setupObserver()
         viewModel.delegate = self
         viewModel.sessionStart()
     }
@@ -54,6 +54,10 @@ class HomeViewController: UIViewController {
         if traitCollection.forceTouchCapability == .available {
             registerForPreviewing(with: self, sourceView: view)
         }
+    }
+    
+    private func setupObserver() {
+        NotificationObserver.add(name: .UIApplicationDidBecomeActive, method: handleAppDidBecomeActive)
     }
     
     private func loadBooks(type: HomeSectionType) {
@@ -89,6 +93,10 @@ class HomeViewController: UIViewController {
         }
     }
     
+    @objc private func handleAppDidBecomeActive(notification: Notification) {
+        viewModel.uploadBookIfNeeded()
+    }
+    
     // MARK: - IBActions
     
     @IBAction private func handleOpenICloud(_ sender: Any) {
@@ -101,6 +109,7 @@ class HomeViewController: UIViewController {
 // MARK: - HomeViewModelDelegate
 extension HomeViewController: HomeViewModelDelegate {
     func onSignin() {
+        viewModel.uploadBookIfNeeded()
         loadBooks(type: .all)
         loadBooks(type: .mine)
         //loadBooks(type: .recent)

@@ -10,7 +10,10 @@ import Foundation
 
 class UserDefaultsUtil {
     static let userDefaults = UserDefaults.standard
+    static let group = UserDefaults(suiteName: suiteName)!
     
+    private static let suiteName = "group.tech.mach.mach-reader"
+    private static let keyShareBookData = "SHARE_DATA"
     private static let keyShowOthersHighlight = "SHOW_OTHERS_HIGHLIGHT"
     private static let keyIsPrivateActivity = "IS_PRIVATE_ACTIVITY"
     private static let keyShowOthersHighlightList = "SHOW_OTHERS_HIGHLIGHT_LIST"
@@ -45,6 +48,17 @@ class UserDefaultsUtil {
         
         get {
             return userDefaults.bool(forKey: keyShowOthersHighlightList)
+        }
+    }
+    
+    static var sharedBookData: Data? {
+        set {
+            group.set(newValue, forKey: keyShareBookData)
+            group.synchronize()
+        }
+        
+        get {
+            return group.data(forKey: keyShareBookData)
         }
     }
     
