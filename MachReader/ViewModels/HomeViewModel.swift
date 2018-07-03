@@ -115,7 +115,10 @@ class HomeViewModel {
     // MARK: - private methods
     
     private func loadPublicBooks(completion: @escaping ((QuerySnapshot?, CollectionChange) -> Void)) {
-        booksDataSource = Book.where(\Book.isPublic, isEqualTo: true).order(by: \Book.updatedAt).limit(to: 30).dataSource()
+        let options: Options = Options()
+        let sortDescriptor: NSSortDescriptor = NSSortDescriptor(key: "updatedAt", ascending: false)
+        options.sortDescirptors = [sortDescriptor]
+        booksDataSource = Book.where(\Book.isPublic, isEqualTo: true).order(by: \Book.updatedAt).limit(to: 30).dataSource(options: options)
             .on({ (snapshot, changes) in
                 completion(snapshot, changes)
             })
@@ -123,7 +126,10 @@ class HomeViewModel {
     }
     
     private func loadPrivateBooks(completion: @escaping ((QuerySnapshot?, CollectionChange) -> Void)) {
-        myBooksDataSource = User.default?.books.order(by: \Book.createdAt).limit(to: 30).dataSource()
+        let options: Options = Options()
+        let sortDescriptor: NSSortDescriptor = NSSortDescriptor(key: "createdAt", ascending: false)
+        options.sortDescirptors = [sortDescriptor]
+        myBooksDataSource = User.default?.books.order(by: \Book.createdAt).limit(to: 30).dataSource(options: options)
             .on({ (snapshot, changes) in
                 completion(snapshot, changes)
             })

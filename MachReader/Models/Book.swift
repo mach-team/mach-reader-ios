@@ -120,7 +120,7 @@ final public class Book: Object {
         // FIXME: these remove should be executed in a batch
         User.default?.books.delete(id: id)
         User.default?.readStatuses.delete(id: id)
-        
+
         batch.commit()
     }
     

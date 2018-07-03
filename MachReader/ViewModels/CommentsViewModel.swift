@@ -32,7 +32,10 @@ class CommentsViewModel {
     }
     
     func loadComments(completion: @escaping ((QuerySnapshot?, CollectionChange) -> Void)) {
-        dataSource = highlight.comments.order(by: \Comment.updatedAt).limit(to: 30).dataSource()
+        let options: Options = Options()
+        let sortDescriptor: NSSortDescriptor = NSSortDescriptor(key: "updatedAt", ascending: false)
+        options.sortDescirptors = [sortDescriptor]
+        dataSource = highlight.comments.order(by: \Comment.updatedAt).limit(to: 30).dataSource(options: options)
             .on(parse: { (_, comment, done) in
                 comment.loadUser() {
                     done(comment)

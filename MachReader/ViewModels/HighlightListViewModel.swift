@@ -29,10 +29,14 @@ class HighlightListViewModel {
     func loadHighlights(completion: @escaping ((QuerySnapshot?, CollectionChange) -> Void)) {
         guard let userID = User.default?.id else { return }
         
+        let options: Options = Options()
+        let sortDescriptor: NSSortDescriptor = NSSortDescriptor(key: "updatedAt", ascending: false)
+        options.sortDescirptors = [sortDescriptor]
+        
         if showOthersHighlightList {
             highlightDataSource = book.highlights
                 .order(by: \Highlight.createdAt)
-                .dataSource()
+                .dataSource(options: options)
                 .on(parse: { (_, highlight, done) in
                     highlight.comments.get() { (snapshot, comments) in
                         done(highlight)
@@ -46,7 +50,7 @@ class HighlightListViewModel {
             highlightDataSource = book.highlights
                 .where(\Highlight.userID, isEqualTo: userID)
                 .order(by: \Highlight.createdAt)
-                .dataSource()
+                .dataSource(options: options)
                 .on(parse: { (_, highlight, done) in
                     highlight.comments.get() { (snapshot, comments) in
                         done(highlight)
