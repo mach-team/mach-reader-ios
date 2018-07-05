@@ -188,6 +188,7 @@
                         <viewLayoutGuide key="safeArea" id="lIh-le-c5h"/>
                     </view>
                     <connections>
+                        <outlet property="activityPrivacyView" destination="umw-j8-cwF" id="Z06-bj-W2I"/>
                         <outlet property="activityPrivateSwitch" destination="DjT-Ei-ERr" id="9j9-LA-S2W"/>
                         <outlet property="bookPrivateSwitch" destination="hRc-pV-HpG" id="E2i-on-wcS"/>
                         <outlet property="bookPrivateView" destination="YSn-vc-icb" id="QXO-Q4-vif"/>

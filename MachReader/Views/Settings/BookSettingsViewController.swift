@@ -15,7 +15,7 @@ class BookSettingsViewController: UIViewController {
     @IBOutlet private weak var activityPrivateSwitch: UISwitch!
     @IBOutlet private weak var bookPrivateSwitch: UISwitch!
     @IBOutlet private weak var bookRemoveView: UIView!
-    
+    @IBOutlet private weak var activityPrivacyView: UIView!
     
     private var viewModel: BookSettingsViewModel!
     
@@ -32,6 +32,9 @@ class BookSettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // TODO: this function
+        activityPrivacyView.isHidden = true
+        
         setupNavigationBar()
         setupSwitch()
     }
