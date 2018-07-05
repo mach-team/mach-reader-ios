@@ -12,14 +12,19 @@ import Firebase
 
 class HighlightListViewModel {
     private let book: Book
-    private var highlightDataSource: DataSource<Highlight>?
-    
+    private var myHighlightDataSource: DataSource<Highlight>?
+    private var allHighlightDataSource: DataSource<Highlight>?
+
     init(book: Book) {
         self.book = book
     }
     
     var highlightsCount: Int {
         return highlightDataSource?.count ?? 0
+    }
+    
+    var highlightDataSource: DataSource<Highlight>? {
+        return showOthersHighlightList ? allHighlightDataSource : myHighlightDataSource
     }
     
     var showOthersHighlightList: Bool {
@@ -34,7 +39,7 @@ class HighlightListViewModel {
         options.sortDescirptors = [sortDescriptor]
         
         if showOthersHighlightList {
-            highlightDataSource = book.highlights
+            allHighlightDataSource = book.highlights
                 .order(by: \Highlight.createdAt)
                 .dataSource(options: options)
                 .on(parse: { (_, highlight, done) in
@@ -47,7 +52,7 @@ class HighlightListViewModel {
                 }
                 .listen()
         } else {
-            highlightDataSource = book.highlights
+            myHighlightDataSource = book.highlights
                 .where(\Highlight.userID, isEqualTo: userID)
                 .order(by: \Highlight.createdAt)
                 .dataSource(options: options)

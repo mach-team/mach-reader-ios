@@ -70,10 +70,11 @@ class PdfReaderViewController: UIViewController {
         super.viewDidDisappear(animated)
         
         viewModel.saveCurrentPageNumber(currentPageNumber)
+        NotificationObserver.removeAll()
     }
     
     deinit {
-        NotificationObserver.removeAll()
+        // FIXME: not called because of notificaiton.
     }
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
