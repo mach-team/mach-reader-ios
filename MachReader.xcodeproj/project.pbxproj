@@ -52,7 +52,6 @@
 		25DFD0B720E91675001C84F5 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFD0B620E91675001C84F5 /* InitialViewController.swift */; };
 		25DFD0B920E9167E001C84F5 /* Initial.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25DFD0B820E9167E001C84F5 /* Initial.storyboard */; };
 		25DFD0DF20F9A3B2001C84F5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25DFD0DE20F9A3B2001C84F5 /* GoogleService-Info.plist */; };
-		25DFD0E120F9A4C2001C84F5 /* GoogleService-Info-Production.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25DFD0E020F9A4C1001C84F5 /* GoogleService-Info-Production.plist */; };
 		BDF1A311C04A47F52E580EF1 /* Pods_MachReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07001BF1EA7BCF832DFA59ED /* Pods_MachReader.framework */; };
 		F5F6B09C1110922480412CEF /* Pods_MachReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25DFD0B320E8D656001C84F5 /* Pods_MachReader.framework */; };
 /* End PBXBuildFile section */
@@ -134,7 +133,6 @@
 		25DFD0B620E91675001C84F5 /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		25DFD0B820E9167E001C84F5 /* Initial.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Initial.storyboard; sourceTree = "<group>"; };
 		25DFD0DE20F9A3B2001C84F5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		25DFD0E020F9A4C1001C84F5 /* GoogleService-Info-Production.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Production.plist"; sourceTree = "<group>"; };
 		BCA1043EB48565CAFD50F509 /* Pods-MachReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MachReader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MachReader/Pods-MachReader.debug.xcconfig"; sourceTree = "<group>"; };
 		FA562CF4233AE72D14C10969 /* Pods-MachReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MachReader.release.xcconfig"; path = "Pods/Target Support Files/Pods-MachReader/Pods-MachReader.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -192,7 +190,6 @@
 				2593F82B20B8073200319C1B /* Assets.xcassets */,
 				2593F82D20B8073200319C1B /* LaunchScreen.storyboard */,
 				2593F83020B8073200319C1B /* Info.plist */,
-				25DFD0E020F9A4C1001C84F5 /* GoogleService-Info-Production.plist */,
 				25DFD0DE20F9A3B2001C84F5 /* GoogleService-Info.plist */,
 			);
 			path = MachReader;
@@ -459,7 +456,6 @@
 				25DFD0DF20F9A3B2001C84F5 /* GoogleService-Info.plist in Resources */,
 				25DFD00D20C6AFA8001C84F5 /* CommentTableViewCell.xib in Resources */,
 				25DFD02F20DBF925001C84F5 /* BookSettings.storyboard in Resources */,
-				25DFD0E120F9A4C2001C84F5 /* GoogleService-Info-Production.plist in Resources */,
 				25DFCFE920BC3710001C84F5 /* Home.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
