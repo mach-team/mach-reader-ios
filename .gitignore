@@ -26,6 +26,7 @@ xcuserdata/
 *.xccheckout
 *.xcscmblueprint
 MachReader/GoogleService-Info.plist
+MachReader/GoogleService-Info-Production.plist
 
 ## Obj-C/Swift specific
 *.hmap

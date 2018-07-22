@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 import PDFKit
 import NVActivityIndicatorView
 import Pring
@@ -23,6 +24,10 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         
         startAnimating(type: .circleStrokeSpin)
+        
+        let imageView = UIImageView(image: UIImage(named: "ic_mach"))
+        imageView.contentMode = .scaleAspectFit
+        navigationController?.navigationBar.topItem?.titleView = imageView
         
         setupCollectionView()
         setup3DTouch()
@@ -71,11 +76,18 @@ class HomeViewController: UIViewController {
     private func setupFAB() {
         let floaty = Floaty()
         floaty.buttonColor = UIColor(red: 0/255.0, green: 168/255.0, blue: 117/255.0, alpha: 1)
-        floaty.addItem("Import PDF from iCloud", icon: #imageLiteral(resourceName: "ic_icloud")) { [weak self] item in
+        floaty.addItem("iCloudからPDFを読み込む", icon: #imageLiteral(resourceName: "ic_icloud")) { [weak self] item in
             self?.handleOpenICloud()
             floaty.close()
         }
         view.addSubview(floaty)
+    }
+    
+    private func pushPermisson() {
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { _, _ in
+            print("push permission finished")
+        }
     }
     
     private func loadBooks(type: HomeSectionType) {
@@ -130,6 +142,7 @@ extension HomeViewController: HomeViewModelDelegate {
         loadBooks(type: .mine)
         //loadBooks(type: .recent)
         stopAnimating()
+        pushPermisson()
     }
 }
 

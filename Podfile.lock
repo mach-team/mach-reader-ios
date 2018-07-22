@@ -19,6 +19,9 @@ PODS:
   - Firebase/Firestore (5.0.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (= 0.12.0)
+  - Firebase/Messaging (5.0.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (= 3.0.0)
   - Firebase/Storage (5.0.0):
     - Firebase/CoreOnly
     - FirebaseStorage (= 3.0.0)
@@ -45,11 +48,18 @@ PODS:
     - Protobuf (~> 3.1)
   - FirebaseInstanceID (3.0.0):
     - FirebaseCore (~> 5.0)
+  - FirebaseMessaging (3.0.0):
+    - FirebaseCore (~> 5.0)
+    - FirebaseInstanceID (~> 3.0)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - Protobuf (~> 3.1)
   - FirebaseStorage (3.0.0):
     - FirebaseCore (~> 5.0)
     - GTMSessionFetcher/Core (~> 1.1)
   - Floaty (4.0.1)
   - GoogleToolboxForMac/Defines (2.1.4)
+  - GoogleToolboxForMac/Logger (2.1.4):
+    - GoogleToolboxForMac/Defines (= 2.1.4)
   - GoogleToolboxForMac/NSData+zlib (2.1.4):
     - GoogleToolboxForMac/Defines (= 2.1.4)
   - GrowingTextView (0.5.6)
@@ -97,6 +107,7 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Firestore
+  - Firebase/Messaging
   - Firebase/Storage
   - Floaty (~> 4.0.0)
   - GrowingTextView (~> 0.5)
@@ -116,6 +127,7 @@ SPEC CHECKSUMS:
   FirebaseCore: e46e4babb9de298fb2f736958edcc6da1dc60d73
   FirebaseFirestore: c3fd43060679baeaeb0f9b78bc5258904d2e4946
   FirebaseInstanceID: 83e0040351565df711a5db3d8ebe5ea21aca998a
+  FirebaseMessaging: f2360a966ecfb0d14facf0fbdf306efc2df0ddbe
   FirebaseStorage: 7ca4bb7b58a25fa647b04f524033fc7cb7eb272b
   Floaty: 82854e1a5ef4fa208281ebd4da2f3d1e51ba67a6
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
@@ -134,6 +146,6 @@ SPEC CHECKSUMS:
   Pring: f19fea218069951baf45858effee0acfffe229f9
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
 
-PODFILE CHECKSUM: cfd33107e278817d04accafc7fcef2cfa9271739
+PODFILE CHECKSUM: 56e4f0ba8dc4caba6adeef334621c3114d83df77
 
 COCOAPODS: 1.4.0

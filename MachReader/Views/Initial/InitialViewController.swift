@@ -14,9 +14,14 @@ class InitialViewController: UIViewController, LTMorphingLabelDelegate {
     @IBOutlet weak var label: LTMorphingLabel!
     
     fileprivate var i = -1
-    fileprivate var textArray = [
-        "マッハリーダー", "それは", "新しい電子書籍リーダー", "みんなでコメント", "盛り上げろ！"
-    ]
+    fileprivate var textArray: [String] {
+        if UserDefaultsUtil.isFirstOpen {
+            return ["マッハリーダー", "それは", "新しい電子書籍リーダー", "みんなでコメント", "盛り上げろ！"]
+        } else {
+            return ["マッハリーダー"]
+        }
+    }
+    
     fileprivate var text: String {
         i = i >= textArray.count - 1 ? 0 : i + 1
         return textArray[i]
@@ -33,6 +38,10 @@ class InitialViewController: UIViewController, LTMorphingLabelDelegate {
         super.viewDidAppear(animated)
         
         label.text = text
+    }
+    
+    deinit {
+        UserDefaultsUtil.isFirstOpen = false
     }
 
     func morphingDidStart(_ label: LTMorphingLabel) {

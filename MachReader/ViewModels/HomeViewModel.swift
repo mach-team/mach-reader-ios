@@ -94,6 +94,7 @@ class HomeViewModel {
     func sessionStart() {
         User.login() { [weak self] user in
             self?.delegate?.onSignin()
+            user?.updateFcmToken()
         }
     }
     

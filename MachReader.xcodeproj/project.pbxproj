@@ -12,9 +12,7 @@
 		2593F82F20B8073200319C1B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2593F82D20B8073200319C1B /* LaunchScreen.storyboard */; };
 		2593F83820B8074D00319C1B /* PdfReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2593F83720B8074D00319C1B /* PdfReaderViewController.swift */; };
 		2593F83A20B8075500319C1B /* PdfReader.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2593F83920B8075500319C1B /* PdfReader.storyboard */; };
-		2593F83C20B808D600319C1B /* sample.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2593F83B20B808D600319C1B /* sample.pdf */; };
 		2593F84020B83E1E00319C1B /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2593F83F20B83E1E00319C1B /* CloudKit.framework */; };
-		2593F84220B842AF00319C1B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2593F84120B842AF00319C1B /* GoogleService-Info.plist */; };
 		25B2B94C20B9625B00B8E93B /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2B94B20B9625B00B8E93B /* Comment.swift */; };
 		25B2B94E20B9629800B8E93B /* Highlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2B94D20B9629800B8E93B /* Highlight.swift */; };
 		25B2B95220B9705D00B8E93B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B2B95120B9705D00B8E93B /* User.swift */; };
@@ -53,6 +51,8 @@
 		25DFD09B20E45B63001C84F5 /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 25DFD09120E45B63001C84F5 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		25DFD0B720E91675001C84F5 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DFD0B620E91675001C84F5 /* InitialViewController.swift */; };
 		25DFD0B920E9167E001C84F5 /* Initial.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25DFD0B820E9167E001C84F5 /* Initial.storyboard */; };
+		25DFD0DF20F9A3B2001C84F5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25DFD0DE20F9A3B2001C84F5 /* GoogleService-Info.plist */; };
+		25DFD0E120F9A4C2001C84F5 /* GoogleService-Info-Production.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25DFD0E020F9A4C1001C84F5 /* GoogleService-Info-Production.plist */; };
 		BDF1A311C04A47F52E580EF1 /* Pods_MachReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07001BF1EA7BCF832DFA59ED /* Pods_MachReader.framework */; };
 		F5F6B09C1110922480412CEF /* Pods_MachReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25DFD0B320E8D656001C84F5 /* Pods_MachReader.framework */; };
 /* End PBXBuildFile section */
@@ -90,10 +90,8 @@
 		2593F83020B8073200319C1B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2593F83720B8074D00319C1B /* PdfReaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfReaderViewController.swift; sourceTree = "<group>"; };
 		2593F83920B8075500319C1B /* PdfReader.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PdfReader.storyboard; sourceTree = "<group>"; };
-		2593F83B20B808D600319C1B /* sample.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = sample.pdf; sourceTree = "<group>"; };
 		2593F83D20B83E1700319C1B /* MachReader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MachReader.entitlements; sourceTree = "<group>"; };
 		2593F83F20B83E1E00319C1B /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		2593F84120B842AF00319C1B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		25B2B94B20B9625B00B8E93B /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		25B2B94D20B9629800B8E93B /* Highlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Highlight.swift; sourceTree = "<group>"; };
 		25B2B95120B9705D00B8E93B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -135,6 +133,8 @@
 		25DFD0B320E8D656001C84F5 /* Pods_MachReader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_MachReader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25DFD0B620E91675001C84F5 /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		25DFD0B820E9167E001C84F5 /* Initial.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Initial.storyboard; sourceTree = "<group>"; };
+		25DFD0DE20F9A3B2001C84F5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		25DFD0E020F9A4C1001C84F5 /* GoogleService-Info-Production.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Production.plist"; sourceTree = "<group>"; };
 		BCA1043EB48565CAFD50F509 /* Pods-MachReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MachReader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MachReader/Pods-MachReader.debug.xcconfig"; sourceTree = "<group>"; };
 		FA562CF4233AE72D14C10969 /* Pods-MachReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MachReader.release.xcconfig"; path = "Pods/Target Support Files/Pods-MachReader/Pods-MachReader.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -187,13 +187,13 @@
 				25B2B95920B9A55A00B8E93B /* Utils */,
 				25B2B94820B9601F00B8E93B /* Models */,
 				2593F83D20B83E1700319C1B /* MachReader.entitlements */,
-				2593F83B20B808D600319C1B /* sample.pdf */,
 				2593F83620B8073D00319C1B /* Views */,
 				2593F82420B8073200319C1B /* AppDelegate.swift */,
 				2593F82B20B8073200319C1B /* Assets.xcassets */,
 				2593F82D20B8073200319C1B /* LaunchScreen.storyboard */,
 				2593F83020B8073200319C1B /* Info.plist */,
-				2593F84120B842AF00319C1B /* GoogleService-Info.plist */,
+				25DFD0E020F9A4C1001C84F5 /* GoogleService-Info-Production.plist */,
+				25DFD0DE20F9A3B2001C84F5 /* GoogleService-Info.plist */,
 			);
 			path = MachReader;
 			sourceTree = "<group>";
@@ -401,6 +401,9 @@
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
 							};
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -451,12 +454,12 @@
 				25DFD03720DDF16E001C84F5 /* HomeBooksHeaderView.xib in Resources */,
 				2593F82C20B8073200319C1B /* Assets.xcassets in Resources */,
 				25DFCFFB20C2AA91001C84F5 /* BookCollectionViewCell.xib in Resources */,
-				2593F83C20B808D600319C1B /* sample.pdf in Resources */,
 				25DFD00720C565CF001C84F5 /* Comments.storyboard in Resources */,
 				25DFD02420D67BB3001C84F5 /* HighlightList.storyboard in Resources */,
+				25DFD0DF20F9A3B2001C84F5 /* GoogleService-Info.plist in Resources */,
 				25DFD00D20C6AFA8001C84F5 /* CommentTableViewCell.xib in Resources */,
-				2593F84220B842AF00319C1B /* GoogleService-Info.plist in Resources */,
 				25DFD02F20DBF925001C84F5 /* BookSettings.storyboard in Resources */,
+				25DFD0E120F9A4C2001C84F5 /* GoogleService-Info-Production.plist in Resources */,
 				25DFCFE920BC3710001C84F5 /* Home.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -755,6 +758,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				BUNDLE_ID_PREFIX = "debug-";
 				CODE_SIGN_ENTITLEMENTS = MachReader/MachReader.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NAJPYUJBUB;
@@ -762,6 +766,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "tech.mach.mach-reader";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME_PREFIX = "STG-";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -773,6 +778,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				BUNDLE_ID_PREFIX = "";
 				CODE_SIGN_ENTITLEMENTS = MachReader/MachReader.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NAJPYUJBUB;
@@ -780,6 +786,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "tech.mach.mach-reader";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME_PREFIX = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -788,6 +795,7 @@
 		25DFD09D20E45B63001C84F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_ID_PREFIX = "debug-";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
@@ -799,6 +807,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "tech.mach.mach-reader.ShareExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME_PREFIX = "STG-";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -808,6 +817,7 @@
 		25DFD09E20E45B63001C84F5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_ID_PREFIX = "";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
@@ -819,6 +829,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "tech.mach.mach-reader.ShareExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME_PREFIX = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

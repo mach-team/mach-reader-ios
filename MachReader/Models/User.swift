@@ -18,6 +18,7 @@ class User: Object {
     
     dynamic var name: String?
     dynamic var avatar: File?
+    dynamic var fcmToken: String?
     dynamic var books: ReferenceCollection<Book> = []
     dynamic var highlights: ReferenceCollection<Highlight> = []
     dynamic var readStatuses: NestedCollection<ReadStatus> = []
@@ -96,5 +97,11 @@ class User: Object {
                 }
             }
         }
+    }
+    
+    func updateFcmToken() {
+        guard let fcm = UserDefaultsUtil.fcmToken else { return }
+        fcmToken = fcm
+        update()
     }
 }

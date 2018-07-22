@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--マッハリーダー-->
+        <!--Home View Controller-->
         <scene sceneID="cec-zL-vG3">
             <objects>
                 <viewController id="a05-Is-u2L" customClass="HomeViewController" customModule="MachReader" customModuleProvider="target" sceneMemberID="viewController">
@@ -51,7 +51,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hhG-Au-fnr"/>
                     </view>
-                    <navigationItem key="navigationItem" title="マッハリーダー" id="CLX-Dg-ren"/>
+                    <navigationItem key="navigationItem" id="CLX-Dg-ren"/>
                     <connections>
                         <outlet property="collectionView" destination="jEv-vG-DeT" id="W4h-xV-WOd"/>
                     </connections>
