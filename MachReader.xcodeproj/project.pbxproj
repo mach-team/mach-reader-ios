@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2530771621041BD900CCA899 /* GoogleService-Info-Production.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2530771521041BD900CCA899 /* GoogleService-Info-Production.plist */; };
 		2593F82520B8073200319C1B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2593F82420B8073200319C1B /* AppDelegate.swift */; };
 		2593F82C20B8073200319C1B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2593F82B20B8073200319C1B /* Assets.xcassets */; };
 		2593F82F20B8073200319C1B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2593F82D20B8073200319C1B /* LaunchScreen.storyboard */; };
@@ -82,6 +83,7 @@
 
 /* Begin PBXFileReference section */
 		07001BF1EA7BCF832DFA59ED /* Pods_MachReader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MachReader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2530771521041BD900CCA899 /* GoogleService-Info-Production.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Production.plist"; sourceTree = "<group>"; };
 		2593F82120B8073200319C1B /* MachReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MachReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2593F82420B8073200319C1B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2593F82B20B8073200319C1B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				2593F82D20B8073200319C1B /* LaunchScreen.storyboard */,
 				2593F83020B8073200319C1B /* Info.plist */,
 				25DFD0DE20F9A3B2001C84F5 /* GoogleService-Info.plist */,
+				2530771521041BD900CCA899 /* GoogleService-Info-Production.plist */,
 			);
 			path = MachReader;
 			sourceTree = "<group>";
@@ -456,6 +459,7 @@
 				25DFD0DF20F9A3B2001C84F5 /* GoogleService-Info.plist in Resources */,
 				25DFD00D20C6AFA8001C84F5 /* CommentTableViewCell.xib in Resources */,
 				25DFD02F20DBF925001C84F5 /* BookSettings.storyboard in Resources */,
+				2530771621041BD900CCA899 /* GoogleService-Info-Production.plist in Resources */,
 				25DFCFE920BC3710001C84F5 /* Home.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
