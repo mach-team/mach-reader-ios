@@ -15,7 +15,9 @@ class BookSettingsViewController: UIViewController {
     @IBOutlet private weak var activityPrivateSwitch: UISwitch!
     @IBOutlet private weak var bookPrivateSwitch: UISwitch!
     @IBOutlet private weak var bookRemoveView: UIView!
+    @IBOutlet private weak var bookNameView: UIView!
     @IBOutlet private weak var activityPrivacyView: UIView!
+    @IBOutlet private weak var bookTitleTextField: UITextField!
     
     private var viewModel: BookSettingsViewModel!
     
@@ -36,7 +38,7 @@ class BookSettingsViewController: UIViewController {
         activityPrivacyView.isHidden = true
         
         setupNavigationBar()
-        setupSwitch()
+        setupView()
     }
     
     // MARK: - private methods
@@ -47,7 +49,7 @@ class BookSettingsViewController: UIViewController {
         navigationItem.leftBarButtonItem = backButtonItem
     }
     
-    private func setupSwitch() {
+    private func setupView() {
         othersHighlightSwitch.isOn = !UserDefaultsUtil.showOthersHighlight
         activityPrivateSwitch.isOn = UserDefaultsUtil.isPrivateActivity
         bookPrivateSwitch.isOn = viewModel.isBookPublic
@@ -55,6 +57,9 @@ class BookSettingsViewController: UIViewController {
         // not display these views when a book is not mine.
         bookPrivateView.isHidden = !viewModel.isBookMine
         bookRemoveView.isHidden = !viewModel.isBookMine
+        bookNameView.isHidden = !viewModel.isBookMine
+        bookTitleTextField.text = viewModel.bookTitle
+        bookTitleTextField.delegate = self
     }
     
 
@@ -87,5 +92,13 @@ class BookSettingsViewController: UIViewController {
         alert.addAction(removeAction)
         alert.addAction(cancelAction)
         alert.show()
+    }
+}
+
+extension BookSettingsViewController: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let title = textField.text {
+            viewModel.updateBookTitle(title)
+        }
     }
 }

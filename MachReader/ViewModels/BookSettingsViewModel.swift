@@ -24,6 +24,10 @@ class BookSettingsViewModel {
         return book.isMine
     }
     
+    var bookTitle: String {
+        return book.title ?? "No name"
+    }
+    
     func showOthersHighlight(isOn: Bool) {
         UserDefaultsUtil.showOthersHighlight = isOn
     }
@@ -39,5 +43,10 @@ class BookSettingsViewModel {
     
     func removeBook() {
         book.remove()
+    }
+    
+    func updateBookTitle(_ title: String) {
+        book.title = title
+        book.update()
     }
 }
