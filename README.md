@@ -12,5 +12,7 @@ This app is serverless. This mainly uses Firebase services for authentication, d
 
 ## Screenshots
 
+![image](https://github.com/mach-team/mach-reader-ios/blob/master/images/home.png)
 
+![](https://github.com/mach-team/mach-reader-ios/blob/master/images/animation.gif)
 
