@@ -1,6 +1,6 @@
 # Mach Reader
 
-[<img src="https://raw.githubusercontent.com/TrustWallet/trust-wallet-ios/master/resources/iphone_cover.png">](https://itunes.apple.com/jp/app/%E3%83%9E%E3%83%83%E3%83%8F%E3%83%AA%E3%83%BC%E3%83%80%E3%83%BC/id1415451566?mt=8&ign-mpt=uo%3D4)
+[<img src="https://raw.githubusercontent.com/TrustWallet/trust-wallet-ios/master/resources/app-store-badge.png">](https://itunes.apple.com/jp/app/%E3%83%9E%E3%83%83%E3%83%8F%E3%83%AA%E3%83%BC%E3%83%80%E3%83%BC/id1415451566?mt=8&ign-mpt=uo%3D4)
 
 ## Structure
 
